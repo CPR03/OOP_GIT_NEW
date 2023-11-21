@@ -100,6 +100,7 @@ public class LogIn_GUI extends JDialog {
             Statement state = con.createStatement();
             ResultSet result = state.executeQuery("SELECT * FROM apartment.users");
 
+
             int flag = 0; //tell if user OK
 
             while (result.next() && flag == 0) {

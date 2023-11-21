@@ -70,7 +70,6 @@ public class Dashboard_GUI extends JDialog {
         unit8.setIcon(new ImageIcon(new ImageIcon("Images/logo.png").getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH)));
         unit9.setIcon(new ImageIcon(new ImageIcon("Images/logo_2.png").getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH)));
 
-
         btnrequest.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onRequest();

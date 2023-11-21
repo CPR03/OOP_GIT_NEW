@@ -81,47 +81,88 @@ public class SignUp_GUI extends JDialog {
 
     private void onOK() {
 
-
         try {
-
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/apartment", "root", "root");
             Statement state = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
-            ResultSet result = state.executeQuery("SELECT * FROM apartment.users");
+            ResultSet getRowCount = state.executeQuery("SELECT COUNT(*) as rowCount FROM apartment.users");
 
-            boolean usernameExists = false;
+            // Move to the first (and only) row of the result set
+            if (getRowCount.next()) {
 
-            while (result.next()) {
+                // Get the count of rows
+                int rowCount = getRowCount.getInt("rowCount");
 
-                String userNameFromDatabase = result.getString("userName").toLowerCase();
-
-                if (userNameFromDatabase.equals(txtUserLog.getText().toLowerCase())) {
-                    JOptionPane.showMessageDialog(null, "Username already exists");
-                    usernameExists = true;
-                    break;  // exit the loop as soon as a matching username is found
-                }
-
-            }
-
-            if (!usernameExists) {
-
-                setVisible(false);
                 String usernameInput = txtUserLog.getText();
                 String passText = new String(passfield.getPassword());
 
-                // Inserting row to the last row of the table
-                result.last();
-                int id = result.getInt("user_id") + 1; //get current id and ADD 1
-                result.moveToInsertRow();
-                result.updateInt("user_id", id); //add the newly created ID
-                result.updateString("userName", usernameInput.toLowerCase()); //add username
-                result.updateString("userPassword", passText.toLowerCase()); //add password
-                result.insertRow();
-                result.beforeFirst();
-                JOptionPane.showMessageDialog(null, "Account successfully created.");
-                LogIn_GUI.LogIn_GUI(); // Go back to Login
+                boolean usernameExists = false;
 
+                ResultSet result;
+
+                if (rowCount == 0) {
+
+                    // Insert the new user with user_id 1 if database is empty
+                    result = state.executeQuery("SELECT * FROM apartment.users");
+
+                    result.moveToInsertRow();
+
+                    result.updateInt("user_id", 1); // add the newly created ID
+                    result.updateString("userName", usernameInput); // add username
+                    result.updateString("userPassword", passText); // add password
+
+                    result.insertRow();
+                    result.beforeFirst();
+
+                    JOptionPane.showMessageDialog(null, "Account successfully created.");
+                    setVisible(false);
+                    LogIn_GUI.LogIn_GUI(); // Go back to Login
+
+
+                } else {
+
+                    // The database is not empty, check for duplicates
+                    result = state.executeQuery("SELECT * FROM apartment.users");
+
+                    //Loop through the database to check if user exists
+                    while (result.next()) {
+
+                        String userNameFromDatabase = result.getString("userName").toLowerCase();
+
+                        if (userNameFromDatabase.equals(usernameInput.toLowerCase())) {
+
+                            JOptionPane.showMessageDialog(null, "Username already exists");
+                            usernameExists = true;
+                            break;  // exit the loop as soon as a matching username is found
+
+                        }
+                    }
+
+                    //if user not exist insert new user
+                    if (!usernameExists) {
+
+                        result.last();
+                        int id = result.getInt("user_id") + 1; // get current id and ADD 1
+
+                        result.moveToInsertRow();
+
+                        result.updateInt("user_id", id); // add the newly created ID
+                        result.updateString("userName", usernameInput); // add username
+                        result.updateString("userPassword", passText); // add password
+
+                        result.insertRow();
+                        result.beforeFirst();
+
+                        JOptionPane.showMessageDialog(null, "Account successfully created.");
+                        setVisible(false);
+                        LogIn_GUI.LogIn_GUI(); // Go back to Login
+
+                    }
+                }
             }
+
+            state.close();
+            con.close();
 
         } catch (Exception exc) {
             exc.printStackTrace();
