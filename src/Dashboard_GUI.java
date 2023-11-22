@@ -78,6 +78,25 @@ public class Dashboard_GUI extends JDialog {
         unit10.setIcon(new ImageIcon(new ImageIcon("Images/logo.png").getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH)));
         unit11.setIcon(new ImageIcon(new ImageIcon("Images/logo_2.png").getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH)));
         unit12.setIcon(new ImageIcon(new ImageIcon("Images/logo.png").getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH)));
+        ActionListener actionListener = new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                System.out.println(actionEvent.getActionCommand());
+                setVisible(false);//hide dashboard
+
+                // Create and show the sign-up dialog
+                Selected_Apr_GUI select = new Selected_Apr_GUI(actionEvent.getActionCommand());
+                select.pack();
+                select.setTitle("SoulSpace | Sign up.");
+
+                select.setResizable(false);
+                select.setBounds(600,200,600,600);
+                select.setVisible(true);
+
+
+
+            }
+        };
+        rentUnit1.addActionListener(actionListener);
         btnrequest.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onRequest();
