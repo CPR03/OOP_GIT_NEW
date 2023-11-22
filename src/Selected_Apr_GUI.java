@@ -1,6 +1,13 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class Selected_Apr_GUI extends JDialog {
     private JPanel contentPane;
@@ -66,11 +73,21 @@ public class Selected_Apr_GUI extends JDialog {
         buttonCancel.setHorizontalTextPosition(SwingConstants.CENTER);
 
     }
+    public static BufferedImage resize(BufferedImage img, int newW, int newH) {
+        Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
+        BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
+
+        Graphics2D g2d = dimg.createGraphics();
+        g2d.drawImage(tmp, 0, 0, null);
+        g2d.dispose();
+
+        return dimg;
+    }
 
     private void chosenUnit(String unit){
+         /*
         if(unit.equals("Rent: Unit 1")){
-            poster.setIcon(new ImageIcon(new ImageIcon("Images/Apartments/Apartment In/Apartment 1 Inside/apr_img_in_1.jpg").getImage().getScaledInstance(500, 300, Image.SCALE_SMOOTH)));
-            poster.setHorizontalTextPosition(SwingConstants.CENTER);
+
 
             poster2.setIcon(new ImageIcon(new ImageIcon("Images/Apartments/Apartment In/Apartment 1 Inside/apr_img_in_1.1.jpg").getImage().getScaledInstance(500, 300, Image.SCALE_SMOOTH)));
             poster2.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -92,6 +109,54 @@ public class Selected_Apr_GUI extends JDialog {
                 Description: A room with tv, sofa, and picture frames\s
                 \s""");
 
+
+
+        } */
+
+
+
+        try {
+
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/apartment", "root", "root");
+            Statement state = con.createStatement();
+            ResultSet result = state.executeQuery("SELECT apartment_unit.*,apartment.unit_photo.*" +
+                    "FROM apartment.apartment_unit JOIN apartment.unit_photo " +
+                    "ON unit_photo.unit_number = apartment_unit.unit_number");
+
+
+
+            while (result.next()) {
+
+                String unit_number = result.getString("unit_number");
+                int bedcount = result.getInt("bedcount");
+                int unit_price=result.getInt("unit_price");
+                BufferedImage[] image = new BufferedImage[5];
+                for(int i=1;i<=5;i++){
+                    java.sql.Blob blob = result.getBlob("unit_photo"+i);
+                    InputStream in = blob.getBinaryStream();
+                    image[i-1]=ImageIO.read(in);
+                }
+
+
+                if (unit.equals("Rent: "+unit_number)) {
+                    details.setText("Unit Number: "+unit_number+"\nBedcount: "+bedcount
+                    +"\nUnit Price: "+unit_price);
+
+                    poster.setIcon(new ImageIcon(resize(image[0],550,300)));
+                    poster2.setIcon(new ImageIcon(resize(image[1],550,300)));
+                    poster3.setIcon(new ImageIcon(resize(image[2],550,300)));
+                    poster4.setIcon(new ImageIcon(resize(image[3],550,300)));
+                    poster5.setIcon(new ImageIcon(resize(image[4],550,300)));
+
+                    break;
+
+                }
+            }
+
+
+        } catch (Exception exc) {
+
+            exc.printStackTrace();
         }
 
     }

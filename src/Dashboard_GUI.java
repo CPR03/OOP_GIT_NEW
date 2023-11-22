@@ -94,8 +94,6 @@ public class Dashboard_GUI extends JDialog {
                 setVisible(true);
 
 
-
-
             }
         };
 
