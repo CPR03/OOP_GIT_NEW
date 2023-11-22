@@ -93,7 +93,10 @@ public class LogIn_GUI extends JDialog {
     }
 
     private int userID;
-    protected static String saveLogin; //save the login for every object to be accessed
+    protected static String saveUserName; //save the login for every object to be accessed
+    protected static String saveUserPass; //save the login for every object to be accessed
+
+    Save_Data log = new Save_Data(saveUserName, saveUserPass);
 
     private void onOK() {
 
@@ -119,7 +122,10 @@ public class LogIn_GUI extends JDialog {
 
                     //if password OK Open Dashboard
                     else {
-                        saveLogin = txtUserLog.getText();
+
+                        saveUserName = txtUserLog.getText();
+                        saveUserPass = txtPass.getText();
+
                         setVisible(false); //hide login
                         //Run Dashboard
                         Dashboard_GUI.Dashboard_GUI();
@@ -154,7 +160,7 @@ public class LogIn_GUI extends JDialog {
             //Error Here
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/apartment", "root", "root");
             Statement state = con.createStatement();
-            ResultSet result = state.executeQuery("SELECT user_id FROM apartment.users WHERE userName ='"+saveLogin+"'");
+            ResultSet result = state.executeQuery("SELECT user_id FROM apartment.users WHERE userName ='"+log.getUsername()+"'");
 
             while(result.next())
                 userID = result.getInt("user_id");
@@ -164,7 +170,7 @@ public class LogIn_GUI extends JDialog {
             exc.printStackTrace();
         }
 
-        System.out.println(saveLogin);
+        System.out.println(log.getUsername());
         return userID;
     }
 
