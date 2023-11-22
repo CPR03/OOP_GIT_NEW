@@ -80,10 +80,8 @@ public class Dashboard_GUI extends JDialog {
         unit12.setIcon(new ImageIcon(new ImageIcon("Images/logo.png").getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH)));
         ActionListener actionListener = new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
-                System.out.println(actionEvent.getActionCommand());
                 setVisible(false);//hide dashboard
-
-                // Create and show the sign-up dialog
+                // Pass the chosen Apartment Unit to Selected GUI
                 Selected_Apr_GUI select = new Selected_Apr_GUI(actionEvent.getActionCommand());
                 select.pack();
                 select.setTitle("SoulSpace | Sign up.");
@@ -92,11 +90,29 @@ public class Dashboard_GUI extends JDialog {
                 select.setBounds(600,200,600,600);
                 select.setVisible(true);
 
+                //make dashboard visible if button cancel is clicked in Selected GUI
+                setVisible(true);
+
+
 
 
             }
         };
+
+        //add actionlistener to every Rent button
         rentUnit1.addActionListener(actionListener);
+        rentUnit2.addActionListener(actionListener);
+        rentUnit3.addActionListener(actionListener);
+        rentUnit4.addActionListener(actionListener);
+        rentUnit5.addActionListener(actionListener);
+        rentUnit6.addActionListener(actionListener);
+        rentUnit7.addActionListener(actionListener);
+        rentUnit8.addActionListener(actionListener);
+        rentUnit9.addActionListener(actionListener);
+        rentUnit10.addActionListener(actionListener);
+        rentUnit11.addActionListener(actionListener);
+        rentUnit12.addActionListener(actionListener);
+
         btnrequest.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onRequest();
