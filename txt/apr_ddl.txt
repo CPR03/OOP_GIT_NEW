@@ -19,3 +19,10 @@ create table users
     userPassword varchar(30) not null
 );
 
+CREATE TABLE Maintenance_Req(
+    req_id int NOT NULL,
+    type varchar(20),
+    desciption varchar(1000) NOT NULL,
+    date_created date NOT NULL
+)
+

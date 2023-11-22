@@ -76,7 +76,6 @@ public class SignUp_GUI extends JDialog {
         buttonCancel.setHorizontalTextPosition(SwingConstants.CENTER);
         buttonCancel.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-
     }
 
     private void onOK() {

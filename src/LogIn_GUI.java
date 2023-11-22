@@ -10,7 +10,7 @@ public class LogIn_GUI extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
-    private JTextField txtUserLog;
+    protected JTextField txtUserLog;
     private JPasswordField txtPass;
     private JLabel logInPic;
     private JLabel labelLogo;
@@ -92,6 +92,10 @@ public class LogIn_GUI extends JDialog {
         sign.setVisible(true);
     }
 
+    private int userID;
+
+    protected String log;
+
     private void onOK() {
 
         try {
@@ -99,7 +103,6 @@ public class LogIn_GUI extends JDialog {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/apartment", "root", "root");
             Statement state = con.createStatement();
             ResultSet result = state.executeQuery("SELECT * FROM apartment.users");
-
 
             int flag = 0; //tell if user OK
 
@@ -119,7 +122,6 @@ public class LogIn_GUI extends JDialog {
                     else {
 
                         setVisible(false); //hide login
-
                         //Run Dashboard
                         Dashboard_GUI.Dashboard_GUI();
 
@@ -147,11 +149,32 @@ public class LogIn_GUI extends JDialog {
         System.exit(0);
     }
 
+    public int getUserID(){
+        try {
+
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/apartment", "root", "root");
+            Statement state = con.createStatement();
+            ResultSet result = state.executeQuery("SELECT user_id FROM apartment.users WHERE userName ='"+txtUserLog.getText()+"'");
+
+            while(result.next())
+                userID = result.getInt("user_id");
+
+        } catch (Exception exc) {
+
+            exc.printStackTrace();
+        }
+
+        System.out.println(log);
+        return userID;
+    }
+
     public static void main(String[] args) {
 
         LogIn_GUI();
 
     }
+
+
 
 
     //for calling LogIn_GUI
