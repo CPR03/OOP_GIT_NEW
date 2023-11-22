@@ -65,10 +65,8 @@ public class Request_Maintenance_GUI extends JDialog{
 
             result.updateInt("req_id", maxReqId + 1); // Increment the max req_id
 
-            int test = log.getUserID();
-            System.out.println(test);
 
-            result.updateInt("user_id", 1); //Error here
+            result.updateInt("user_id", log.getUserID());
 
             result.updateString("type", cmbReqType.getSelectedItem().toString());
             result.updateString("description", areaConcern.getText());
@@ -105,12 +103,11 @@ public class Request_Maintenance_GUI extends JDialog{
     //for calling Request Maintenance
     static void Request_Maintenance_GUI() {
 
-        Request_Maintenance_GUI dialog = new Request_Maintenance_GUI();
-        dialog.pack();
-        dialog.setBounds(300,100,250,250);
-        dialog.setTitle("SoulSpace | Request Maintenance");
-        dialog.setVisible(true);
-        System.exit(0);
+        Request_Maintenance_GUI req = new Request_Maintenance_GUI();
+        req.pack();
+        req.setBounds(600,200,600,350);
+        req.setTitle("SoulSpace | Request Maintenance");
 
+        req.setVisible(true);
     }
 }

@@ -137,7 +137,6 @@ public class Selected_Apr_GUI extends JDialog {
                     image[i-1]=ImageIO.read(in);
                 }
 
-
                 if (unit.equals("Rent: "+unit_number)) {
                     details.setText("Unit Number: "+unit_number+"\nBedcount: "+bedcount
                     +"\nUnit Price: "+unit_price);
@@ -168,10 +167,6 @@ public class Selected_Apr_GUI extends JDialog {
     private void onCancel() {
         // add your code here if necessary
         dispose();
-
-
-
     }
-
 
 }

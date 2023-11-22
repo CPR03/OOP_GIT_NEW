@@ -56,11 +56,9 @@ public class Dashboard_GUI extends JDialog {
         //Know what button is clicked returns the label
         ActionListener actionListener = new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
-                setVisible(false);//hide dashboard
-
                 Selected_Apr_GUI select = new Selected_Apr_GUI(actionEvent.getActionCommand());// Pass the chosen Apartment Unit to Selected GUI
                 select.pack();
-                select.setTitle("SoulSpace | Sign up.");
+                select.setTitle("SoulSpace | Unit Details.");
 
                 select.setResizable(false);
                 select.setBounds(600,200,600,600);
@@ -72,6 +70,7 @@ public class Dashboard_GUI extends JDialog {
 
             }
         };
+
         //Store all Buttons to Array
         JButton [] Apart_buttons = {rentUnit1,rentUnit2,rentUnit3,rentUnit4,rentUnit5,
         rentUnit6,rentUnit7,rentUnit8,rentUnit9,rentUnit10,rentUnit11,rentUnit12};
@@ -130,15 +129,8 @@ public class Dashboard_GUI extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
         profilePic.setIcon(new ImageIcon(new ImageIcon("Images/profile.png").getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
-        homeLogo.setIcon(new ImageIcon(new ImageIcon("Images/home_logo.png").getImage().getScaledInstance(150, 70, Image.SCALE_SMOOTH)));
+        homeLogo.setIcon(new ImageIcon(new ImageIcon("Images/home_logo.png").getImage().getScaledInstance(300, 70, Image.SCALE_SMOOTH)));
         dashMan.setIcon(new ImageIcon(new ImageIcon("Images/dash_board_man.png").getImage().getScaledInstance(170, 170, Image.SCALE_SMOOTH)));
-
-
-
-
-
-
-
 
     }
     // Method to create an image icon
@@ -151,13 +143,9 @@ public class Dashboard_GUI extends JDialog {
             return null;
         }
     }
-    private void onRequest(){
-        Request_Maintenance_GUI req = new Request_Maintenance_GUI();
-        req.pack();
-        req.setBounds(600,200,600,350);
-        req.setTitle("SoulSpace | Request Maintenance");
 
-        req.setVisible(true);
+    private void onRequest(){
+        Request_Maintenance_GUI.Request_Maintenance_GUI();
 
     }
 
@@ -180,13 +168,12 @@ public class Dashboard_GUI extends JDialog {
 
         Dashboard_GUI dialog = new Dashboard_GUI();
         dialog.pack();
-        dialog.setBounds(300, 100, 1300, 950);
+        dialog.setBounds(300, 25, 1300, 950);
         dialog.setResizable(false);
         dialog.setTitle("SoulSpace | Dashboard.");
         dialog.setIconImage(dialog.imageLogo);
 
         dialog.setVisible(true);
     }
-
 
 }
