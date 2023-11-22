@@ -35,6 +35,12 @@ public class Dashboard_GUI extends JDialog {
     private JButton rentUnit7;
     private JButton rentUnit8;
     private JButton rentUnit9;
+    private JLabel unit10;
+    private JLabel unit11;
+    private JLabel unit12;
+    private JButton rentUnit10;
+    private JButton rentUnit11;
+    private JButton rentUnit12;
 
 
     public Dashboard_GUI() {
@@ -69,7 +75,9 @@ public class Dashboard_GUI extends JDialog {
         unit7.setIcon(new ImageIcon(new ImageIcon("Images/sample.png").getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH)));
         unit8.setIcon(new ImageIcon(new ImageIcon("Images/logo.png").getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH)));
         unit9.setIcon(new ImageIcon(new ImageIcon("Images/logo_2.png").getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH)));
-
+        unit10.setIcon(new ImageIcon(new ImageIcon("Images/logo.png").getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH)));
+        unit11.setIcon(new ImageIcon(new ImageIcon("Images/logo_2.png").getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH)));
+        unit12.setIcon(new ImageIcon(new ImageIcon("Images/logo.png").getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH)));
         btnrequest.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onRequest();
@@ -136,6 +144,15 @@ public class Dashboard_GUI extends JDialog {
         rentUnit9.setIcon(new ImageIcon(new ImageIcon("Images/button_red.png").getImage().getScaledInstance(150, 30, Image.SCALE_SMOOTH)));
         rentUnit9.setHorizontalTextPosition(SwingConstants.CENTER);
 
+        rentUnit10.setIcon(new ImageIcon(new ImageIcon("Images/button_red.png").getImage().getScaledInstance(150, 30, Image.SCALE_SMOOTH)));
+        rentUnit10.setHorizontalTextPosition(SwingConstants.CENTER);
+
+        rentUnit11.setIcon(new ImageIcon(new ImageIcon("Images/button_red.png").getImage().getScaledInstance(150, 30, Image.SCALE_SMOOTH)));
+        rentUnit11.setHorizontalTextPosition(SwingConstants.CENTER);
+
+        rentUnit12.setIcon(new ImageIcon(new ImageIcon("Images/button_red.png").getImage().getScaledInstance(150, 30, Image.SCALE_SMOOTH)));
+        rentUnit12.setHorizontalTextPosition(SwingConstants.CENTER);
+
         btnrequest.setCursor(new Cursor(Cursor.HAND_CURSOR));
         rentUnit1.setCursor(new Cursor(Cursor.HAND_CURSOR));
         rentUnit2.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -146,6 +163,10 @@ public class Dashboard_GUI extends JDialog {
         rentUnit7.setCursor(new Cursor(Cursor.HAND_CURSOR));
         rentUnit8.setCursor(new Cursor(Cursor.HAND_CURSOR));
         rentUnit9.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        rentUnit10.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        rentUnit11.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        rentUnit12.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
 
     }
     // Method to create an image icon

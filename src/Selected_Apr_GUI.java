@@ -8,13 +8,12 @@ public class Selected_Apr_GUI extends JDialog {
     private JButton buttonCancel;
     private JPanel panel;
     private JTextArea details;
-    private JButton poster;
+    private JLabel poster;
     private JTabbedPane tabbedPane1;
-    private JButton poster2;
-    private JButton poster3;
-    private JButton poster4;
-    private JButton poster5;
-    private JButton button1;
+    private JLabel poster2;
+    private JLabel poster3;
+    private JLabel poster4;
+    private JLabel poster5;
 
 
     public Selected_Apr_GUI() {
@@ -34,11 +33,11 @@ public class Selected_Apr_GUI extends JDialog {
             }
         });
 
-        poster.addActionListener(new ActionListener() {
+        /*poster.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onDetails();
             }
-        });
+        });*/
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -54,8 +53,20 @@ public class Selected_Apr_GUI extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
-        poster.setIcon(new ImageIcon(new ImageIcon("Images/Apartments/Apartments_1.png").getImage().getScaledInstance(500, 300, Image.SCALE_SMOOTH)));
+        poster.setIcon(new ImageIcon(new ImageIcon("Images/Apartments/Apartment In/Apartment 1 Inside/apr_img_in_1.jpg").getImage().getScaledInstance(500, 300, Image.SCALE_SMOOTH)));
         poster.setHorizontalTextPosition(SwingConstants.CENTER);
+
+        poster2.setIcon(new ImageIcon(new ImageIcon("Images/Apartments/Apartment In/Apartment 1 Inside/apr_img_in_1.1.jpg").getImage().getScaledInstance(500, 300, Image.SCALE_SMOOTH)));
+        poster2.setHorizontalTextPosition(SwingConstants.CENTER);
+
+        poster3.setIcon(new ImageIcon(new ImageIcon("Images/Apartments/Apartment In/Apartment 1 Inside/apr_img_in_1.1.1.jpg").getImage().getScaledInstance(500, 300, Image.SCALE_SMOOTH)));
+        poster3.setHorizontalTextPosition(SwingConstants.CENTER);
+
+        poster4.setIcon(new ImageIcon(new ImageIcon("Images/Apartments/Apartment In/Apartment 1 Inside/apr_img_in_1.1.1.1.jpg").getImage().getScaledInstance(500, 300, Image.SCALE_SMOOTH)));
+        poster4.setHorizontalTextPosition(SwingConstants.CENTER);
+
+        poster5.setIcon(new ImageIcon(new ImageIcon("Images/Apartments/Apartment In/Apartment 1 Inside/apr_img_in_1.1.1.1.1.jpg").getImage().getScaledInstance(500, 300, Image.SCALE_SMOOTH)));
+        poster5.setHorizontalTextPosition(SwingConstants.CENTER);
 
         details.setText("""
                 \s
