@@ -68,7 +68,7 @@ public class Request_Maintenance_GUI extends JDialog{
             int test = log.getUserID();
             System.out.println(test);
 
-            result.updateInt("user_id", 1); //wrong here
+            result.updateInt("user_id", 1); //Error here
 
             result.updateString("type", cmbReqType.getSelectedItem().toString());
             result.updateString("description", areaConcern.getText());

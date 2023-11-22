@@ -152,6 +152,7 @@ public class LogIn_GUI extends JDialog {
     public int getUserID(){
         try {
 
+            //Error Here
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/apartment", "root", "root");
             Statement state = con.createStatement();
             ResultSet result = state.executeQuery("SELECT user_id FROM apartment.users WHERE userName ='"+txtUserLog.getText()+"'");
