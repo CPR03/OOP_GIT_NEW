@@ -51,38 +51,14 @@ public class Dashboard_GUI extends JDialog {
         pane.getVerticalScrollBar().setUnitIncrement(16); //set scroll speed
 
 
-        /*for (int i = 1; i <= 12; i++) {
-
-            JLabel label = new JLabel("House" + i, SwingConstants.CENTER);
 
 
-            label.setIcon(new ImageIcon(new ImageIcon("Images/sample.png").getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH)));
-            label.setIcon(new ImageIcon(new ImageIcon("Images/logo.png").getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH)));
-
-            label.setHorizontalTextPosition(JLabel.CENTER);
-            label.setVerticalTextPosition(JLabel.BOTTOM);
-
-            apartment_panel.add(label);
-
-        }*/
-
-        unit1.setIcon(new ImageIcon(new ImageIcon("Images/sample.png").getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH)));
-        unit2.setIcon(new ImageIcon(new ImageIcon("Images/logo.png").getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH)));
-        unit3.setIcon(new ImageIcon(new ImageIcon("Images/logo_2.png").getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH)));
-        unit4.setIcon(new ImageIcon(new ImageIcon("Images/sample.png").getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH)));
-        unit5.setIcon(new ImageIcon(new ImageIcon("Images/logo.png").getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH)));
-        unit6.setIcon(new ImageIcon(new ImageIcon("Images/logo_2.png").getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH)));
-        unit7.setIcon(new ImageIcon(new ImageIcon("Images/sample.png").getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH)));
-        unit8.setIcon(new ImageIcon(new ImageIcon("Images/logo.png").getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH)));
-        unit9.setIcon(new ImageIcon(new ImageIcon("Images/logo_2.png").getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH)));
-        unit10.setIcon(new ImageIcon(new ImageIcon("Images/logo.png").getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH)));
-        unit11.setIcon(new ImageIcon(new ImageIcon("Images/logo_2.png").getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH)));
-        unit12.setIcon(new ImageIcon(new ImageIcon("Images/logo.png").getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH)));
+        //Know what button is clicked returns the label
         ActionListener actionListener = new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 setVisible(false);//hide dashboard
-                // Pass the chosen Apartment Unit to Selected GUI
-                Selected_Apr_GUI select = new Selected_Apr_GUI(actionEvent.getActionCommand());
+
+                Selected_Apr_GUI select = new Selected_Apr_GUI(actionEvent.getActionCommand());// Pass the chosen Apartment Unit to Selected GUI
                 select.pack();
                 select.setTitle("SoulSpace | Sign up.");
 
@@ -96,20 +72,28 @@ public class Dashboard_GUI extends JDialog {
 
             }
         };
+        //Store all Buttons to Array
+        JButton [] Apart_buttons = {rentUnit1,rentUnit2,rentUnit3,rentUnit4,rentUnit5,
+        rentUnit6,rentUnit7,rentUnit8,rentUnit9,rentUnit10,rentUnit11,rentUnit12};
 
-        //add actionlistener to every Rent button
-        rentUnit1.addActionListener(actionListener);
-        rentUnit2.addActionListener(actionListener);
-        rentUnit3.addActionListener(actionListener);
-        rentUnit4.addActionListener(actionListener);
-        rentUnit5.addActionListener(actionListener);
-        rentUnit6.addActionListener(actionListener);
-        rentUnit7.addActionListener(actionListener);
-        rentUnit8.addActionListener(actionListener);
-        rentUnit9.addActionListener(actionListener);
-        rentUnit10.addActionListener(actionListener);
-        rentUnit11.addActionListener(actionListener);
-        rentUnit12.addActionListener(actionListener);
+        //Store all label to Array
+        JLabel [] Unit_image={unit1,unit2,unit3,unit4,unit5,unit6,unit7,unit8,unit9,unit10,unit11,unit12};
+
+        for(int i=0;i<12;i++){
+            Apart_buttons[i].addActionListener(actionListener);//add actionlistener to every Rent button
+            //Set image for buttons
+            Apart_buttons[i].setIcon(new ImageIcon(new ImageIcon("Images/button_red.png").getImage().getScaledInstance(150, 30, Image.SCALE_SMOOTH)));
+            Apart_buttons[i].setHorizontalTextPosition(SwingConstants.CENTER);//Center text
+            Apart_buttons[i].setText("Rent: Unit "+(i+1)); //Set label for buttons
+            Apart_buttons[i].setCursor(new Cursor(Cursor.HAND_CURSOR));//Cursor hover
+
+            //Palitan ng Directory pag may Pic na
+            //Pang set ng Image to
+            Unit_image[i].setIcon(new ImageIcon(new ImageIcon("Images/sample.png").getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH)));
+
+        }
+        btnrequest.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
 
         btnrequest.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -150,55 +134,10 @@ public class Dashboard_GUI extends JDialog {
         dashMan.setIcon(new ImageIcon(new ImageIcon("Images/dash_board_man.png").getImage().getScaledInstance(170, 170, Image.SCALE_SMOOTH)));
 
 
-        rentUnit1.setIcon(new ImageIcon(new ImageIcon("Images/button_red.png").getImage().getScaledInstance(150, 30, Image.SCALE_SMOOTH)));
-        rentUnit1.setHorizontalTextPosition(SwingConstants.CENTER);
 
-        rentUnit2.setIcon(new ImageIcon(new ImageIcon("Images/button_red.png").getImage().getScaledInstance(150, 30, Image.SCALE_SMOOTH)));
-        rentUnit2.setHorizontalTextPosition(SwingConstants.CENTER);
 
-        rentUnit3.setIcon(new ImageIcon(new ImageIcon("Images/button_red.png").getImage().getScaledInstance(150, 30, Image.SCALE_SMOOTH)));
-        rentUnit3.setHorizontalTextPosition(SwingConstants.CENTER);
 
-        rentUnit4.setIcon(new ImageIcon(new ImageIcon("Images/button_red.png").getImage().getScaledInstance(150, 30, Image.SCALE_SMOOTH)));
-        rentUnit4.setHorizontalTextPosition(SwingConstants.CENTER);
 
-        rentUnit5.setIcon(new ImageIcon(new ImageIcon("Images/button_red.png").getImage().getScaledInstance(150, 30, Image.SCALE_SMOOTH)));
-        rentUnit5.setHorizontalTextPosition(SwingConstants.CENTER);
-
-        rentUnit6.setIcon(new ImageIcon(new ImageIcon("Images/button_red.png").getImage().getScaledInstance(150, 30, Image.SCALE_SMOOTH)));
-        rentUnit6.setHorizontalTextPosition(SwingConstants.CENTER);
-
-        rentUnit7.setIcon(new ImageIcon(new ImageIcon("Images/button_red.png").getImage().getScaledInstance(150, 30, Image.SCALE_SMOOTH)));
-        rentUnit7.setHorizontalTextPosition(SwingConstants.CENTER);
-
-        rentUnit8.setIcon(new ImageIcon(new ImageIcon("Images/button_red.png").getImage().getScaledInstance(150, 30, Image.SCALE_SMOOTH)));
-        rentUnit8.setHorizontalTextPosition(SwingConstants.CENTER);
-
-        rentUnit9.setIcon(new ImageIcon(new ImageIcon("Images/button_red.png").getImage().getScaledInstance(150, 30, Image.SCALE_SMOOTH)));
-        rentUnit9.setHorizontalTextPosition(SwingConstants.CENTER);
-
-        rentUnit10.setIcon(new ImageIcon(new ImageIcon("Images/button_red.png").getImage().getScaledInstance(150, 30, Image.SCALE_SMOOTH)));
-        rentUnit10.setHorizontalTextPosition(SwingConstants.CENTER);
-
-        rentUnit11.setIcon(new ImageIcon(new ImageIcon("Images/button_red.png").getImage().getScaledInstance(150, 30, Image.SCALE_SMOOTH)));
-        rentUnit11.setHorizontalTextPosition(SwingConstants.CENTER);
-
-        rentUnit12.setIcon(new ImageIcon(new ImageIcon("Images/button_red.png").getImage().getScaledInstance(150, 30, Image.SCALE_SMOOTH)));
-        rentUnit12.setHorizontalTextPosition(SwingConstants.CENTER);
-
-        btnrequest.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        rentUnit1.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        rentUnit2.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        rentUnit3.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        rentUnit4.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        rentUnit5.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        rentUnit6.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        rentUnit7.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        rentUnit8.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        rentUnit9.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        rentUnit10.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        rentUnit11.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        rentUnit12.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
 
     }
