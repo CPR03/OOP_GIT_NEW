@@ -93,8 +93,8 @@ public class LogIn_GUI extends JDialog {
     }
 
     private int userID;
-    protected static String saveUserName; //save the login for every object to be accessed
-    protected static String saveUserPass; //save the login for every object to be accessed
+    private static String saveUserName; //save the login for every object to be accessed
+    private static String saveUserPass; //save the login for every object to be accessed
 
     Save_Data log = new Save_Data(saveUserName, saveUserPass);
 
@@ -154,7 +154,7 @@ public class LogIn_GUI extends JDialog {
         System.exit(0);
     }
 
-    public int getUserID(){
+    protected int getUserID(){
         try {
 
             //Error Here
