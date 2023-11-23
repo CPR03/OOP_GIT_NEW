@@ -4,18 +4,24 @@ import java.awt.event.*;
 
 public class Pay_GUI extends JDialog {
     private JPanel contentPane;
-    private JButton buttonOK;
+    private JButton paybtn;
     private JButton buttonCancel;
     private JComboBox comboBox1;
+    private JTextField initialtxt;
+    private JTextField dcodetxt;
+    private JTextField disctxt;
+    private JTextField totaltxt;
+    private JTextArea receipttxta;
+    private JTextField chargetxt;
 
     public Pay_GUI() {
         setContentPane(contentPane);
         setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
+        getRootPane().setDefaultButton(paybtn);
 
-        buttonOK.addActionListener(new ActionListener() {
+        paybtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                onOK();
+                onPay();
             }
         });
 
@@ -41,9 +47,12 @@ public class Pay_GUI extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
-    private void onOK() {
-        // add your code here
-        dispose();
+    private void onPay() {
+        String ipay = JOptionPane.showInputDialog(null,"Enter Paying Amount: ");
+        int pay = Integer.parseInt(ipay);
+
+
+
     }
 
     private void onCancel() {
