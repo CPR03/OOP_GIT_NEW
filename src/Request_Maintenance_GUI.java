@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
 import java.text.ParseException;
@@ -100,12 +101,15 @@ public class Request_Maintenance_GUI extends JDialog{
         Request_Maintenance_GUI.Request_Maintenance_GUI();
     }
 
+    Image imagelogo = new ImageIcon("Images/logo.png").getImage();
     //for calling Request Maintenance
     static void Request_Maintenance_GUI() {
 
         Request_Maintenance_GUI req = new Request_Maintenance_GUI();
         req.pack();
+        req.setIconImage(req.imagelogo);
         req.setBounds(600,200,600,350);
+        req.setLocationRelativeTo(null);
         req.setTitle("SoulSpace | Request Maintenance");
 
         req.setVisible(true);

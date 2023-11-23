@@ -83,13 +83,7 @@ public class LogIn_GUI extends JDialog {
         setVisible(false);//hide login
 
         // Create and show the sign-up dialog
-        SignUp_GUI sign = new SignUp_GUI();
-        sign.pack();
-        sign.setTitle("SoulSpace | Sign up.");
-        sign.setIconImage(sign.imageLogo);
-        sign.setResizable(false);
-        sign.setBounds(600,200,600,380);
-        sign.setVisible(true);
+        SignUp_GUI.SignUp_GUI();
     }
 
     private int userID;
@@ -180,15 +174,17 @@ public class LogIn_GUI extends JDialog {
 
     }
 
+    Image imagelogo = new ImageIcon("Images/logo.png").getImage();
     //for calling LogIn_GUI
     static void LogIn_GUI() {
 
         LogIn_GUI log = new LogIn_GUI();
         log.pack();
         log.setTitle("SoulSpace | Login.");
-        log.setIconImage(log.imageLogo);
+        log.setIconImage(log.imagelogo);
         log.setResizable(false);
         log.setBounds(600,200,600,380);
+        log.setLocationRelativeTo(null);
 
         log.setVisible(true);
     }

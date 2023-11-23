@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
 public class Pay_GUI extends JDialog {
@@ -51,10 +52,18 @@ public class Pay_GUI extends JDialog {
     }
 
     public static void main(String[] args) {
+        Pay_GUI.Pay_GUI();
+    }
+
+    Image imageLogo = new ImageIcon("Images/logo.png").getImage();
+    static void Pay_GUI(){
         Pay_GUI dialog = new Pay_GUI();
         dialog.pack();
-        dialog.setVisible(true);
         dialog.setTitle("SoulSpace | Payment");
+        dialog.setIconImage(dialog.imageLogo);
+        dialog.setLocationRelativeTo(null);
+
+        dialog.setVisible(true);
         System.exit(0);
     }
 }

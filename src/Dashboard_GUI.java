@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.net.URL;
@@ -24,7 +25,7 @@ public class Dashboard_GUI extends JDialog {
     private JLabel unit8;
     private JLabel unit9;
     private JPanel scrollPanel;
-    private JPanel test;
+    private JPanel other_info_panel;
     private JPanel dashPanel;
     private JButton rentUnit1;
     private JButton rentUnit2;
@@ -41,6 +42,8 @@ public class Dashboard_GUI extends JDialog {
     private JButton rentUnit10;
     private JButton rentUnit11;
     private JButton rentUnit12;
+    private JTable table1;
+    private JPanel myInfo_panel;
 
 
     public Dashboard_GUI() {
@@ -49,8 +52,6 @@ public class Dashboard_GUI extends JDialog {
         getRootPane().setDefaultButton(buttonOK);
 
         pane.getVerticalScrollBar().setUnitIncrement(16); //set scroll speed
-
-
 
 
         //Know what button is clicked returns the label
@@ -62,6 +63,7 @@ public class Dashboard_GUI extends JDialog {
 
                 select.setResizable(false);
                 select.setBounds(600,200,600,600);
+                select.setLocationRelativeTo(null);
                 select.setVisible(true);
 
                 //make dashboard visible if button cancel is clicked in Selected GUI
@@ -132,6 +134,11 @@ public class Dashboard_GUI extends JDialog {
         homeLogo.setIcon(new ImageIcon(new ImageIcon("Images/home_logo.png").getImage().getScaledInstance(300, 70, Image.SCALE_SMOOTH)));
         dashMan.setIcon(new ImageIcon(new ImageIcon("Images/dash_board_man.png").getImage().getScaledInstance(170, 170, Image.SCALE_SMOOTH)));
 
+        table1.setModel(new DefaultTableModel(
+                null,
+                new String[] {"Name","Current Apartment","Rent Per Month","Duration of Stay","Amenities","Wi-Fi","Cable","Water"}
+        ));
+
     }
     // Method to create an image icon
     protected static ImageIcon createImageIcon(String path) {
@@ -150,8 +157,8 @@ public class Dashboard_GUI extends JDialog {
     }
 
     private void onOK() {
-        pane.setVisible(false);
-        test.setVisible(true);
+        scrollPanel.setVisible(false);
+        myInfo_panel.setVisible(true);
     }
 
     private void onCancel() {

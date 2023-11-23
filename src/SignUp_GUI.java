@@ -130,7 +130,7 @@ public class SignUp_GUI extends JDialog {
 
                         if (userNameFromDatabase.equals(usernameInput.toLowerCase())) {
 
-                            JOptionPane.showMessageDialog(null, "Username already exists");
+                            JOptionPane.showMessageDialog(null, "Username already exists","Details not valid.",JOptionPane.ERROR_MESSAGE);
                             usernameExists = true;
                             break;  // exit the loop as soon as a matching username is found
 
@@ -180,6 +180,23 @@ public class SignUp_GUI extends JDialog {
 
     private void onCancel() {
         dispose();
+    }
+
+    public static void main (String[] args){
+        SignUp_GUI.SignUp_GUI();
+    }
+
+    Image imagelogo = new ImageIcon("Images/logo.png").getImage();
+    static void SignUp_GUI(){
+        SignUp_GUI sign = new SignUp_GUI();
+        sign.pack();
+        sign.setTitle("SoulSpace | Sign up.");
+        sign.setIconImage(sign.imagelogo);
+        sign.setResizable(false);
+        sign.setBounds(600,200,600,380);
+
+        sign.setLocationRelativeTo(null);
+        sign.setVisible(true);
     }
 
 }

@@ -49,7 +49,7 @@ public class Rent_Confirmation_GUI extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
-        homeLogo.setIcon(new ImageIcon(new ImageIcon("Images/home_logo.png").getImage().getScaledInstance(150, 70, Image.SCALE_SMOOTH)));
+        homeLogo.setIcon(new ImageIcon(new ImageIcon("Images/home_logo.png").getImage().getScaledInstance(200, 70, Image.SCALE_SMOOTH)));
 
         buttonOK.setIcon(new ImageIcon(new ImageIcon("Images/button_red.png").getImage().getScaledInstance(150, 30, Image.SCALE_SMOOTH)));
         buttonOK.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -61,8 +61,7 @@ public class Rent_Confirmation_GUI extends JDialog {
     }
 
     private void onOK() {
-        // add your code here
-        dispose();
+        Pay_GUI.Pay_GUI();
     }
 
     private void onCancel() {
@@ -71,12 +70,19 @@ public class Rent_Confirmation_GUI extends JDialog {
     }
 
     Image imageLogo = new ImageIcon("Images/logo.png").getImage();
+
+
     public static void main(String[] args) {
+        Rent_Confirmation_GUI.Rent_Confirmation_GUI();
+    }
+
+    static void Rent_Confirmation_GUI (){
         Rent_Confirmation_GUI dialog = new Rent_Confirmation_GUI();
         dialog.pack();
-        dialog.setBounds(300,100,330,490);
+        dialog.setBounds(600,200,350,490);
+        dialog.setLocationRelativeTo(null);
         dialog.setResizable(false);
-        dialog.setTitle("SoulSpace | Dashboard.");
+        dialog.setTitle("SoulSpace | Rent Confirmation.");
         dialog.setIconImage(dialog.imageLogo);
 
         dialog.setVisible(true);
