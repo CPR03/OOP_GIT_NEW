@@ -2,29 +2,24 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Rent_Confirmation_GUI extends JDialog {
+public class PayRent_GUI extends JDialog {
     private JPanel contentPane;
-    private JButton buttonOK;
+    private JButton paybtn;
     private JButton buttonCancel;
-    private JTextField textField1;
-    private JRadioButton a1MonthRadioButton;
-    private JRadioButton a6MonthsRadioButton;
-    private JRadioButton a1YearRadioButton;
-    private JCheckBox amenitiesCheckBox;
-    private JCheckBox wiFiCheckBox;
-    private JRadioButton othersRadioButton;
-    private JCheckBox cableCheckBox;
-    private JCheckBox waterCheckBox;
-    private JLabel homeLogo;
+    private JComboBox comboBox1;
+    private JTextField initialtxt;
+    private JTextField totaltxt;
+    private JTextArea receipttxta;
+    private JTextField chargetxt;
 
-    public Rent_Confirmation_GUI() {
+    public PayRent_GUI() {
         setContentPane(contentPane);
         setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
+        getRootPane().setDefaultButton(paybtn);
 
-        buttonOK.addActionListener(new ActionListener() {
+        paybtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                onOK();
+                onPay();
             }
         });
 
@@ -49,19 +44,20 @@ public class Rent_Confirmation_GUI extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
-        homeLogo.setIcon(new ImageIcon(new ImageIcon("Images/Components/home_logo.png").getImage().getScaledInstance(200, 70, Image.SCALE_SMOOTH)));
-
-        buttonOK.setIcon(new ImageIcon(new ImageIcon("Images/Components/button_red.png").getImage().getScaledInstance(150, 30, Image.SCALE_SMOOTH)));
-        buttonOK.setHorizontalTextPosition(SwingConstants.CENTER);
-        buttonOK.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        paybtn.setIcon(new ImageIcon(new ImageIcon("Images/Components/button_red.png").getImage().getScaledInstance(150, 30, Image.SCALE_SMOOTH)));
+        paybtn.setHorizontalTextPosition(SwingConstants.CENTER);
+        paybtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         buttonCancel.setIcon(new ImageIcon(new ImageIcon("Images/Components/button_cancel.png").getImage().getScaledInstance(80, 23, Image.SCALE_SMOOTH)));
         buttonCancel.setHorizontalTextPosition(SwingConstants.CENTER);
         buttonCancel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
     }
 
-    private void onOK() {
-        Pay_GUI.Pay_GUI();
+    private void onPay() {
+        String ipay = JOptionPane.showInputDialog(null,"Enter Paying Amount: ");
+        int pay = Integer.parseInt(ipay);
+
     }
 
     private void onCancel() {
@@ -69,25 +65,19 @@ public class Rent_Confirmation_GUI extends JDialog {
         dispose();
     }
 
-    Image imagelogo = new ImageIcon("Images/Components/logo.png").getImage();
-
-
     public static void main(String[] args) {
-        Rent_Confirmation_GUI.Rent_Confirmation_GUI();
+        PayRent_GUI.PayRent_GUI();
     }
 
-    static void Rent_Confirmation_GUI (){
-        Rent_Confirmation_GUI dialog = new Rent_Confirmation_GUI();
+    Image imageLogo = new ImageIcon("Images/Components/logo.png").getImage();
+    static void PayRent_GUI(){
+        PayRent_GUI dialog = new PayRent_GUI();
         dialog.pack();
-        dialog.setBounds(600,200,350,490);
+        dialog.setTitle("SoulSpace | Pay Rent");
+        dialog.setIconImage(dialog.imageLogo);
         dialog.setLocationRelativeTo(null);
-        dialog.setResizable(false);
-        dialog.setTitle("SoulSpace | Rent Confirmation.");
-        dialog.setIconImage(dialog.imagelogo);
 
         dialog.setVisible(true);
 
     }
-
-
 }

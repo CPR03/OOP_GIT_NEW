@@ -62,11 +62,11 @@ public class Selected_Apr_GUI extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
 
-        buttonOK.setIcon(new ImageIcon(new ImageIcon("Images/button_red.png").getImage().getScaledInstance(150, 30, Image.SCALE_SMOOTH)));
+        buttonOK.setIcon(new ImageIcon(new ImageIcon("Images/Components/button_red.png").getImage().getScaledInstance(150, 30, Image.SCALE_SMOOTH)));
         buttonOK.setHorizontalTextPosition(SwingConstants.CENTER);
         buttonOK.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        buttonCancel.setIcon(new ImageIcon(new ImageIcon("Images/button_cancel.png").getImage().getScaledInstance(150, 30, Image.SCALE_SMOOTH)));
+        buttonCancel.setIcon(new ImageIcon(new ImageIcon("Images/Components/button_cancel.png").getImage().getScaledInstance(150, 30, Image.SCALE_SMOOTH)));
         buttonCancel.setHorizontalTextPosition(SwingConstants.CENTER);
         buttonCancel.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
@@ -110,7 +110,6 @@ public class Selected_Apr_GUI extends JDialog {
 
 
         } */
-
 
 
         try {
@@ -161,9 +160,12 @@ public class Selected_Apr_GUI extends JDialog {
         Rent_Confirmation_GUI.Rent_Confirmation_GUI();
     }
 
+
     private void onCancel() {
         // add your code here if necessary
         dispose();
     }
+
+    Image imageLogo = new ImageIcon("Images/Components/logo.png").getImage();
 
 }

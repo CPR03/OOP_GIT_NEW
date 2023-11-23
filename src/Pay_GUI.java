@@ -45,13 +45,20 @@ public class Pay_GUI extends JDialog {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+
+        paybtn.setIcon(new ImageIcon(new ImageIcon("Images/Components/button_red.png").getImage().getScaledInstance(150, 30, Image.SCALE_SMOOTH)));
+        paybtn.setHorizontalTextPosition(SwingConstants.CENTER);
+        paybtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        buttonCancel.setIcon(new ImageIcon(new ImageIcon("Images/Components/button_cancel.png").getImage().getScaledInstance(80, 23, Image.SCALE_SMOOTH)));
+        buttonCancel.setHorizontalTextPosition(SwingConstants.CENTER);
+        buttonCancel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
     }
 
     private void onPay() {
         String ipay = JOptionPane.showInputDialog(null,"Enter Paying Amount: ");
         int pay = Integer.parseInt(ipay);
-
-
 
     }
 
@@ -64,7 +71,7 @@ public class Pay_GUI extends JDialog {
         Pay_GUI.Pay_GUI();
     }
 
-    Image imageLogo = new ImageIcon("Images/logo.png").getImage();
+    Image imageLogo = new ImageIcon("Images/Components/logo.png").getImage();
     static void Pay_GUI(){
         Pay_GUI dialog = new Pay_GUI();
         dialog.pack();

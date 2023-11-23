@@ -61,15 +61,15 @@ public class LogIn_GUI extends JDialog {
 
 
         //Sign in Picture
-        logInPic.setIcon(new ImageIcon(new ImageIcon("Images/sign_in.png").getImage().getScaledInstance(220, 220, Image.SCALE_SMOOTH)));
-        labelLogo.setIcon(new ImageIcon(new ImageIcon("Images/logo.png").getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH)));
+        logInPic.setIcon(new ImageIcon(new ImageIcon("Images/Components/sign_in.png").getImage().getScaledInstance(220, 220, Image.SCALE_SMOOTH)));
+        labelLogo.setIcon(new ImageIcon(new ImageIcon("Images/Components/logo.png").getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH)));
 
         //Rounded Buttons
-        buttonOK.setIcon(new ImageIcon(new ImageIcon("Images/button_red.png").getImage().getScaledInstance(150, 30, Image.SCALE_SMOOTH)));
+        buttonOK.setIcon(new ImageIcon(new ImageIcon("Images/Components/button_red.png").getImage().getScaledInstance(150, 30, Image.SCALE_SMOOTH)));
         buttonOK.setHorizontalTextPosition(SwingConstants.CENTER);
         buttonOK.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        buttonCancel.setIcon(new ImageIcon(new ImageIcon("Images/button_cancel.png").getImage().getScaledInstance(80, 23, Image.SCALE_SMOOTH)));
+        buttonCancel.setIcon(new ImageIcon(new ImageIcon("Images/Components/button_cancel.png").getImage().getScaledInstance(80, 23, Image.SCALE_SMOOTH)));
         buttonCancel.setHorizontalTextPosition(SwingConstants.CENTER);
         buttonCancel.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
@@ -174,7 +174,7 @@ public class LogIn_GUI extends JDialog {
 
     }
 
-    Image imagelogo = new ImageIcon("Images/logo.png").getImage();
+    Image imagelogo = new ImageIcon("Images/Components/logo.png").getImage();
     //for calling LogIn_GUI
     static void LogIn_GUI() {
 

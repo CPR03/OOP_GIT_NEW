@@ -101,7 +101,7 @@ public class Request_Maintenance_GUI extends JDialog{
         Request_Maintenance_GUI.Request_Maintenance_GUI();
     }
 
-    Image imagelogo = new ImageIcon("Images/logo.png").getImage();
+    Image imagelogo = new ImageIcon("Images/Components/logo.png").getImage();
     //for calling Request Maintenance
     static void Request_Maintenance_GUI() {
 
