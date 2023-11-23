@@ -64,6 +64,6 @@ public class Pay_GUI extends JDialog {
         dialog.setLocationRelativeTo(null);
 
         dialog.setVisible(true);
-        System.exit(0);
+
     }
 }

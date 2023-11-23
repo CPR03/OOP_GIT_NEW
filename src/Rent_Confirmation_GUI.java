@@ -86,7 +86,7 @@ public class Rent_Confirmation_GUI extends JDialog {
         dialog.setIconImage(dialog.imageLogo);
 
         dialog.setVisible(true);
-        System.exit(0);
+
     }
 
 
