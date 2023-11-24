@@ -90,12 +90,12 @@ public class LogIn_GUI extends JDialog {
     private static String saveUserName; //save the login for every object to be accessed
     private static String saveUserPass; //save the login for every object to be accessed
 
-    Save_Data log = new Save_Data(saveUserName, saveUserPass);
+
+    User_Data cal = new Transaction();
+
 
     private void onOK() {
-
         try {
-
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/apartment", "root", "root");
             Statement state = con.createStatement();
             ResultSet result = state.executeQuery("SELECT * FROM apartment.users");
@@ -116,13 +116,19 @@ public class LogIn_GUI extends JDialog {
 
                     //if password OK Open Dashboard
                     else {
-
                         saveUserName = txtUserLog.getText();
                         saveUserPass = txtPass.getText();
+                        Login_Details log = new Login_Details(saveUserName, saveUserPass);
+
+                        //Passing User data(Username & Balance) from Login_Details Class to Transaction Class
+                        cal.setUserDetails(log.getUsername(),log.getBalance());
+
 
                         setVisible(false); //hide login
                         //Run Dashboard
                         Dashboard_GUI.Dashboard_GUI();
+
+
 
                     }
 
@@ -141,6 +147,9 @@ public class LogIn_GUI extends JDialog {
             exc.printStackTrace();
         }
 
+        ;
+
+
     }
 
     private void onCancel() {
@@ -148,25 +157,7 @@ public class LogIn_GUI extends JDialog {
         System.exit(0);
     }
 
-    protected int getUserID(){
-        try {
 
-            //Error Here
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/apartment", "root", "root");
-            Statement state = con.createStatement();
-            ResultSet result = state.executeQuery("SELECT user_id FROM apartment.users WHERE userName ='"+log.getUsername()+"'");
-
-            while(result.next())
-                userID = result.getInt("user_id");
-
-        } catch (Exception exc) {
-
-            exc.printStackTrace();
-        }
-
-        System.out.println(log.getUsername());
-        return userID;
-    }
 
     public static void main(String[] args) {
 

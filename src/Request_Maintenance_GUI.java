@@ -67,7 +67,7 @@ public class Request_Maintenance_GUI extends JDialog{
             result.updateInt("req_id", maxReqId + 1); // Increment the max req_id
 
 
-            result.updateInt("user_id", log.getUserID());
+            //result.updateInt("user_id", log.getUserID());
 
             result.updateString("type", cmbReqType.getSelectedItem().toString());
             result.updateString("description", areaConcern.getText());

@@ -1,8 +1,12 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.net.URL;
+import java.io.File;
 
 public class Dashboard_GUI extends JDialog {
     private JPanel contentPane;
@@ -45,6 +49,7 @@ public class Dashboard_GUI extends JDialog {
     private JTable table1;
     private JPanel myInfo_panel;
     private JButton btnPayRent;
+    private JLabel txtWelcome;
 
 
     public Dashboard_GUI() {
@@ -74,31 +79,9 @@ public class Dashboard_GUI extends JDialog {
 
             }
         };
+        Display(actionListener);
 
-        //Store all Buttons to Array
-        JButton [] Apart_buttons = {rentUnit1,rentUnit2,rentUnit3,rentUnit4,rentUnit5,
-        rentUnit6,rentUnit7,rentUnit8,rentUnit9,rentUnit10,rentUnit11,rentUnit12};
 
-        //Store all label to Array
-        JLabel [] Unit_image={unit1,unit2,unit3,unit4,unit5,unit6,unit7,unit8,unit9,unit10,unit11,unit12};
-
-        for(int i=0;i<12;i++){
-            Apart_buttons[i].addActionListener(actionListener);//add actionlistener to every Rent button
-            //Set image for buttons
-            Apart_buttons[i].setIcon(new ImageIcon(new ImageIcon("Images/Components/button_red.png").getImage().getScaledInstance(150, 30, Image.SCALE_SMOOTH)));
-            Apart_buttons[i].setHorizontalTextPosition(SwingConstants.CENTER);//Center text
-            Apart_buttons[i].setText("Rent: Unit "+(i+1)); //Set label for buttons
-            Apart_buttons[i].setCursor(new Cursor(Cursor.HAND_CURSOR));//Cursor hover
-
-            String imagePath = "Images/Apartments/Out/pngs/unit" + (i + 1) + ".png";
-
-            //Palitan ng Directory pag may Pic na
-            //Pang set ng Image to
-            Unit_image[i].setIcon(new ImageIcon(new ImageIcon(imagePath).getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH)));
-
-        }
-        btnrequest.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btnPayRent.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         btnrequest.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -142,6 +125,35 @@ public class Dashboard_GUI extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
+
+
+    }
+    User_Data cal = new Transaction();
+    private void Display(ActionListener actionListener){
+        //Store all Buttons to Array
+        JButton [] Apart_buttons = {rentUnit1,rentUnit2,rentUnit3,rentUnit4,rentUnit5,
+                rentUnit6,rentUnit7,rentUnit8,rentUnit9,rentUnit10,rentUnit11,rentUnit12};
+
+        //Store all label to Array
+        JLabel [] Unit_image={unit1,unit2,unit3,unit4,unit5,unit6,unit7,unit8,unit9,unit10,unit11,unit12};
+
+        for(int i=0;i<12;i++){
+            Apart_buttons[i].addActionListener(actionListener);//add actionlistener to every Rent button
+            //Set image for buttons
+            Apart_buttons[i].setIcon(new ImageIcon(new ImageIcon("Images/Components/button_red.png").getImage().getScaledInstance(150, 30, Image.SCALE_SMOOTH)));
+            Apart_buttons[i].setHorizontalTextPosition(SwingConstants.CENTER);//Center text
+            Apart_buttons[i].setText("Rent: Unit "+(i+1)); //Set label for buttons
+            Apart_buttons[i].setCursor(new Cursor(Cursor.HAND_CURSOR));//Cursor hover
+
+            String imagePath = "Images/Apartments/Out/pngs/unit" + (i + 1) + ".png";
+
+            //Palitan ng Directory pag may Pic na
+            //Pang set ng Image to
+            Unit_image[i].setIcon(new ImageIcon(new ImageIcon(imagePath).getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH)));
+
+        }
+        btnrequest.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnPayRent.setCursor(new Cursor(Cursor.HAND_CURSOR));
         profilePic.setIcon(new ImageIcon(new ImageIcon("Images/Components/profile.png").getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
         homeLogo.setIcon(new ImageIcon(new ImageIcon("Images/Components/home_logo.png").getImage().getScaledInstance(300, 70, Image.SCALE_SMOOTH)));
         dashMan.setIcon(new ImageIcon(new ImageIcon("Images/Components/dash_board_man.png").getImage().getScaledInstance(170, 170, Image.SCALE_SMOOTH)));
@@ -150,20 +162,13 @@ public class Dashboard_GUI extends JDialog {
                 null,
                 new String[] {"Name","Current Apartment","Rent Per Month","Duration of Stay","Amenities","Wi-Fi","Cable","Water"}
         ));
+        txtWelcome.setText(cal.getUsername());
 
     }
 
 
-    // Method to create an image icon
-    protected static ImageIcon createImageIcon(String path) {
-        URL imgUrl = Dashboard_GUI.class.getResource(path);
-        if (imgUrl != null) {
-            return new ImageIcon(imgUrl);
-        } else {
-            System.err.println("Couldn't find file: " + path);
-            return null;
-        }
-    }
+
+
 
     private void onRequest(){
         Request_Maintenance_GUI.Request_Maintenance_GUI();

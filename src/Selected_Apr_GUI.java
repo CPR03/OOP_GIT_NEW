@@ -83,33 +83,7 @@ public class Selected_Apr_GUI extends JDialog {
     }
 
     private void chosenUnit(String unit){
-         /*
-        if(unit.equals("Rent: Unit 1")){
 
-
-            poster2.setIcon(new ImageIcon(new ImageIcon("Images/Apartments/Apartment In/Apartment 1 Inside/apr_img_in_1.1.jpg").getImage().getScaledInstance(500, 300, Image.SCALE_SMOOTH)));
-            poster2.setHorizontalTextPosition(SwingConstants.CENTER);
-
-            poster3.setIcon(new ImageIcon(new ImageIcon("Images/Apartments/Apartment In/Apartment 1 Inside/apr_img_in_1.1.1.jpg").getImage().getScaledInstance(500, 300, Image.SCALE_SMOOTH)));
-            poster3.setHorizontalTextPosition(SwingConstants.CENTER);
-
-            poster4.setIcon(new ImageIcon(new ImageIcon("Images/Apartments/Apartment In/Apartment 1 Inside/apr_img_in_1.1.1.1.jpg").getImage().getScaledInstance(500, 300, Image.SCALE_SMOOTH)));
-            poster4.setHorizontalTextPosition(SwingConstants.CENTER);
-
-            poster5.setIcon(new ImageIcon(new ImageIcon("Images/Apartments/Apartment In/Apartment 1 Inside/apr_img_in_1.1.1.1.1.jpg").getImage().getScaledInstance(500, 300, Image.SCALE_SMOOTH)));
-            poster5.setHorizontalTextPosition(SwingConstants.CENTER);
-
-            details.setText("""
-                \s
-                House name: Hakim's Crib\s
-                Address:  123 Downtown QC\s
-                Distance: Tatlo'y Dos\s
-                Description: A room with tv, sofa, and picture frames\s
-                \s""");
-
-
-
-        } */
 
 
         try {
