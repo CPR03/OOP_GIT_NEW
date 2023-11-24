@@ -1,26 +1,49 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class Rent_Confirmation_GUI extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
-    private JTextField textField1;
-    private JRadioButton a1MonthRadioButton;
-    private JRadioButton a6MonthsRadioButton;
-    private JRadioButton a1YearRadioButton;
+    private JTextField txtUnit;
+    private JRadioButton btn1month;
+    private JRadioButton btn3months;
+    private JRadioButton btn1year;
     private JCheckBox amenitiesCheckBox;
     private JCheckBox wiFiCheckBox;
-    private JRadioButton othersRadioButton;
+    private JRadioButton halfyear;
     private JCheckBox cableCheckBox;
     private JCheckBox waterCheckBox;
     private JLabel homeLogo;
-
+    Calculate chosen_details = new Calculate();
+    private String Duration;
+    ArrayList<String> utilities = new ArrayList<String>();
     public Rent_Confirmation_GUI() {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
+        btn1month.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Duration="1month";
+            }
+        });
+        btn3months.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Duration="3months";
+            }
+        });
+        halfyear.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Duration="6months";
+            }
+        });
+        btn1year.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Duration="1year";
+            }
+        });
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -58,9 +81,31 @@ public class Rent_Confirmation_GUI extends JDialog {
         buttonCancel.setIcon(new ImageIcon(new ImageIcon("Images/Components/button_cancel.png").getImage().getScaledInstance(80, 23, Image.SCALE_SMOOTH)));
         buttonCancel.setHorizontalTextPosition(SwingConstants.CENTER);
         buttonCancel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        txtUnit.setText(chosen_details.getUnit_number());
+        txtUnit.setHorizontalAlignment(SwingConstants.CENTER);
     }
 
+
     private void onOK() {
+        //get selected Utility/s
+
+        if(amenitiesCheckBox.isSelected()){
+            utilities.add(amenitiesCheckBox.getText());
+        }
+        if(cableCheckBox.isSelected()){
+            utilities.add(cableCheckBox.getText());
+        }
+        if(waterCheckBox.isSelected()){
+            utilities.add(waterCheckBox.getText());
+        }
+        if(wiFiCheckBox.isSelected()){
+            utilities.add(wiFiCheckBox.getText());
+        }
+
+
+        Calculate.setDuration(Duration);
+        Calculate.setUtilities(utilities);
+
         Pay_GUI.Pay_GUI();
     }
 

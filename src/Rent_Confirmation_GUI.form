@@ -98,13 +98,15 @@
             </properties>
             <border type="bevel-lowered" title="Selected"/>
             <children>
-              <component id="3d238" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+              <component id="3d238" class="javax.swing.JTextField" binding="txtUnit">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="1" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
                   </grid>
                 </constraints>
-                <properties/>
+                <properties>
+                  <editable value="false"/>
+                </properties>
               </component>
             </children>
           </grid>
@@ -130,7 +132,7 @@
             </properties>
             <border type="bevel-lowered" title="Duration of Stay"/>
             <children>
-              <component id="95f26" class="javax.swing.JRadioButton" binding="a1MonthRadioButton" default-binding="true">
+              <component id="95f26" class="javax.swing.JRadioButton" binding="btn1month">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -140,17 +142,17 @@
                   <text value="1 month"/>
                 </properties>
               </component>
-              <component id="dbad3" class="javax.swing.JRadioButton" binding="a6MonthsRadioButton" default-binding="true">
+              <component id="dbad3" class="javax.swing.JRadioButton" binding="btn3months">
                 <constraints>
                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <background color="-331570"/>
                   <foreground color="-16777216"/>
-                  <text value="6 months"/>
+                  <text value="3 months"/>
                 </properties>
               </component>
-              <component id="e003b" class="javax.swing.JRadioButton" binding="a1YearRadioButton" default-binding="true">
+              <component id="e003b" class="javax.swing.JRadioButton" binding="btn1year">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -160,14 +162,14 @@
                   <text value="1 year"/>
                 </properties>
               </component>
-              <component id="71283" class="javax.swing.JRadioButton" binding="othersRadioButton" default-binding="true">
+              <component id="71283" class="javax.swing.JRadioButton" binding="halfyear">
                 <constraints>
                   <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <background color="-331570"/>
                   <foreground color="-16777216"/>
-                  <text value="Others"/>
+                  <text value="6 months"/>
                 </properties>
               </component>
             </children>
@@ -240,4 +242,13 @@
       </grid>
     </children>
   </grid>
+  <buttonGroups>
+    <group name="durationgroup">
+      <member id="95f26"/>
+      <member id="95f26"/>
+      <member id="dbad3"/>
+      <member id="e003b"/>
+      <member id="71283"/>
+    </group>
+  </buttonGroups>
 </form>

@@ -11,7 +11,7 @@ import java.sql.Statement;
 
 public class Selected_Apr_GUI extends JDialog {
     private JPanel contentPane;
-    private JButton buttonOK;
+    private JButton btnRent;
     private JButton buttonCancel;
     private JPanel panel;
     private JTextArea details;
@@ -26,12 +26,12 @@ public class Selected_Apr_GUI extends JDialog {
     public Selected_Apr_GUI(String unitNum) {
         setContentPane(contentPane);
         setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
+        getRootPane().setDefaultButton(btnRent);
         chosenUnit(unitNum);
 
-        buttonOK.addActionListener(new ActionListener() {
+        btnRent.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                onOK();
+                onRent();
             }
         });
 
@@ -62,9 +62,9 @@ public class Selected_Apr_GUI extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
 
-        buttonOK.setIcon(new ImageIcon(new ImageIcon("Images/Components/button_red.png").getImage().getScaledInstance(150, 30, Image.SCALE_SMOOTH)));
-        buttonOK.setHorizontalTextPosition(SwingConstants.CENTER);
-        buttonOK.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnRent.setIcon(new ImageIcon(new ImageIcon("Images/Components/button_red.png").getImage().getScaledInstance(150, 30, Image.SCALE_SMOOTH)));
+        btnRent.setHorizontalTextPosition(SwingConstants.CENTER);
+        btnRent.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         buttonCancel.setIcon(new ImageIcon(new ImageIcon("Images/Components/button_cancel.png").getImage().getScaledInstance(150, 30, Image.SCALE_SMOOTH)));
         buttonCancel.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -81,9 +81,10 @@ public class Selected_Apr_GUI extends JDialog {
 
         return dimg;
     }
-
+    String unit_number;
+    int unit_price;
     private void chosenUnit(String unit){
-
+        String unitNum=unit.substring(6);
 
 
         try {
@@ -98,19 +99,21 @@ public class Selected_Apr_GUI extends JDialog {
 
             while (result.next()) {
 
-                String unit_number = result.getString("unit_number");
+                unit_number = result.getString("unit_number");
                 int bedcount = result.getInt("bedcount");
-                int unit_price=result.getInt("unit_price");
+                unit_price=result.getInt("unit_price");
+                String status = result.getString("status");
                 BufferedImage[] image = new BufferedImage[5];
                 for(int i=1;i<=5;i++){
                     java.sql.Blob blob = result.getBlob("unit_photo"+i);
                     InputStream in = blob.getBinaryStream();
                     image[i-1]=ImageIO.read(in);
                 }
+                System.out.println(unit_number+" "+unit);
 
-                if (unit.equals("Rent: "+unit_number)) {
+                if (unitNum.equals(unit_number)) {
                     details.setText("Unit Number: "+unit_number+"\nBedcount: "+bedcount
-                    +"\nUnit Price: "+unit_price);
+                    +"\nUnit Price: "+unit_price+"\nStatus: "+status);
 
                     poster.setIcon(new ImageIcon(resize(image[0],550,300)));
                     poster2.setIcon(new ImageIcon(resize(image[1],550,300)));
@@ -130,7 +133,9 @@ public class Selected_Apr_GUI extends JDialog {
         }
 
     }
-    private void onOK() {
+    private void onRent() {
+        Calculate.setUnit_number(unit_number);
+        Calculate.setUnit_price(unit_price);
         Rent_Confirmation_GUI.Rent_Confirmation_GUI();
     }
 

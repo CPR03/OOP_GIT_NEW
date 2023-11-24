@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class Pay_GUI extends JDialog {
     private JPanel contentPane;
@@ -8,22 +9,42 @@ public class Pay_GUI extends JDialog {
     private JButton buttonCancel;
     private JComboBox comboBox1;
     private JTextField initialtxt;
-    private JTextField dcodetxt;
     private JTextField disctxt;
     private JTextField totaltxt;
-    private JTextArea receipttxta;
+    private JTextArea receipttxt;
     private JTextField chargetxt;
-
+    private JComboBox cmbDiscount;
+    private JTextField txtDuration;
+    private JTextField txtUtil;
+    String DiscountCode;
+    static ArrayList<String> test = new ArrayList<String>();
     public Pay_GUI() {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(paybtn);
 
+        test=Calculate.getUtilities();
+        for(int i=0;i<test.size();i++){
+            System.out.println(test.get(i));
+        }
+
+
+
+        cmbDiscount.addActionListener(new ActionListener() {//Check selected item from Discount code and set the Discount
+            public void actionPerformed(ActionEvent e) {
+
+                DiscountCode=cmbDiscount.getSelectedItem().toString();
+                getDiscount();
+                getTotal();
+
+            }
+        });
         paybtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onPay();
             }
         });
+
 
         buttonCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -54,11 +75,37 @@ public class Pay_GUI extends JDialog {
         buttonCancel.setHorizontalTextPosition(SwingConstants.CENTER);
         buttonCancel.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-    }
+        initialtxt.setText(String.valueOf(Calculate.getUnit_price()));
+        txtDuration.setText(Calculate.getDuration());
+        txtUtil.setText(String.valueOf(Calculate.getAdditional()));
 
+
+
+
+    }
+    private void getTotal(){
+        double discount,total,price;
+        discount=Double.parseDouble(disctxt.getText().substring(0,2))/100;
+        price=Calculate.getUnit_price()*discount;
+        total=Calculate.getUnit_price()-price;
+        totaltxt.setText(String.valueOf(total));
+    }
+    private void getDiscount(){
+        switch (DiscountCode) {
+            case "Roland" -> disctxt.setText("30%");
+            case "Gail" -> disctxt.setText("25%");
+            case "King" -> disctxt.setText("20%");
+            case "Hakim" -> disctxt.setText("15%");
+            default -> disctxt.setText("10%");
+        }
+
+    }
     private void onPay() {
+        Calculate.setTotalprice(Double.parseDouble(totaltxt.getText()));//save total price to Calculate
+
         String ipay = JOptionPane.showInputDialog(null,"Enter Paying Amount: ");
         int pay = Integer.parseInt(ipay);
+
 
     }
 
