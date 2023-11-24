@@ -46,7 +46,7 @@ public class Request_Maintenance_GUI extends JDialog{
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
-    LogIn_GUI log = new LogIn_GUI();
+    User_Data cal= new Transaction();
 
     private void onOK() {
 
@@ -75,6 +75,7 @@ public class Request_Maintenance_GUI extends JDialog{
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             Date date = formatter.parse(formatter.format(new Date()));
             result.updateDate("date_created", new java.sql.Date(date.getTime()));
+            result.updateInt("user_id",cal.getUserID());
 
             result.insertRow();
             result.beforeFirst();

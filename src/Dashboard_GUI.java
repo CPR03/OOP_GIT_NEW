@@ -162,7 +162,7 @@ public class Dashboard_GUI extends JDialog {
                 null,
                 new String[] {"Name","Current Apartment","Rent Per Month","Duration of Stay","Amenities","Wi-Fi","Cable","Water"}
         ));
-        txtWelcome.setText(cal.getUsername());
+        txtWelcome.setText("WELCOME!  "+cal.getUsername().toUpperCase());
 
     }
 
