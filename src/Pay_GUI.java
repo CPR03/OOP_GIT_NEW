@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.text.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.Connection;
@@ -6,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -17,12 +19,13 @@ public class Pay_GUI extends JDialog {
     private JTextField initialtxt;
     private JTextField disctxt;
     private JTextField totaltxt;
-    private JTextArea receipttxt;
+    private JTextPane receipttxt;
     private JTextField chargetxt;
     private JComboBox cmbDiscount;
     private JTextField txtDuration;
     private JTextField txtUtil;
     String DiscountCode;
+    String mode;
     static ArrayList<String> test = new ArrayList<String>();
     public Pay_GUI() {
         setContentPane(contentPane);
@@ -40,9 +43,19 @@ public class Pay_GUI extends JDialog {
             public void actionPerformed(ActionEvent e) {
 
                 DiscountCode=cmbDiscount.getSelectedItem().toString();
+                Calculate.setDiscountCode(DiscountCode);
                 getDiscount();
-                getTotal();
 
+
+            }
+        });
+        cmbPayMethod.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mode = cmbPayMethod.getSelectedItem().toString();
+                Calculate.setPaymentmod(mode);
+                getPaymentmode();
+                getTotal();
             }
         });
 
@@ -54,15 +67,7 @@ public class Pay_GUI extends JDialog {
             }
         });
 
-        paybtn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
 
-               onPay();
-
-
-
-            }
-        });
 
 
         buttonCancel.addActionListener(new ActionListener() {
@@ -96,7 +101,10 @@ public class Pay_GUI extends JDialog {
 
         initialtxt.setText(String.valueOf(Calculate.getUnit_price()));
         txtDuration.setText(Calculate.getDuration());
+        Calculate.setAdditional();//Compute Additional fee for Utilities
         txtUtil.setText(String.valueOf(Calculate.getAdditional()));
+
+
 
 
 
@@ -106,11 +114,14 @@ public class Pay_GUI extends JDialog {
 
 
     private void getTotal(){
-        double discount,total,price;
+        double total,price,chargefee,discount;
+        chargefee=Double.parseDouble(chargetxt.getText());
         discount=Double.parseDouble(disctxt.getText().substring(0,2))/100;
         price=Calculate.getUnit_price()*discount;
-        total=Calculate.getUnit_price()-price;
+        total=(Calculate.getUnit_price()-price)+chargefee;
         totaltxt.setText(String.valueOf(total));
+        Calculate.setTotalprice(total);
+
     }
 
     private void getDiscount(){
@@ -123,56 +134,88 @@ public class Pay_GUI extends JDialog {
         }
 
     }
+    private void getPaymentmode(){
 
-    Transaction transaction = new Transaction();
-
-    private void onPay() {
-
-        String payMethod = cmbPayMethod.getSelectedItem().toString();
-
-        String ipay = "";
-        int pay = 0;
-
-        if (payMethod.equals("GCash")){
-            ipay = JOptionPane.showInputDialog(null,"Enter Paying Amount: ", "GCash Method", JOptionPane.INFORMATION_MESSAGE);
-            pay = Integer.parseInt(ipay);
+        switch (mode) {
+            case "SoulSpace" -> chargetxt.setText("0");
+            case "GCash" -> chargetxt.setText("100");
+            default -> chargetxt.setText("200");
         }
 
-        else if (payMethod.equals("Debit")){
-             ipay = JOptionPane.showInputDialog(null,"Enter Paying Amount: ", "Debit Method", JOptionPane.INFORMATION_MESSAGE);
-             pay = Integer.parseInt(ipay);
+
+    }
+
+    Accessor accessor = new Accessor();
+
+    private void onPay() {
+        double input;
+
+        if(mode.equals("GCash" )){
+            input=Double.parseDouble(JOptionPane.showInputDialog(null,"Input Amount: ","Gcash",JOptionPane.QUESTION_MESSAGE));
+            JOptionPane.showMessageDialog(null,"Change: "+String.valueOf(input-Calculate.getTotalprice()),"Payment Successful",JOptionPane.INFORMATION_MESSAGE);
+        } else if (mode.equals("Debit")) {
+            input=Double.parseDouble(JOptionPane.showInputDialog(null,"Input Amount: ","DebitCard",JOptionPane.QUESTION_MESSAGE));
+            JOptionPane.showMessageDialog(null,"Change: "+ (input - Calculate.getTotalprice()),"Payment Successful",JOptionPane.INFORMATION_MESSAGE);
+
+        }
+
+        else{
+
+            Accessor.setBalance(Accessor.getBalance()-Calculate.getTotalprice());
+            JOptionPane.showMessageDialog(null,"Remaining Balance "+ Accessor.getBalance(),"Payment Successful",JOptionPane.INFORMATION_MESSAGE);
         }
 
 
         String convert = "";
-
         for (int i = 0; i < Calculate.getUtilities().size(); i++) {
-            convert += String.valueOf(Calculate.getUtilities().get(i));
+            convert += String.valueOf(Calculate.getUtilities().get(i)); //Get all utilities
 
             if (i < Calculate.getUtilities().size() - 1)
-                convert += "\n";
+                convert += " ";
         }
+
+
+
+
+
+
+        Font font = new Font("Arial", Font.PLAIN, 16);
+        receipttxt.setFont(font);
+
+
 
         receipttxt.setText(
 
-                "~User Info~" + "\n " +
-                    "User ID: " + transaction.getUserID() + "\n" +
-                    "Username: "+ transaction.getUsername() + "\n" + "\n" +
 
-                "~Total~" + "\n" + " "+
-                    "Unit Price: " + Calculate.getUnit_price() + "\n" +
-                    "Duration of Stay: " + Calculate.getDuration() + "\n" + "\n" +
+                "\t     ~User Info~" + "\n" +
+                    "\tUser ID: " + accessor.getUserID() + "\n" +
+                    "\tUsername: "+ accessor.getUsername() +"\n"+
+                    "\tRemaining Balance: "+Calculate.getBalance()+"\n"+
+                    "\tDate: "+ LocalDate.now() +"\n"+"\n"+
 
-                "~Utilities~" + "\n " +
-                    "Utilities Total: " + Calculate.getAdditional() + "\n" +
-                    convert
+                "\t     ~Apartment info~" + "\n"+
+                    "\tUnit number: "+Calculate.getUnitnum()+"\n"+
+                    "\tUnit Price: " + Calculate.getUnit_price() + "\n" +
+                    "\tDuration of Stay: " + Calculate.getDuration() + "\n"+
+                    "\tUtilities: " + convert +"\n"+"\n"+
+
+
+                "\t     ~Total~" + "\n" +
+                    "\tUtilities Fee: " + Calculate.getAdditional() + "\n"+
+                    "\tCharge Fee: " + chargetxt.getText() +"\n"+
+                    "\tDiscount: " + disctxt.getText()+"\n"+
+                    "\tTotal: " + totaltxt.getText()
+
 
         );
+
+
 
         saveTransaction();
 
     }
     private void saveTransaction(){
+//        String unitNum= Accessor.getUnitnum().substring(6);
 //        try {
 //
 //            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/apartment", "root", "root");
@@ -180,8 +223,11 @@ public class Pay_GUI extends JDialog {
 //
 //            ResultSet getMaxTranId = state.executeQuery("SELECT MAX(tran_id) as maxReqId FROM apartment.transaction");
 //            getMaxTranId.next();
-//
 //            int maxTranId = getMaxTranId.getInt("maxReqId");
+//            Transaction.setHistory(maxTranId+1);//Pass trans id to Transaction form & for dashboard History
+//            ResultSet getApartId=state.executeQuery("SELECT apr_id FROM apartment.apartment_unit" +
+//                    " where unit_number= ${unitNum}");
+//
 //
 //            ResultSet result = state.executeQuery("SELECT * FROM apartment.transaction");
 //
@@ -221,14 +267,16 @@ public class Pay_GUI extends JDialog {
     }
 
     public static void main(String[] args) {
-        Pay_GUI.Pay_GUI();
+        Pay_GUI.pay_GUI();
     }
 
     Image imageLogo = new ImageIcon("Images/Components/logo.png").getImage();
-    static void Pay_GUI(){
+    static void pay_GUI(){
         Pay_GUI dialog = new Pay_GUI();
         dialog.pack();
         dialog.setTitle("SoulSpace | Payment");
+        dialog.setBounds(300, 25, 700, 450);
+        dialog.setResizable(false);
         dialog.setIconImage(dialog.imageLogo);
         dialog.setLocationRelativeTo(null);
 

@@ -28,7 +28,7 @@ public class Selected_Apr_GUI extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(btnRent);
 
-        chosenUnit(Transaction.getUnitnum());
+        chosenUnit(Accessor.getUnitnum());
 
 
         btnRent.addActionListener(new ActionListener() {
@@ -85,8 +85,8 @@ public class Selected_Apr_GUI extends JDialog {
     }
     String unit_number;
     int unit_price;
-    private void chosenUnit(String unit){
-        String unitNum=unit.substring(6);
+    private void chosenUnit(String unit){ //pass chosen unit
+        String unitNum=unit.substring(6); //cut unnecessary string
 
         try {
 

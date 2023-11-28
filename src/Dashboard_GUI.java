@@ -1,12 +1,7 @@
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.URL;
-import java.io.File;
 
 public class Dashboard_GUI extends JDialog {
     private JPanel contentPane;
@@ -50,7 +45,7 @@ public class Dashboard_GUI extends JDialog {
     private JPanel myInfo_panel;
     private JButton btnPayRent;
     private JLabel txtWelcome;
-    private JTextField textField1;
+    private JTextField txtBalance;
 
 
     public Dashboard_GUI() {
@@ -65,7 +60,7 @@ public class Dashboard_GUI extends JDialog {
         ActionListener actionListener = new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
 
-                Transaction.setUnitnum(actionEvent.getActionCommand());
+                Accessor.setUnitnum(actionEvent.getActionCommand());
 
                 Selected_Apr_GUI.Selected_Apr_GUI();
                 //make dashboard visible if button cancel is clicked in Selected GUI
@@ -122,7 +117,7 @@ public class Dashboard_GUI extends JDialog {
 
     }
 
-    User_Data cal = new Transaction();
+    User_Data cal = new Accessor();
     private void Display(ActionListener actionListener){
         //Store all Buttons to Array
         JButton [] Apart_buttons = {rentUnit1,rentUnit2,rentUnit3,rentUnit4,rentUnit5,
@@ -155,6 +150,7 @@ public class Dashboard_GUI extends JDialog {
                 new String[] {"Name","Current Apartment","Rent Per Month","Duration of Stay","Amenities","Wi-Fi","Cable","Water"}
         ));
         txtWelcome.setText("WELCOME!  "+cal.getUsername().toUpperCase());
+        txtBalance.setText(String.valueOf(Accessor.getBalance()));
 
     }
 

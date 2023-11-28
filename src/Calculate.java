@@ -1,16 +1,16 @@
 import java.util.ArrayList;
 
-public class Calculate extends Transaction{
+public class Calculate extends Accessor {
     private static String Unit_number;
     private static int Unit_price;
     private static String Duration;
+    private static String Paymentmod;
+    private static String DiscountCode;
     private static Double totalprice;
     private static double additional;
     static ArrayList<String> utilities = new ArrayList<String>();
 
-    public static void setTotalprice(Double num){
-        totalprice=num;
-    }
+
 
     public static void setUtilities(ArrayList utilList){
 
@@ -19,12 +19,9 @@ public class Calculate extends Transaction{
         }
     }
 
-    static ArrayList<String> getUtilities(){
 
-        return utilities;
-    }
 
-    public static double getAdditional(){
+    public static void setAdditional(){
         for (int i = 0; i < utilities.size(); i++){
             if(utilities.get(i).equals("Amenities")){
                 additional+=200;
@@ -39,9 +36,10 @@ public class Calculate extends Transaction{
                 additional+=100; //Water
             }
         }
-        return additional;
     }
-
+    public static void setTotalprice(Double num){
+        totalprice=num;
+    }
     public static void setDuration(String date){
         Duration=date;
     }
@@ -50,6 +48,12 @@ public class Calculate extends Transaction{
     }
     public static void setUnit_price(int price){
         Unit_price=price;
+    }
+    public static void setPaymentmod(String paymentmod){
+        Paymentmod=paymentmod;
+    }
+    public static void setDiscountCode(String discountCode){
+        DiscountCode=discountCode;
     }
 
     public String getUnit_number(){
@@ -61,6 +65,22 @@ public class Calculate extends Transaction{
 
     public static String getDuration() {
         return Duration;
+    }
+    public static String getPaymentmod() {
+        return Paymentmod;
+    }
+    public static double getTotalprice(){
+        return totalprice;
+    }
+    public static double getAdditional(){
+        return additional;
+    }
+    public static ArrayList<String> getUtilities(){
+
+        return utilities;
+    }
+    public static String getDiscountCode(){
+        return DiscountCode;
     }
 
 

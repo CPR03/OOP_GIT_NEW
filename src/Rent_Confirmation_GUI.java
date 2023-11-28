@@ -107,7 +107,7 @@ public class Rent_Confirmation_GUI extends JDialog {
         Calculate.setUtilities(utilities);
 
         this.setVisible(false);
-        Pay_GUI.Pay_GUI();
+        Pay_GUI.pay_GUI();
 
     }
 

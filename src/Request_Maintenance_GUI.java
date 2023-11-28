@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
-import java.text.ParseException;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
@@ -46,7 +45,7 @@ public class Request_Maintenance_GUI extends JDialog{
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
-    User_Data cal= new Transaction();
+    User_Data cal= new Accessor();
 
     private void onOK() {
 

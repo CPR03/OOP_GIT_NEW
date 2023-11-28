@@ -1,89 +1,71 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
-public class Transaction extends User_Data{ //Inheritance
+public class Transaction extends Calculate{ //To view transaction history
+    private static String Unit_number;
+    private static int Unit_price;
+    private static int trans_id;
+    private static String Duration;
+    private static String Paymentmod;
+    private static Double Totalprice;
+    private static Double Remaining_balance;
+    private static int Remaining_months;
+    private static double Additional;
+    private static double balance;
+
+    static ArrayList<String> Utilities = new ArrayList<String>();
+
+    public static void setHistory(int Trans_id){
+        trans_id=Trans_id;
+        Unit_number=getUnitnum();
+        Unit_price=getUnit_price();
+        Duration=getDuration();
+        Paymentmod = getPaymentmod();
+        Totalprice = getTotalprice();
+        Utilities= getUtilities();
+        Additional = getAdditional();
+        balance=getBalance();
+        Remaining_months= setmonths();
+        Remaining_balance=Remaining_months*Totalprice;
 
 
-    //Static variable so that value will be the same for every instance
-    //Apply Encapsulation
-    private static int UserId;
-    private static String Username;
-    private static int Balance;
-    private static String Unitnum;
 
-
-
-
-    //Polymorphism
-    public void setUserDetails(String Username,int Balance) {
-        Transaction.Username=Username;
-        Transaction.Balance=Balance;
-        Transaction.UserId=setUserID();
     }
 
-
-
-    //abstract Methods
-    public int setUserID(){
-        int userID = 0;
-        try {
-
-
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/apartment", "root", "root");
-            Statement state = con.createStatement();
-            ResultSet result = state.executeQuery("SELECT user_id FROM apartment.users WHERE userName ='"+this.Username+"'");
-
-            while(result.next())
-                userID = result.getInt("user_id");
-
-        } catch (Exception exc) {
-
-            exc.printStackTrace();
+    public static int setmonths(){
+        int months=0;
+        if(Duration.equals("3months")){
+            months=2;
+        } else if (Duration.equals("6months")) {
+            months=5;
+        } else if (Duration.equals("1year")) {
+            months=11;
+        }else{
+            months=0;
         }
 
-
-        return userID;
+        return months;
     }
 
 
-    public static void setBalance(int amount){
-        Balance = amount;
-    }
-    public static void setUnitnum(String unitnum){
-        Unitnum=unitnum;
-
-    }
-
-    @Override
-    public int getUserID() {
-        return UserId;
-    }
-
-    @Override
-    public String getUsername() {
-        return Username;
-    }
-
-    @Override
-    public int getBalance() {
-        return Balance;
-    }
-
-
-    public static String getUnitnum() {
-        return Unitnum;
-    }
-
-
+//    public static double getTotalprice(){
+//        return Totalprice;
+//    }
+//
+//    public String getUnit_number(){
+//        return Unit_number;
+//    }
+//    public static int getUnit_price(){
+//        return Unit_price;
+//    }
+//
+//    public static String getDuration() {
+//        return Duration;
+//    }
+//    public static String getPaymentmod() {
+//        return Paymentmod;
+//    }
+//    public static double getAdditional(){
+//        return Additional;
+//    }
 }
-
-
-
-
-
-
-
-
-

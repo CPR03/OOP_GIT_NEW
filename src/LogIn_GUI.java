@@ -91,7 +91,7 @@ public class LogIn_GUI extends JDialog {
     private static String saveUserPass; //save the login for every object to be accessed
 
 
-    User_Data cal = new Transaction();
+    User_Data cal = new Accessor();
 
 
     private void onOK() {
@@ -120,7 +120,7 @@ public class LogIn_GUI extends JDialog {
                         saveUserPass = txtPass.getText();
                         Login_Details log = new Login_Details(saveUserName, saveUserPass);
 
-                        //Passing User data(Username & Balance) from Login_Details Class to Transaction Class
+                        //Passing User data(Username & Balance) from Login_Details Class to Accessor Class
                         cal.setUserDetails(log.getUsername(),log.getBalance());
 
 
