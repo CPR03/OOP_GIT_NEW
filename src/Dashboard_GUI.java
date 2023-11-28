@@ -76,7 +76,6 @@ public class Dashboard_GUI extends JDialog {
         Display(actionListener);
 
 
-
         btnrequest.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onRequest();

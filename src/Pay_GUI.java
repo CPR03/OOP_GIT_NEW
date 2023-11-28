@@ -167,6 +167,7 @@ public class Pay_GUI extends JDialog {
     }
 
     private void onCancel() {
+        Calculate.utilities.clear(); //Clear Utilities
         dispose();
         Rent_Confirmation_GUI.Rent_Confirmation_GUI();
     }
