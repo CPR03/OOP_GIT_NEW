@@ -7,7 +7,7 @@ public class Pay_GUI extends JDialog {
     private JPanel contentPane;
     private JButton paybtn;
     private JButton buttonCancel;
-    private JComboBox comboBox1;
+    private JComboBox cmbPayMethod;
     private JTextField initialtxt;
     private JTextField disctxt;
     private JTextField totaltxt;
@@ -39,9 +39,22 @@ public class Pay_GUI extends JDialog {
 
             }
         });
+
+        paybtn.addActionListener(new ActionListener() {//Check selected item from Discount code and set the Discount
+            public void actionPerformed(ActionEvent e) {
+
+                onPay();
+
+            }
+        });
+
         paybtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                onPay();
+
+               onPay();
+
+
+
             }
         });
 
@@ -83,6 +96,9 @@ public class Pay_GUI extends JDialog {
 
 
     }
+
+
+
     private void getTotal(){
         double discount,total,price;
         discount=Double.parseDouble(disctxt.getText().substring(0,2))/100;
@@ -90,6 +106,7 @@ public class Pay_GUI extends JDialog {
         total=Calculate.getUnit_price()-price;
         totaltxt.setText(String.valueOf(total));
     }
+
     private void getDiscount(){
         switch (DiscountCode) {
             case "Roland" -> disctxt.setText("30%");
@@ -100,11 +117,51 @@ public class Pay_GUI extends JDialog {
         }
 
     }
-    private void onPay() {
-        Calculate.setTotalprice(Double.parseDouble(totaltxt.getText()));//save total price to Calculate
 
-        String ipay = JOptionPane.showInputDialog(null,"Enter Paying Amount: ");
-        int pay = Integer.parseInt(ipay);
+    Transaction transaction = new Transaction();
+
+    private void onPay() {
+
+        String payMethod = cmbPayMethod.getSelectedItem().toString();
+
+        String ipay = "";
+        int pay = 0;
+
+        if (payMethod.equals("GCash")){
+            ipay = JOptionPane.showInputDialog(null,"Enter Paying Amount: ", "GCash Method", JOptionPane.INFORMATION_MESSAGE);
+            pay = Integer.parseInt(ipay);
+        }
+
+        else if (payMethod.equals("Debit")){
+             ipay = JOptionPane.showInputDialog(null,"Enter Paying Amount: ", "Debit Method", JOptionPane.INFORMATION_MESSAGE);
+             pay = Integer.parseInt(ipay);
+        }
+
+
+        String convert = "";
+
+        for (int i = 0; i < Calculate.getUtilities().size(); i++) {
+            convert += String.valueOf(Calculate.getUtilities().get(i));
+
+            if (i < Calculate.getUtilities().size() - 1)
+                convert += "\n";
+        }
+
+        receipttxt.setText(
+
+                "~User Info~" + "\n " +
+                    "User ID: " + transaction.getUserID() + "\n" +
+                    "Username: "+ transaction.getUsername() + "\n" + "\n" +
+
+                "~Total~" + "\n" + " "+
+                    "Unit Price: " + Calculate.getUnit_price() + "\n" +
+                    "Duration of Stay: " + Calculate.getDuration() + "\n" + "\n" +
+
+                "~Utilities~" + "\n " +
+                    "Utilities Total: " + Calculate.getAdditional() + "\n" +
+                    convert
+
+        );
 
 
     }

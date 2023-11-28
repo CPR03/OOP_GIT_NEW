@@ -96,7 +96,6 @@ public class Selected_Apr_GUI extends JDialog {
                     "ON unit_photo.unit_number = apartment_unit.unit_number");
 
 
-
             while (result.next()) {
 
                 unit_number = result.getString("unit_number");
