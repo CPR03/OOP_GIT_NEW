@@ -16,6 +16,7 @@ public class Calculate extends Transaction{
             utilities.add(utilList.get(i).toString());
         }
     }
+
     static ArrayList<String> getUtilities(){
 
         return utilities;

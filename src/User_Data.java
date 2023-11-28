@@ -5,7 +5,6 @@ abstract class User_Data{
 
     private int Balance;
 
-
     public void setUserDetails(String Username, int balance) {
 
     }

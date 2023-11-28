@@ -7,10 +7,10 @@ public class Transaction extends User_Data{ //Inheritance
 
 
     //Static variable so that value will be the same for every instance
+    //Apply Encapsulation
     private static int UserId;
     private static String Username;
     private static int Balance;
-
 
 
 
@@ -21,14 +21,13 @@ public class Transaction extends User_Data{ //Inheritance
         Transaction.UserId=setUserID();
     }
 
-   
 
     //abstract Methods
     public int setUserID(){
         int userID = 0;
         try {
 
-            //Error Here
+
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/apartment", "root", "root");
             Statement state = con.createStatement();
             ResultSet result = state.executeQuery("SELECT user_id FROM apartment.users WHERE userName ='"+this.Username+"'");
