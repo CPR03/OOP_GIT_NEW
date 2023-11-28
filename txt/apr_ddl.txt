@@ -1,14 +1,44 @@
 -- auto-generated definition
 create table apartment_unit
 (
-    apr_id      int        not null
+    apr_id      int         not null
         primary key,
-    unit_number varchar(7) not null,
-    bedcount    int        not null,
-    unit_price  int        not null,
-    unit_photo  mediumblob null
+    unit_number varchar(7)  not null,
+    bedcount    int         not null,
+    unit_price  int         not null,
+    unit_photo  mediumblob  null,
+    status      varchar(10) not null,
+    constraint apartment_unit_ibfk_1
+        foreign key (unit_number) references unit_photo (unit_number)
 );
 
+create index unit_number
+    on apartment_unit (unit_number);
+
+-- auto-generated definition
+create table maintenance_req
+(
+    req_id       int auto_increment
+        primary key,
+    type         varchar(20)   null,
+    description  varchar(1000) not null,
+    date_created date          not null,
+    user_id      int           null,
+    constraint maintenance_req_fk
+        foreign key (user_id) references users (user_id)
+);
+
+-- auto-generated definition
+create table unit_photo
+(
+    unit_number varchar(7) not null
+        primary key,
+    unit_photo1 mediumblob not null,
+    unit_photo2 mediumblob not null,
+    unit_photo3 mediumblob not null,
+    unit_photo4 mediumblob not null,
+    unit_photo5 mediumblob not null
+);
 
 -- auto-generated definition
 create table users
@@ -16,13 +46,9 @@ create table users
     user_id      int         not null
         primary key,
     userName     varchar(50) not null,
-    userPassword varchar(30) not null
+    userPassword varchar(30) not null,
+    apr_id       int         null,
+    constraint users_users__fk
+        foreign key (apr_id) references apartment_unit (apr_id)
 );
-
-CREATE TABLE Maintenance_Req(
-    req_id int NOT NULL,
-    type varchar(20),
-    desciption varchar(1000) NOT NULL,
-    date_created date NOT NULL
-)
 
