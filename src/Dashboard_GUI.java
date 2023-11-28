@@ -145,7 +145,7 @@ public class Dashboard_GUI extends JDialog {
             Apart_buttons[i].setText("Rent: Unit "+(i+1)); //Set label for buttons
             Apart_buttons[i].setCursor(new Cursor(Cursor.HAND_CURSOR));//Cursor hover
 
-            String imagePath = "Images/Apartments/Out/pngs/unit" + (i + 1) + ".png";
+            String imagePath = "Images/Apartments/Out1/pngs/unit" + (i + 1) + ".png";
 
             //Palitan ng Directory pag may Pic na
             //Pang set ng Image to
