@@ -167,8 +167,8 @@ public class Pay_GUI extends JDialog {
     }
 
     private void onCancel() {
-        // add your code here if necessary
         dispose();
+        Rent_Confirmation_GUI.Rent_Confirmation_GUI();
     }
 
     public static void main(String[] args) {

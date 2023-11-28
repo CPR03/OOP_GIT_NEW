@@ -50,6 +50,7 @@ public class Dashboard_GUI extends JDialog {
     private JPanel myInfo_panel;
     private JButton btnPayRent;
     private JLabel txtWelcome;
+    private JTextField textField1;
 
 
     public Dashboard_GUI() {
@@ -64,18 +65,11 @@ public class Dashboard_GUI extends JDialog {
         ActionListener actionListener = new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
 
-                Selected_Apr_GUI select = new Selected_Apr_GUI(actionEvent.getActionCommand());// Pass the chosen Apartment Unit to Selected GUI
-                select.pack();
-                select.setTitle("SoulSpace | Unit Details.");
-                select.setIconImage(select.imageLogo);
-                select.setResizable(false);
-                select.setBounds(600,200,600,600);
-                select.setLocationRelativeTo(null);
-                select.setVisible(true);
+                Transaction.setUnitnum(actionEvent.getActionCommand());
 
+                Selected_Apr_GUI.Selected_Apr_GUI();
                 //make dashboard visible if button cancel is clicked in Selected GUI
                 setVisible(true);
-
 
             }
         };
@@ -128,6 +122,7 @@ public class Dashboard_GUI extends JDialog {
 
 
     }
+
     User_Data cal = new Transaction();
     private void Display(ActionListener actionListener){
         //Store all Buttons to Array
@@ -147,8 +142,6 @@ public class Dashboard_GUI extends JDialog {
 
             String imagePath = "Images/Apartments/Out1/pngs/unit" + (i + 1) + ".png";
 
-            //Palitan ng Directory pag may Pic na
-            //Pang set ng Image to
             Unit_image[i].setIcon(new ImageIcon(new ImageIcon(imagePath).getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH)));
 
         }
@@ -165,9 +158,6 @@ public class Dashboard_GUI extends JDialog {
         txtWelcome.setText("WELCOME!  "+cal.getUsername().toUpperCase());
 
     }
-
-
-
 
 
     private void onRequest(){

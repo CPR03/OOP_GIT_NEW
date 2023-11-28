@@ -11,6 +11,7 @@ public class Calculate extends Transaction{
     public static void setTotalprice(Double num){
         totalprice=num;
     }
+
     public static void setUtilities(ArrayList utilList){
         for (int i = 0; i < utilList.size(); i++){
             utilities.add(utilList.get(i).toString());
@@ -21,6 +22,7 @@ public class Calculate extends Transaction{
 
         return utilities;
     }
+
     public static double getAdditional(){
         for (int i = 0; i < utilities.size(); i++){
             if(utilities.get(i).equals("Amenities")){
@@ -38,6 +40,7 @@ public class Calculate extends Transaction{
         }
         return additional;
     }
+
     public static void setDuration(String date){
         Duration=date;
     }

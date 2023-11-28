@@ -106,16 +106,18 @@ public class Rent_Confirmation_GUI extends JDialog {
         Calculate.setDuration(Duration);
         Calculate.setUtilities(utilities);
 
+        this.setVisible(false);
         Pay_GUI.Pay_GUI();
+
     }
 
     private void onCancel() {
         // add your code here if necessary
         dispose();
+        Selected_Apr_GUI.Selected_Apr_GUI();
     }
 
     Image imagelogo = new ImageIcon("Images/Components/logo.png").getImage();
-
 
     public static void main(String[] args) {
         Rent_Confirmation_GUI.Rent_Confirmation_GUI();

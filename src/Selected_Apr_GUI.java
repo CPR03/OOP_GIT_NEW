@@ -10,8 +10,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class Selected_Apr_GUI extends JDialog {
-    private JPanel contentPane;
-    private JButton btnRent;
+    private  JPanel contentPane;
+    private  JButton btnRent;
     private JButton buttonCancel;
     private JPanel panel;
     private JTextArea details;
@@ -22,12 +22,14 @@ public class Selected_Apr_GUI extends JDialog {
     private JLabel poster4;
     private JLabel poster5;
 
+    public Selected_Apr_GUI() {
 
-    public Selected_Apr_GUI(String unitNum) {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(btnRent);
-        chosenUnit(unitNum);
+
+        chosenUnit(Transaction.getUnitnum());
+
 
         btnRent.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -86,7 +88,6 @@ public class Selected_Apr_GUI extends JDialog {
     private void chosenUnit(String unit){
         String unitNum=unit.substring(6);
 
-
         try {
 
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/apartment", "root", "root");
@@ -135,6 +136,7 @@ public class Selected_Apr_GUI extends JDialog {
     private void onRent() {
         Calculate.setUnit_number(unit_number);
         Calculate.setUnit_price(unit_price);
+        setVisible(false);
         Rent_Confirmation_GUI.Rent_Confirmation_GUI();
     }
 
@@ -144,6 +146,30 @@ public class Selected_Apr_GUI extends JDialog {
         dispose();
     }
 
+
+
+    public static void main(String[] args) {
+            Selected_Apr_GUI.Selected_Apr_GUI();
+    }
+
     Image imageLogo = new ImageIcon("Images/Components/logo.png").getImage();
+
+    static void Selected_Apr_GUI () {
+
+        Selected_Apr_GUI selectedAprGui = new Selected_Apr_GUI();
+
+        selectedAprGui.pack();
+        selectedAprGui.setTitle("SoulSpace | Unit Details.");
+        selectedAprGui.setIconImage(selectedAprGui.imageLogo);
+        selectedAprGui.setResizable(false);
+        selectedAprGui.setBounds(600,200,600,600);
+        selectedAprGui.setLocationRelativeTo(null);
+        selectedAprGui.setVisible(true);
+
+    }
+
+
+
+
 
 }

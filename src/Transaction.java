@@ -11,6 +11,8 @@ public class Transaction extends User_Data{ //Inheritance
     private static int UserId;
     private static String Username;
     private static int Balance;
+    private static String Unitnum;
+
 
 
 
@@ -20,6 +22,7 @@ public class Transaction extends User_Data{ //Inheritance
         Transaction.Balance=Balance;
         Transaction.UserId=setUserID();
     }
+
 
 
     //abstract Methods
@@ -48,6 +51,10 @@ public class Transaction extends User_Data{ //Inheritance
     public static void setBalance(int amount){
         Balance = amount;
     }
+    public static void setUnitnum(String unitnum){
+        Unitnum=unitnum;
+
+    }
 
     @Override
     public int getUserID() {
@@ -64,6 +71,10 @@ public class Transaction extends User_Data{ //Inheritance
         return Balance;
     }
 
+
+    public static String getUnitnum() {
+        return Unitnum;
+    }
 
 
 }
