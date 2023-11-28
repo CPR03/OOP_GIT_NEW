@@ -13,6 +13,7 @@ public class Calculate extends Transaction{
     }
 
     public static void setUtilities(ArrayList utilList){
+
         for (int i = 0; i < utilList.size(); i++){
             utilities.add(utilList.get(i).toString());
         }

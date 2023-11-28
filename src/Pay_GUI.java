@@ -1,7 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Pay_GUI extends JDialog {
     private JPanel contentPane;
@@ -163,7 +169,49 @@ public class Pay_GUI extends JDialog {
 
         );
 
+        saveTransaction();
 
+    }
+    private void saveTransaction(){
+//        try {
+//
+//            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/apartment", "root", "root");
+//            Statement state = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+//
+//            ResultSet getMaxTranId = state.executeQuery("SELECT MAX(tran_id) as maxReqId FROM apartment.transaction");
+//            getMaxTranId.next();
+//
+//            int maxTranId = getMaxTranId.getInt("maxReqId");
+//
+//            ResultSet result = state.executeQuery("SELECT * FROM apartment.transaction");
+//
+//            result.moveToInsertRow();
+//
+//            result.updateInt("tran_id", maxTranId + 1); // Increment the max tran_id
+//
+//
+//            //result.updateInt("user_id", log.getUserID());
+//
+//            result.updateString("payment_method",cmbPayMethod.getSelectedItem().toString());
+//            result.updateInt("rent_total", ); // Total
+//
+//
+//            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+//            Date date = formatter.parse(formatter.format(new Date()));
+//            result.updateDate("date_created", new java.sql.Date(date.getTime()));
+//            result.updateInt("user_id",cal.getUserID());
+//
+//            result.insertRow();
+//            result.beforeFirst();
+//
+//            JOptionPane.showMessageDialog(null, "Request Successfully sent.");
+//
+//            state.close();
+//            con.close();
+//
+//        } catch (Exception exc) {
+//            exc.printStackTrace();
+//        }
     }
 
     private void onCancel() {
