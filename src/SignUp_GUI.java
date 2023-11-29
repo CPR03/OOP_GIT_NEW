@@ -78,6 +78,7 @@ public class SignUp_GUI extends JDialog {
     }
 
     private void onOK() {
+        int initial=10000;
 
         try {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/apartment", "root", "root");
@@ -108,7 +109,7 @@ public class SignUp_GUI extends JDialog {
                     result.updateInt("user_id", 1); // add the newly created ID
                     result.updateString("userName", usernameInput); // add username
                     result.updateString("userPassword", passText); // add password
-
+                    result.updateDouble("Balance",10000.0);
                     result.insertRow();
                     result.beforeFirst();
 
@@ -146,7 +147,8 @@ public class SignUp_GUI extends JDialog {
 
                         result.updateInt("user_id", id); // add the newly created ID
                         result.updateString("userName", usernameInput); // add username
-                        result.updateString("userPassword", passText); // add password
+                        result.updateString("userPassword", passText);
+                        result.updateDouble("Balance",initial);// add password
 
                         result.insertRow();
                         result.beforeFirst();

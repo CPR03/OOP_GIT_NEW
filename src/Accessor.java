@@ -17,11 +17,13 @@ public class Accessor extends User_Data{ //Inheritance
 
 
     //Polymorphism
-    public void setUserDetails(String Username) {
+    public static void setUserDetails(String Username) {
         Accessor.Username=Username;
-        Accessor.Balance=checkBalance();
-        Accessor.UserId=setUserID();
+        UserId=setUserID();
+
     }
+
+
 
 
     public double checkBalance(){
@@ -30,8 +32,8 @@ public class Accessor extends User_Data{ //Inheritance
 
 
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/apartment", "root", "root");
-            Statement state = con.createStatement();
-            ResultSet result = state.executeQuery("SELECT Balance FROM apartment.users WHERE userName ='"+Username+"'");
+            Statement state = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet result = state.executeQuery("SELECT Balance FROM apartment.users WHERE userName ='"+Accessor.Username+"'");
 
             while(result.next())
                 bal = result.getDouble("Balance");
@@ -42,14 +44,14 @@ public class Accessor extends User_Data{ //Inheritance
         }
         return bal;
     }
-    public int setUserID(){
+    public static int setUserID(){
         int userID = 0;
         try {
 
 
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/apartment", "root", "root");
-            Statement state = con.createStatement();
-            ResultSet result = state.executeQuery("SELECT user_id FROM apartment.users WHERE userName ='"+this.Username+"'");
+            Statement state = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet result = state.executeQuery("SELECT user_id FROM apartment.users WHERE userName ='"+Accessor.Username+"'");
 
             while(result.next())
                 userID = result.getInt("user_id");

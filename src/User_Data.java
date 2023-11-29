@@ -3,13 +3,16 @@ abstract class User_Data{
 
 
 
-    public void setUserDetails(String Username) {
+    public static void setUserDetails(String Username) {
 
     }
 
 
     public abstract double checkBalance();
-    public abstract int setUserID();
+
+    public static int setUserID() {
+        return 0;
+    }
 
 
     public static int getUserID() {

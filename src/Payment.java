@@ -39,7 +39,7 @@ public class Payment extends Error {
             if(accessor.checkBalance()>=Calculate.getTotalprice()){
                 try {
                     Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/apartment", "root", "root");
-                    Statement state = con.createStatement();
+                    Statement state = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
                     ResultSet result = state.executeQuery("SELECT Balance FROM apartment.users WHERE user_id ='"+Accessor.getUserID()+"'");
 
                     result.updateDouble("Balance",accessor.getBalance()-Calculate.getTotalprice());
