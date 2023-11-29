@@ -72,7 +72,10 @@ public class Dashboard_GUI extends JDialog {
 
             }
         };
+        //WindowListerner for PAYGUI
+
         Display(actionListener);
+
 
 
         btnrequest.addActionListener(new ActionListener() {
@@ -95,6 +98,7 @@ public class Dashboard_GUI extends JDialog {
 
             }
         });
+
 
         buttonCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -131,14 +135,13 @@ public class Dashboard_GUI extends JDialog {
 
         }
         else{
+
             btnrequest.setVisible(true);
             btnPayRent.setVisible(true);
             scrollPanel.setVisible(false);
 
             myInfo_panel.setVisible(true);
-            history();
-
-
+            history(); //Display Data to table-Now working
 
         }
         //Store all Buttons to Array
@@ -250,7 +253,11 @@ public class Dashboard_GUI extends JDialog {
 
 
     public static void main(String[] args) {
+
         Dashboard_GUI.Dashboard_GUI();
+
+
+
     }
 
 

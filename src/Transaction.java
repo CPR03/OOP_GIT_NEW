@@ -13,6 +13,7 @@ public class Transaction extends Calculate{ //To view transaction history
     private static int Unit_price;
     private static int trans_id;
     private static int Apartment_id;
+    private static int Status=0;
     private static String Duration;
     private static String Paymentmod;
     private static Double Totalprice;
@@ -55,8 +56,11 @@ public class Transaction extends Calculate{ //To view transaction history
         return months;
     }
 
+
+
     public static void saveTransaction(){
         String unitNum= getUnitnum().substring(6);
+
 
         try {
 
@@ -124,6 +128,7 @@ public class Transaction extends Calculate{ //To view transaction history
             result.insertRow();
             result.beforeFirst();
 
+            Status=1;
             JOptionPane.showMessageDialog(null, "Transaction Successful.");
 
             state.close();
@@ -134,7 +139,9 @@ public class Transaction extends Calculate{ //To view transaction history
         }
     }
 
-
+    public static int getStatus(){
+        return Status;
+    }
 //    public static double getTotalprice(){
 //        return Totalprice;
 //    }

@@ -207,6 +207,7 @@ public class Pay_GUI extends JDialog {
 
     private void onCancel() {
         if(flag){
+
             dispose(); //If payment successful back to Dashboard
 
         }
@@ -221,11 +222,12 @@ public class Pay_GUI extends JDialog {
     }
 
     public static void main(String[] args) {
+
         Pay_GUI.pay_GUI();
     }
 
     Image imageLogo = new ImageIcon("Images/Components/logo.png").getImage();
-    static void pay_GUI(){
+     static void pay_GUI(){
         Pay_GUI dialog = new Pay_GUI();
         dialog.pack();
         dialog.setTitle("SoulSpace | Payment");
