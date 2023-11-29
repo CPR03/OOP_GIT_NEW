@@ -2,6 +2,10 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class Dashboard_GUI extends JDialog {
     private JPanel contentPane;
@@ -118,7 +122,25 @@ public class Dashboard_GUI extends JDialog {
     }
 
     User_Data cal = new Accessor();
+    String type;
     private void Display(ActionListener actionListener){
+        checkType();
+        if(type.equals("new")){
+           btnrequest.setVisible(false);
+           btnPayRent.setVisible(false);
+
+        }
+        else{
+            btnrequest.setVisible(true);
+            btnPayRent.setVisible(true);
+            scrollPanel.setVisible(false);
+
+            myInfo_panel.setVisible(true);
+            history();
+
+
+
+        }
         //Store all Buttons to Array
         JButton [] Apart_buttons = {rentUnit1,rentUnit2,rentUnit3,rentUnit4,rentUnit5,
                 rentUnit6,rentUnit7,rentUnit8,rentUnit9,rentUnit10,rentUnit11,rentUnit12};
@@ -147,18 +169,74 @@ public class Dashboard_GUI extends JDialog {
 
         table1.setModel(new DefaultTableModel(
                 null,
-                new String[] {"Name","Current Apartment","Rent Per Month","Duration of Stay","Amenities","Wi-Fi","Cable","Water"}
-        ));
+                new String[] {"Name","Current Apartment","Date created","Rent Per Month","Duration of Stay","Amenities","Wi-Fi","Cable","Water"}));
+
+
+        txtBalance.setText(String.valueOf(cal.getBalance()));
         txtWelcome.setText("WELCOME!  "+cal.getUsername().toUpperCase());
-        txtBalance.setText(String.valueOf(Accessor.getBalance()));
 
     }
 
+    private void history(){
+
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/apartment", "root", "root");
+            Statement state = con.createStatement();
+
+
+            ResultSet result = state.executeQuery(" SELECT apartment.users.userName,apartment.apartment_unit.unit_number,apartment.transaction.Date, apartment.transaction.monthly_due_amount, apartment.transaction.duration,apartment.transaction.amenities,apartment.transaction.wifi,apartment.transaction.cable,apartment.transaction.water\n" +
+                    "            FROM apartment.users\n" +
+                    "            RIGHT JOIN apartment.transaction ON users.user_id = transaction.user_id\n" +
+                    "            LEFT JOIN apartment.apartment_unit ON transaction.apart_id = apartment_unit.apr_id;");
+            result.next();
+
+            Object[] row = {result.getString("userName"),result.getString("unit_number"),
+                    result.getDate("Date"),result.getDouble("monthly_due_amount"),
+                    result.getString("duration"),result.getInt("amenities"),
+                    result.getInt("wifi"),result.getInt("cable"),result.getInt("water")
+            };
+            DefaultTableModel data= (DefaultTableModel)
+                    table1.getModel();
+            data.addRow(row);
+
+
+        } catch (Exception exc) {
+
+            exc.printStackTrace();
+        }
+
+
+    }
+
+    private void checkType(){
+
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/apartment", "root", "root");
+            Statement state = con.createStatement();
+            ResultSet result = state.executeQuery("SELECT COUNT(*) as Rowcount FROM apartment.transaction WHERE user_id ='"+Accessor.getUserID()+"'");
+            result.next();
+            int count = result.getInt("Rowcount");
+            result.close();
+            if(count>0){
+                type="old";
+            }
+            else{
+                type="new";
+            }
+
+
+        } catch (Exception exc) {
+
+            exc.printStackTrace();
+        }
+
+    }
 
     private void onRequest(){
         Request_Maintenance_GUI.Request_Maintenance_GUI();
 
     }
+
 
     private void onOK() {
         scrollPanel.setVisible(false);

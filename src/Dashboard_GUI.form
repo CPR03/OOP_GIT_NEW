@@ -118,7 +118,7 @@
                       <requestFocusEnabled value="true"/>
                       <text value="Request Maintenance"/>
                       <verticalTextPosition value="0"/>
-                      <visible value="false"/>
+                      <visible value="true"/>
                     </properties>
                   </component>
                   <component id="4ff8f" class="javax.swing.JButton" binding="btnPayRent">
@@ -136,7 +136,7 @@
                       <requestFocusEnabled value="true"/>
                       <text value="Pay Rent"/>
                       <verticalTextPosition value="0"/>
-                      <visible value="false"/>
+                      <visible value="true"/>
                     </properties>
                   </component>
                 </children>
@@ -636,7 +636,9 @@
                 <children>
                   <component id="70984" class="javax.swing.JTable" binding="table1" default-binding="true">
                     <constraints/>
-                    <properties/>
+                    <properties>
+                      <autoCreateRowSorter value="true"/>
+                    </properties>
                   </component>
                 </children>
               </scrollpane>

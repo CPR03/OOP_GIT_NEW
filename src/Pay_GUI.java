@@ -26,16 +26,13 @@ public class Pay_GUI extends JDialog {
     private JTextField txtUtil;
     String DiscountCode;
     String mode;
-    static ArrayList<String> test = new ArrayList<String>();
+
     public Pay_GUI() {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(paybtn);
 
-        test=Calculate.getUtilities();
-        for(int i=0;i<test.size();i++){
-            System.out.println(test.get(i));
-        }
+
 
 
 
@@ -102,6 +99,7 @@ public class Pay_GUI extends JDialog {
         initialtxt.setText(String.valueOf(Calculate.getUnit_price()));
         txtDuration.setText(Calculate.getDuration());
         Calculate.setAdditional();//Compute Additional fee for Utilities
+
         txtUtil.setText(String.valueOf(Calculate.getAdditional()));
 
 
@@ -110,7 +108,6 @@ public class Pay_GUI extends JDialog {
 
 
     }
-
 
 
     private void getTotal(){
@@ -146,124 +143,81 @@ public class Pay_GUI extends JDialog {
     }
 
     Accessor accessor = new Accessor();
-
+    Payment confirm = new Payment();
+    boolean flag=false; //Payment status indicator
     private void onPay() {
-        double input;
+        ; //Check if payment is successful
+        flag=confirm.confirmPayment(mode);
 
-        if(mode.equals("GCash" )){
-            input=Double.parseDouble(JOptionPane.showInputDialog(null,"Input Amount: ","Gcash",JOptionPane.QUESTION_MESSAGE));
-            JOptionPane.showMessageDialog(null,"Change: "+String.valueOf(input-Calculate.getTotalprice()),"Payment Successful",JOptionPane.INFORMATION_MESSAGE);
-        } else if (mode.equals("Debit")) {
-            input=Double.parseDouble(JOptionPane.showInputDialog(null,"Input Amount: ","DebitCard",JOptionPane.QUESTION_MESSAGE));
-            JOptionPane.showMessageDialog(null,"Change: "+ (input - Calculate.getTotalprice()),"Payment Successful",JOptionPane.INFORMATION_MESSAGE);
+        if(flag){// if Payment successful print receipt update database
 
+            String convert = "";
+            for (int i = 0; i < Calculate.getUtilities().size(); i++) {
+                convert += String.valueOf(Calculate.getUtilities().get(i)); //Get all utilities
+
+                if (i < Calculate.getUtilities().size() - 1)
+                    convert += " ";
+            }
+
+
+            Font font = new Font("Arial", Font.PLAIN, 16);
+            receipttxt.setFont(font);
+
+
+
+            receipttxt.setText(
+
+
+                    "\t     ~User Info~" + "\n" +
+                            "\tUser ID: " + accessor.getUserID() + "\n" +
+                            "\tUsername: "+ accessor.getUsername() +"\n"+
+                            "\tRemaining Balance: "+accessor.getBalance()+"\n"+
+                            "\tDate: "+ LocalDate.now() +"\n"+"\n"+
+
+                            "\t     ~Apartment info~" + "\n"+
+                            "\tUnit number: "+Calculate.getUnitnum()+"\n"+
+                            "\tUnit Price: " + Calculate.getUnit_price() + "\n" +
+                            "\tDuration of Stay: " + Calculate.getDuration() + "\n"+
+                            "\tUtilities: " + convert +"\n"+"\n"+
+
+
+                            "\t     ~Total~" + "\n" +
+                            "\tUtilities Fee: " + Calculate.getAdditional() + "\n"+
+                            "\tCharge Fee: " + chargetxt.getText() +"\n"+
+                            "\tDiscount: " + disctxt.getText()+"\n"+
+                            "\tTotal: " + totaltxt.getText()
+
+
+            );
+
+
+            //Update to Database
+            Transaction.saveTransaction();
+        }else{
+            JOptionPane.showMessageDialog(null,"Payment Unsuccessful\nPlease Try again!");
+            onPay(); //Call itself
         }
 
-        else{
-
-            Accessor.setBalance(Accessor.getBalance()-Calculate.getTotalprice());
-            JOptionPane.showMessageDialog(null,"Remaining Balance "+ Accessor.getBalance(),"Payment Successful",JOptionPane.INFORMATION_MESSAGE);
-        }
 
 
-        String convert = "";
-        for (int i = 0; i < Calculate.getUtilities().size(); i++) {
-            convert += String.valueOf(Calculate.getUtilities().get(i)); //Get all utilities
-
-            if (i < Calculate.getUtilities().size() - 1)
-                convert += " ";
-        }
-
-
-
-
-
-
-        Font font = new Font("Arial", Font.PLAIN, 16);
-        receipttxt.setFont(font);
-
-
-
-        receipttxt.setText(
-
-
-                "\t     ~User Info~" + "\n" +
-                    "\tUser ID: " + accessor.getUserID() + "\n" +
-                    "\tUsername: "+ accessor.getUsername() +"\n"+
-                    "\tRemaining Balance: "+Calculate.getBalance()+"\n"+
-                    "\tDate: "+ LocalDate.now() +"\n"+"\n"+
-
-                "\t     ~Apartment info~" + "\n"+
-                    "\tUnit number: "+Calculate.getUnitnum()+"\n"+
-                    "\tUnit Price: " + Calculate.getUnit_price() + "\n" +
-                    "\tDuration of Stay: " + Calculate.getDuration() + "\n"+
-                    "\tUtilities: " + convert +"\n"+"\n"+
-
-
-                "\t     ~Total~" + "\n" +
-                    "\tUtilities Fee: " + Calculate.getAdditional() + "\n"+
-                    "\tCharge Fee: " + chargetxt.getText() +"\n"+
-                    "\tDiscount: " + disctxt.getText()+"\n"+
-                    "\tTotal: " + totaltxt.getText()
-
-
-        );
-
-
-
-        saveTransaction();
 
     }
-    private void saveTransaction(){
-//        String unitNum= Accessor.getUnitnum().substring(6);
-//        try {
-//
-//            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/apartment", "root", "root");
-//            Statement state = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-//
-//            ResultSet getMaxTranId = state.executeQuery("SELECT MAX(tran_id) as maxReqId FROM apartment.transaction");
-//            getMaxTranId.next();
-//            int maxTranId = getMaxTranId.getInt("maxReqId");
-//            Transaction.setHistory(maxTranId+1);//Pass trans id to Transaction form & for dashboard History
-//            ResultSet getApartId=state.executeQuery("SELECT apr_id FROM apartment.apartment_unit" +
-//                    " where unit_number= ${unitNum}");
-//
-//
-//            ResultSet result = state.executeQuery("SELECT * FROM apartment.transaction");
-//
-//            result.moveToInsertRow();
-//
-//            result.updateInt("tran_id", maxTranId + 1); // Increment the max tran_id
-//
-//
-//            //result.updateInt("user_id", log.getUserID());
-//
-//            result.updateString("payment_method",cmbPayMethod.getSelectedItem().toString());
-//            result.updateInt("rent_total", ); // Total
-//
-//
-//            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-//            Date date = formatter.parse(formatter.format(new Date()));
-//            result.updateDate("date_created", new java.sql.Date(date.getTime()));
-//            result.updateInt("user_id",cal.getUserID());
-//
-//            result.insertRow();
-//            result.beforeFirst();
-//
-//            JOptionPane.showMessageDialog(null, "Request Successfully sent.");
-//
-//            state.close();
-//            con.close();
-//
-//        } catch (Exception exc) {
-//            exc.printStackTrace();
-//        }
-    }
+
+
 
     private void onCancel() {
-        Calculate.utilities.clear(); //Clear Utilities
-        dispose();
-        Rent_Confirmation_GUI.Rent_Confirmation_GUI();
+        if(flag){
+            dispose(); //If payment successful back to Dashboard
+
+        }
+        else{          //clear utilities back to Rent confirmation
+            Calculate.utilities.clear(); //Clear Utilities
+            dispose();
+            Rent_Confirmation_GUI.Rent_Confirmation_GUI();
+
+        }
+
+
     }
 
     public static void main(String[] args) {

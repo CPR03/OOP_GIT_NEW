@@ -121,7 +121,7 @@ public class LogIn_GUI extends JDialog {
                         Login_Details log = new Login_Details(saveUserName, saveUserPass);
 
                         //Passing User data(Username & Balance) from Login_Details Class to Accessor Class
-                        cal.setUserDetails(log.getUsername(),log.getBalance());
+                        cal.setUserDetails(log.getUsername());
 
 
                         setVisible(false); //hide login

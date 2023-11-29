@@ -3,20 +3,22 @@ abstract class User_Data{
 
 
 
-    public void setUserDetails(String Username, int balance) {
+    public void setUserDetails(String Username) {
 
     }
 
 
-    public static void setBalance(int amount){};
+    public abstract double checkBalance();
     public abstract int setUserID();
 
 
+    public static int getUserID() {
+        return 0;
+    }
 
-    public abstract int getUserID();
     public abstract String getUsername();
 
-    public static double getBalance() {
+    public double getBalance() {
         return 0;
     }
 

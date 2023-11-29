@@ -109,7 +109,6 @@ public class Selected_Apr_GUI extends JDialog {
                     InputStream in = blob.getBinaryStream();
                     image[i-1]=ImageIO.read(in);
                 }
-                System.out.println(unit_number+" "+unit);
 
                 if (unitNum.equals(unit_number)) {
                     details.setText("Unit Number: "+unit_number+"\nBedcount: "+bedcount
