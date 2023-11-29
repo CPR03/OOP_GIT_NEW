@@ -207,17 +207,21 @@ public class Pay_GUI extends JDialog {
 
     private void onCancel() {
         if(flag){
+            dispose();
+            Dashboard_GUI dash = new Dashboard_GUI();
+            dash.triggerAction();
 
-            dispose(); //If payment successful back to Dashboard
+
+           //If payment successful back to Dashboard
 
         }
         else{          //clear utilities back to Rent confirmation
             Calculate.utilities.clear(); //Clear Utilities
             dispose();
+
             Rent_Confirmation_GUI.Rent_Confirmation_GUI();
 
         }
-
 
     }
 

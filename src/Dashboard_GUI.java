@@ -50,6 +50,7 @@ public class Dashboard_GUI extends JDialog {
     private JButton btnPayRent;
     private JLabel txtWelcome;
     private JTextField txtBalance;
+    private  JButton btnUpdate;
 
 
     public Dashboard_GUI() {
@@ -72,7 +73,7 @@ public class Dashboard_GUI extends JDialog {
 
             }
         };
-        //WindowListerner for PAYGUI
+
 
         Display(actionListener);
 
@@ -99,6 +100,15 @@ public class Dashboard_GUI extends JDialog {
             }
         });
 
+
+        btnUpdate.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+               Dashboard_GUI dash = new Dashboard_GUI();
+               dash.checkType();
+
+
+            }
+        });
 
         buttonCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -129,21 +139,7 @@ public class Dashboard_GUI extends JDialog {
     String type;
     private void Display(ActionListener actionListener){
         checkType();
-        if(type.equals("new")){
-           btnrequest.setVisible(false);
-           btnPayRent.setVisible(false);
 
-        }
-        else{
-
-            btnrequest.setVisible(true);
-            btnPayRent.setVisible(true);
-            scrollPanel.setVisible(false);
-
-            myInfo_panel.setVisible(true);
-            history(); //Display Data to table-Now working
-
-        }
         //Store all Buttons to Array
         JButton [] Apart_buttons = {rentUnit1,rentUnit2,rentUnit3,rentUnit4,rentUnit5,
                 rentUnit6,rentUnit7,rentUnit8,rentUnit9,rentUnit10,rentUnit11,rentUnit12};
@@ -198,6 +194,7 @@ public class Dashboard_GUI extends JDialog {
                     result.getString("duration"),result.getInt("amenities"),
                     result.getInt("wifi"),result.getInt("cable"),result.getInt("water")
             };
+
             DefaultTableModel data= (DefaultTableModel)
                     table1.getModel();
             data.addRow(row);
@@ -210,7 +207,16 @@ public class Dashboard_GUI extends JDialog {
 
 
     }
+    //for Update
 
+    public void triggerAction() {
+        if (btnUpdate != null) {
+            ActionEvent event = new ActionEvent(btnUpdate, ActionEvent.ACTION_PERFORMED, "");
+            for (ActionListener listener : btnUpdate.getActionListeners()) {
+                listener.actionPerformed(event);
+            }
+        }
+    }
     private void checkType(){
 
         try {
@@ -228,9 +234,26 @@ public class Dashboard_GUI extends JDialog {
             }
 
 
+
         } catch (Exception exc) {
 
             exc.printStackTrace();
+        }
+
+        if(type.equals("new")){
+            btnrequest.setVisible(false);
+            btnPayRent.setVisible(false);
+
+        }
+        else{
+
+            btnrequest.setVisible(true);
+            btnPayRent.setVisible(true);
+            scrollPanel.setVisible(false);
+
+            myInfo_panel.setVisible(true);
+            history(); //Display Data to table-Now working
+
         }
 
     }
@@ -246,9 +269,8 @@ public class Dashboard_GUI extends JDialog {
         myInfo_panel.setVisible(true);
     }
 
-    private void onCancel() {
+    public void onCancel() {
         dispose();
-        LogIn_GUI.LogIn_GUI(); //Go back to login if user exit
     }
 
 
