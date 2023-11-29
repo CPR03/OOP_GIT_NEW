@@ -41,14 +41,17 @@ create table unit_photo
 );
 
 -- auto-generated definition
-create table users
+
+create table apartment.users
 (
-    user_id      int                  not null
+    user_id      int         not null
         primary key,
-    userName     varchar(50)          not null,
-    userPassword varchar(30)          not null,
-    Balance      double default 10000 not null
+    userName     varchar(50) not null,
+    userPassword varchar(30) not null,
+    Balance      double      null
 );
+
+
 
 
 
