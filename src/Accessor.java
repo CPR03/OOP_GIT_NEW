@@ -30,7 +30,6 @@ public class Accessor extends User_Data{ //Inheritance
         double bal=0;
         try {
 
-
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/apartment", "root", "root");
             Statement state = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ResultSet result = state.executeQuery("SELECT Balance FROM apartment.users WHERE userName ='"+Accessor.Username+"'");

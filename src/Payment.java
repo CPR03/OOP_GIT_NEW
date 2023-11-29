@@ -1,8 +1,5 @@
 import javax.swing.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 public class Payment extends Error {
 
@@ -37,13 +34,25 @@ public class Payment extends Error {
 
         else{
             if(accessor.checkBalance()>=Calculate.getTotalprice()){
+                int user = Accessor.getUserID();
+                double currentbal=accessor.checkBalance();
+                double newbal=currentbal-Calculate.getTotalprice();
                 try {
+
                     Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/apartment", "root", "root");
-                    Statement state = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                    ResultSet result = state.executeQuery("SELECT Balance FROM apartment.users WHERE user_id ='"+Accessor.getUserID()+"'");
+                    con.setAutoCommit(true);
+//                    Statement state = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+//
+                    PreparedStatement stmt = con.prepareStatement("UPDATE users SET Balance = ? WHERE user_id = ?");
+                    stmt.setDouble(1,newbal);
+                    stmt.setInt(2,user);
+                    stmt.executeUpdate();
+                    stmt.close();
+                    con.close();
 
-                    result.updateDouble("Balance",accessor.getBalance()-Calculate.getTotalprice());
 
+
+//                    result.updateDouble("Balance",accessor.checkBalance()-Calculate.getTotalprice());
 
                 } catch (Exception exc) {
 
@@ -51,7 +60,7 @@ public class Payment extends Error {
                 }
 
 
-                JOptionPane.showMessageDialog(null,"Remaining Balance "+ accessor.getBalance(),"Payment Successful",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null,"Remaining Balance "+ accessor.checkBalance(),"Payment Successful",JOptionPane.INFORMATION_MESSAGE);
                 flag=true;
             }
             else{
