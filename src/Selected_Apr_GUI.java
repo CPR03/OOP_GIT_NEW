@@ -94,7 +94,8 @@ public class Selected_Apr_GUI extends JDialog {
             Statement state = con.createStatement();
             ResultSet result = state.executeQuery("SELECT apartment_unit.*,apartment.unit_photo.*" +
                     "FROM apartment.apartment_unit JOIN apartment.unit_photo " +
-                    "ON unit_photo.unit_number = apartment_unit.unit_number");
+                    "ON unit_photo.unit_number = apartment_unit.unit_number" +
+                    " WHERE unit_photo.unit_number= '"+unitNum+"'");
 
 
             while (result.next()) {
@@ -110,19 +111,18 @@ public class Selected_Apr_GUI extends JDialog {
                     image[i-1]=ImageIO.read(in);
                 }
 
-                if (unitNum.equals(unit_number)) {
-                    details.setText("Unit Number: "+unit_number+"\nBedcount: "+bedcount
-                    +"\nUnit Price: "+unit_price+"\nStatus: "+status);
 
-                    poster.setIcon(new ImageIcon(resize(image[0],550,300)));
-                    poster2.setIcon(new ImageIcon(resize(image[1],550,300)));
-                    poster3.setIcon(new ImageIcon(resize(image[2],550,300)));
-                    poster4.setIcon(new ImageIcon(resize(image[3],550,300)));
-                    poster5.setIcon(new ImageIcon(resize(image[4],550,300)));
+                details.setText("Unit Number: "+unit_number+"\nBedcount: "+bedcount
+                +"\nUnit Price: "+unit_price+"\nStatus: "+status);
 
-                    break;
+                poster.setIcon(new ImageIcon(resize(image[0],550,300)));
+                poster2.setIcon(new ImageIcon(resize(image[1],550,300)));
+                poster3.setIcon(new ImageIcon(resize(image[2],550,300)));
+                poster4.setIcon(new ImageIcon(resize(image[3],550,300)));
+                poster5.setIcon(new ImageIcon(resize(image[4],550,300)));
 
-                }
+                break;
+
             }
 
 
@@ -143,6 +143,7 @@ public class Selected_Apr_GUI extends JDialog {
     private void onCancel() {
         // add your code here if necessary
         dispose();
+        Dashboard_GUI.Dashboard_GUI();
 
     }
 
