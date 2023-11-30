@@ -6,6 +6,7 @@
       <xy x="48" y="54" width="1080" height="887"/>
     </constraints>
     <properties>
+      <foreground color="-14275879"/>
       <maximumSize width="604" height="482"/>
     </properties>
     <border type="none"/>
@@ -292,6 +293,7 @@
                     </constraints>
                     <properties>
                       <alignmentY value="0.0"/>
+                      <foreground color="-14275879"/>
                       <horizontalAlignment value="0"/>
                       <horizontalTextPosition value="0"/>
                       <text value=""/>
@@ -676,7 +678,14 @@
                   <component id="70984" class="javax.swing.JTable" binding="table1" default-binding="true">
                     <constraints/>
                     <properties>
-                      <autoCreateRowSorter value="true"/>
+                      <alignmentX value="0.5"/>
+                      <autoCreateColumnsFromModel value="true"/>
+                      <autoCreateRowSorter value="false"/>
+                      <autoResizeMode value="4"/>
+                      <foreground color="-14275879"/>
+                      <rowHeight value="30"/>
+                      <rowSelectionAllowed value="false"/>
+                      <visible value="true"/>
                     </properties>
                   </component>
                 </children>

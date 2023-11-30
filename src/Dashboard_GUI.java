@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
@@ -175,42 +176,50 @@ public class Dashboard_GUI extends JDialog {
                 null,
                 new String[] {"Name","Current Apartment","Date created","Rent Per Month","Duration of Stay","Amenities","Wi-Fi","Cable","Water"}));
 
-
+        history();//Add rows by calling history
         txtBalance.setText(String.valueOf(cal.getBalance()));
         txtWelcome.setText("WELCOME!  "+cal.getUsername().toUpperCase());
 
     }
 
-    private void history(){
+    private void history(){ //Get all transaction of the User
 
         try {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/apartment", "root", "root");
             Statement state = con.createStatement();
 
-
-            ResultSet result = state.executeQuery(" SELECT apartment.users.userName,apartment.apartment_unit.unit_number,apartment.transaction.Date, apartment.transaction.monthly_due_amount, apartment.transaction.duration,apartment.transaction.amenities,apartment.transaction.wifi,apartment.transaction.cable,apartment.transaction.water\n" +
+            ResultSet result = state.executeQuery(" SELECT apartment.users.user_id,apartment.users.userName,apartment.apartment_unit.unit_number,apartment.transaction.Date, apartment.transaction.monthly_due_amount, apartment.transaction.duration,apartment.transaction.amenities,apartment.transaction.wifi,apartment.transaction.cable,apartment.transaction.water\n" +
                     "            FROM apartment.users\n" +
                     "            RIGHT JOIN apartment.transaction ON users.user_id = transaction.user_id\n" +
-                    "            LEFT JOIN apartment.apartment_unit ON transaction.apart_id = apartment_unit.apr_id;");
-            result.next();
+                    "            LEFT JOIN apartment.apartment_unit ON transaction.apart_id = apartment_unit.apr_id" +
+                    " Where users.user_id ='"+Accessor.getUserID()+"'");
 
-            Object[] row = {result.getString("userName"),result.getString("unit_number"),
-                    result.getDate("Date"),result.getDouble("monthly_due_amount"),
-                    result.getString("duration"),result.getInt("amenities"),
-                    result.getInt("wifi"),result.getInt("cable"),result.getInt("water")
-            };
+            while (result.next()){
 
-            DefaultTableModel data= (DefaultTableModel)
-                    table1.getModel();
-            data.addRow(row);
+                Object[] row = {result.getString("userName"),result.getString("unit_number"),
+                        result.getDate("Date"),result.getDouble("monthly_due_amount"),
+                        result.getString("duration"),result.getInt("amenities"),
+                        result.getInt("wifi"),result.getInt("cable"),result.getInt("water")
+                };
+                DefaultTableModel model = (DefaultTableModel) table1.getModel();
+                model.addRow(new Object[]{row[0], row[1], row[2],row[3],row[4],row[5],row[6],row[7],row[8]});
+
+
+                DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+                centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+                for(int i=0;i<9;i++){
+                    table1.getColumnModel().getColumn(i).setCellRenderer(centerRenderer); // Center align column
+                }
+
+            }
+            state.close();
+            con.close();
 
 
         } catch (Exception exc) {
 
             exc.printStackTrace();
         }
-
-
     }
     //for Update
 
@@ -267,7 +276,7 @@ public class Dashboard_GUI extends JDialog {
             duration.setText(String.valueOf(objects.get(1)));
 
 
-            history(); //Display Data to table-Now working
+             //Display Data to table-Now working
 
         }
 
