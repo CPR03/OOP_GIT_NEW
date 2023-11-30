@@ -1,4 +1,8 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -138,9 +142,48 @@ public class Transaction extends Calculate{ //To view transaction history
             exc.printStackTrace();
         }
     }
+    User_Data cal = new Accessor();
+    public static ArrayList getTransaction(){
+        Image image;
+        double remaining;
+        String duration;
+        ArrayList<Object> dashboard = new ArrayList<Object>();
 
-    public static int getStatus(){
-        return Status;
+
+        try {
+
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/apartment", "root", "root");
+            Statement state = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+
+            ResultSet result=state.executeQuery(" SELECT apartment_unit.unit_photo, transaction.rent_total, transaction.duration,transaction.user_id\n" +
+                    "            FROM apartment.transaction\n" +
+                    "            INNER JOIN apartment.apartment_unit ON transaction.apart_id = apartment_unit.apr_id");
+
+            while (result.next()){
+                if(Accessor.getUserID()==result.getInt("user_id")){
+                    java.sql.Blob blob = result.getBlob("unit_photo");
+                    InputStream in = blob.getBinaryStream();
+                    image= ImageIO.read(in).getScaledInstance(250,150,Image.SCALE_SMOOTH);
+                    remaining=result.getDouble("rent_total");
+                    duration=result.getString("duration");
+                    dashboard.add(image);
+                    dashboard.add(duration);
+                    dashboard.add(remaining);
+
+                }
+
+
+            }
+
+
+
+            state.close();
+            con.close();
+
+        } catch (Exception exc) {
+            exc.printStackTrace();
+        }
+        return dashboard;
     }
 //    public static double getTotalprice(){
 //        return Totalprice;

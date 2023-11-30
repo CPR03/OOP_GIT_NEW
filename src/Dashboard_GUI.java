@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class Dashboard_GUI extends JDialog {
     private JPanel contentPane;
@@ -52,6 +53,9 @@ public class Dashboard_GUI extends JDialog {
     private JLabel txtWelcome;
     private JTextField txtBalance;
     private  JButton btnUpdate;
+    private JLabel dash_pic;
+    private JLabel rentotal;
+    private JLabel duration;
 
 
     public Dashboard_GUI() {
@@ -218,6 +222,7 @@ public class Dashboard_GUI extends JDialog {
 //            }
 //        }
 //    }
+    ArrayList objects;
     private void checkType(){
 
         try {
@@ -242,17 +247,26 @@ public class Dashboard_GUI extends JDialog {
         }
 
         if(type.equals("new")){
+
             btnrequest.setVisible(false);
             btnPayRent.setVisible(false);
 
+
         }
         else{
-
+            objects = Transaction.getTransaction();
+            Object dashpic= objects.get(0);
+            ImageIcon icon = new ImageIcon((Image) dashpic);
             btnrequest.setVisible(true);
             btnPayRent.setVisible(true);
             scrollPanel.setVisible(false);
-
             myInfo_panel.setVisible(true);
+
+            dash_pic.setIcon(icon);
+            rentotal.setText(String.valueOf(objects.get(2)));
+            duration.setText(String.valueOf(objects.get(1)));
+
+
             history(); //Display Data to table-Now working
 
         }
