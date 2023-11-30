@@ -9,6 +9,7 @@ import java.sql.Statement;
 
 public class Dashboard_GUI extends JDialog {
     private JPanel contentPane;
+
     private JButton buttonOK;
     private JButton buttonCancel;
     private JLabel profilePic;
@@ -55,21 +56,20 @@ public class Dashboard_GUI extends JDialog {
 
     public Dashboard_GUI() {
         setContentPane(contentPane);
-        setModal(true);
+
         getRootPane().setDefaultButton(buttonOK);
 
         pane.getVerticalScrollBar().setUnitIncrement(16); //set scroll speed
-
 
         //Know what button is clicked returns the label
         ActionListener actionListener = new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
 
                 Accessor.setUnitnum(actionEvent.getActionCommand());
-
+                dispose();
                 Selected_Apr_GUI.Selected_Apr_GUI();
                 //make dashboard visible if button cancel is clicked in Selected GUI
-                setVisible(true);
+
 
             }
         };
@@ -101,14 +101,15 @@ public class Dashboard_GUI extends JDialog {
         });
 
 
-        btnUpdate.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-               Dashboard_GUI dash = new Dashboard_GUI();
-               dash.checkType();
-
-
-            }
-        });
+//        btnUpdate.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                dispose();
+//
+//
+//
+//
+//            }
+//        });
 
         buttonCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -209,14 +210,14 @@ public class Dashboard_GUI extends JDialog {
     }
     //for Update
 
-    public void triggerAction() {
-        if (btnUpdate != null) {
-            ActionEvent event = new ActionEvent(btnUpdate, ActionEvent.ACTION_PERFORMED, "");
-            for (ActionListener listener : btnUpdate.getActionListeners()) {
-                listener.actionPerformed(event);
-            }
-        }
-    }
+//    public void triggerAction() {
+//        if (btnUpdate != null) {
+//            ActionEvent event = new ActionEvent(btnUpdate, ActionEvent.ACTION_PERFORMED, "");
+//            for (ActionListener listener : btnUpdate.getActionListeners()) {
+//                listener.actionPerformed(event);
+//            }
+//        }
+//    }
     private void checkType(){
 
         try {
@@ -297,3 +298,5 @@ public class Dashboard_GUI extends JDialog {
     }
 
 }
+
+

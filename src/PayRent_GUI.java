@@ -62,6 +62,7 @@ public class PayRent_GUI extends JDialog {
 
     private void onCancel() {
         // add your code here if necessary
+
         dispose();
     }
 

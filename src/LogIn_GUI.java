@@ -127,7 +127,7 @@ public class LogIn_GUI extends JDialog {
 
 
 
-                        setVisible(false); //hide login
+                        dispose();//hide login
                         //Run Dashboard
                         Dashboard_GUI.Dashboard_GUI();
 

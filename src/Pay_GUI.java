@@ -208,8 +208,8 @@ public class Pay_GUI extends JDialog {
     private void onCancel() {
         if(flag){
             dispose();
-            Dashboard_GUI dash = new Dashboard_GUI();
-            dash.triggerAction();
+            Dashboard_GUI.Dashboard_GUI();
+
 
 
            //If payment successful back to Dashboard
