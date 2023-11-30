@@ -41,6 +41,7 @@ public class Calculate extends Accessor {
         totalprice=num;
     }
     public static void setDuration(String date){
+
         Duration=date;
     }
     public static void setUnit_number(String unit){
@@ -79,9 +80,7 @@ public class Calculate extends Accessor {
 
         return utilities;
     }
-    public static String getDiscountCode(){
-        return DiscountCode;
-    }
+
 
 
 }

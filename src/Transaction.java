@@ -157,20 +157,21 @@ public class Transaction extends Calculate{ //To view transaction history
 
             ResultSet result=state.executeQuery(" SELECT apartment_unit.unit_photo, transaction.rent_total, transaction.duration,transaction.user_id\n" +
                     "            FROM apartment.transaction\n" +
-                    "            INNER JOIN apartment.apartment_unit ON transaction.apart_id = apartment_unit.apr_id");
+                    "            INNER JOIN apartment.apartment_unit ON transaction.apart_id = apartment_unit.apr_id" +
+                    " WHERE user_id='"+Accessor.getUserID()+"'");
 
             while (result.next()){
-                if(Accessor.getUserID()==result.getInt("user_id")){
-                    java.sql.Blob blob = result.getBlob("unit_photo");
-                    InputStream in = blob.getBinaryStream();
-                    image= ImageIO.read(in).getScaledInstance(250,150,Image.SCALE_SMOOTH);
-                    remaining=result.getDouble("rent_total");
-                    duration=result.getString("duration");
-                    dashboard.add(image);
-                    dashboard.add(duration);
-                    dashboard.add(remaining);
+                java.sql.Blob blob = result.getBlob("unit_photo");
+                InputStream in = blob.getBinaryStream();
+                image= ImageIO.read(in).getScaledInstance(250,150,Image.SCALE_SMOOTH);
+                remaining=result.getDouble("rent_total");
+                duration=result.getString("duration");
 
-                }
+                dashboard.add(image);
+                dashboard.add(duration);
+                dashboard.add(remaining);
+
+
 
 
             }

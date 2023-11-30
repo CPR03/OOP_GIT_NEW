@@ -295,6 +295,7 @@ public class Dashboard_GUI extends JDialog {
 
     public void onCancel() {
         dispose();
+        LogIn_GUI.LogIn_GUI();
     }
 
 

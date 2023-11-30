@@ -74,7 +74,7 @@ public class Request_Maintenance_GUI extends JDialog{
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             Date date = formatter.parse(formatter.format(new Date()));
             result.updateDate("date_created", new java.sql.Date(date.getTime()));
-            result.updateInt("user_id",cal.getUserID());
+            result.updateInt("user_id",Accessor.getUserID());
 
             result.insertRow();
             result.beforeFirst();
