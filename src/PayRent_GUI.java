@@ -132,6 +132,7 @@ public class PayRent_GUI extends JDialog {
         chargefee=Double.parseDouble(txtCharge.getText());
 
         utilfee=Calculate.getAdditional();
+        System.out.println(utilfee);
         price=unitprice*(discount/100);
         total=(unitprice-price)+chargefee+utilfee-last_chargefee; //Subtract last charge fee
         txtbill.setText(String.valueOf(total));

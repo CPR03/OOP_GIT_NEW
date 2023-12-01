@@ -22,18 +22,19 @@ public class Calculate extends Accessor {
 
 
     public static void setAdditional(){
+
         for (int i = 0; i < utilities.size(); i++){
             if(utilities.get(i).equals("Amenities")){
-                additional=200;
+                additional+=200;
             }
             else if (utilities.get(i).equals("Wi-Fi")) {
-                additional=300;
+                additional+=300;
             }
             else if (utilities.get(i).equals("Cable")) {
-                additional=400;
+                additional+=400;
             }
             else{
-                additional=100; //Water
+                additional+=100; //Water
             }
         }
     }
