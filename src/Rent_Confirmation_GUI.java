@@ -24,26 +24,16 @@ public class Rent_Confirmation_GUI extends JDialog {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
-        btn1month.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Duration="1month";
-            }
-        });
-        btn3months.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Duration="3months";
-            }
-        });
-        halfyear.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Duration="6months";
-            }
-        });
-        btn1year.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Duration="1year";
-            }
-        });
+
+        ButtonGroup durationgroup = new ButtonGroup();
+        durationgroup.add(btn1month);
+        durationgroup.add(btn3months);
+        durationgroup.add(halfyear);
+        durationgroup.add(btn1year);
+
+
+
+
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -83,6 +73,8 @@ public class Rent_Confirmation_GUI extends JDialog {
         buttonCancel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         txtUnit.setText(chosen_details.getUnit_number());
         txtUnit.setHorizontalAlignment(SwingConstants.CENTER);
+        btn1month.setSelected(true);
+
     }
 
 
@@ -100,6 +92,16 @@ public class Rent_Confirmation_GUI extends JDialog {
         }
         if(wiFiCheckBox.isSelected()){
             utilities.add(wiFiCheckBox.getText());
+        }
+
+        if(btn1month.isSelected()){
+            Duration="1 month";
+        } else if (btn3months.isSelected()) {
+            Duration="3 months";
+        } else if (halfyear.isSelected()) {
+            Duration="6 months";
+        }else {
+            Duration="1 year";
         }
 
 

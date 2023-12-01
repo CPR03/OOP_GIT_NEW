@@ -10,7 +10,9 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class Transaction extends Calculate{ //To view transaction history
     private static String Unit_number;
@@ -28,30 +30,15 @@ public class Transaction extends Calculate{ //To view transaction history
     static ArrayList<String> util = new ArrayList<String>();
 
 
-//    public static void setHistory(int Trans_id){
-//        trans_id=Trans_id;
-//        Unit_number=getUnitnum();
-//        Unit_price=getUnit_price();
-//        Duration=getDuration();
-//        Paymentmod = getPaymentmod();
-//        Totalprice = getTotalprice();
-//        Utilities= getUtilities();
-//        Additional = getAdditional();
-//        balance=getBalance();
-//        Remaining_months= setmonths();
-//        Remaining_balance=Remaining_months*Totalprice;
-//
-//
-//
-//    }
+
 
     public static int getmonths(){
         int months=0;
-        if(getDuration().equals("3months")){
+        if(getDuration().equals("3 months")){
             months=3;
-        } else if (getDuration().equals("6months")) {
+        } else if (getDuration().equals("6 months")) {
             months=6;
-        } else if (getDuration().equals("1year")) {
+        } else if (getDuration().equals("1 year")) {
             months=12;
         }else{
             months=1;
@@ -93,7 +80,7 @@ public class Transaction extends Calculate{ //To view transaction history
 
 
 
-
+            result.updateDouble("Discount_code",Calculate.getDiscountCode()*100);
 
             //Date
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -106,6 +93,7 @@ public class Transaction extends Calculate{ //To view transaction history
             result.updateDouble("rent_total",getTotalprice()*getmonths());
             //monthly due
             result.updateDouble("monthly_due_amount",getTotalprice());
+
             result.updateString("duration",getDuration());
 
             //utilities
@@ -142,7 +130,7 @@ public class Transaction extends Calculate{ //To view transaction history
             exc.printStackTrace();
         }
     }
-    User_Data cal = new Accessor();
+
     public static ArrayList getTransaction(){
         Image image;
         double remaining;
@@ -163,7 +151,7 @@ public class Transaction extends Calculate{ //To view transaction history
             while (result.next()){
                 java.sql.Blob blob = result.getBlob("unit_photo");
                 InputStream in = blob.getBinaryStream();
-                image= ImageIO.read(in).getScaledInstance(250,150,Image.SCALE_SMOOTH);
+                image= ImageIO.read(in).getScaledInstance(250,200,Image.SCALE_SMOOTH);
                 remaining=result.getDouble("rent_total");
                 duration=result.getString("duration");
 
@@ -186,24 +174,49 @@ public class Transaction extends Calculate{ //To view transaction history
         }
         return dashboard;
     }
-//    public static double getTotalprice(){
-//        return Totalprice;
-//    }
+
+    public static ArrayList getlast_trans(){
+        ArrayList<Object> last_transaction = new ArrayList<Object>();
+        try {
+
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/apartment", "root", "root");
+            Statement state = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+
+            ResultSet result=state.executeQuery(" SELECT apartment_unit.apr_id,apartment_unit.unit_number,apartment_unit.unit_price, transaction.*" +
+                    "            FROM apartment.transaction\n" +
+                    "            INNER JOIN apartment.apartment_unit ON transaction.apart_id = apartment_unit.apr_id" +
+                    " WHERE user_id='"+Accessor.getUserID()+"' order by Date DESC ");
+
+            while (result.next()){
+//                Calendar cal1 = new GregorianCalendar();
+//                cal1.add(Calendar.MONTH, +1);
+//                last_transaction.add(result.getDate("Date",cal1));
+                last_transaction.add(result.getInt("apr_id"));
+                last_transaction.add(result.getString("unit_number"));
+                last_transaction.add(result.getInt("unit_price"));
+                last_transaction.add(result.getInt("tran_id"));
+                last_transaction.add(result.getDate("Date"));
+                last_transaction.add(result.getDouble("Discount_code"));
+                last_transaction.add(result.getDouble("monthly_due_amount"));
+                last_transaction.add(result.getString("duration"));
+                last_transaction.add(result.getInt("amenities"));
+                last_transaction.add(result.getInt("wifi"));
+                last_transaction.add(result.getInt("cable"));
+                last_transaction.add(result.getInt("water"));
+                last_transaction.add(result.getString("payment_method"));
+
+
+            }
+
+
+            state.close();
+            con.close();
+
+        } catch (Exception exc) {
+            exc.printStackTrace();
+        }
+
+        return last_transaction;
+    }
 //
-//    public String getUnit_number(){
-//        return Unit_number;
-//    }
-//    public static int getUnit_price(){
-//        return Unit_price;
-//    }
-//
-//    public static String getDuration() {
-//        return Duration;
-//    }
-//    public static String getPaymentmod() {
-//        return Paymentmod;
-//    }
-//    public static double getAdditional(){
-//        return Additional;
-//    }
 }

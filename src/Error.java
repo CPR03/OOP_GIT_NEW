@@ -15,5 +15,15 @@ public class Error {
         JOptionPane.showMessageDialog(null, "Input is insufficient!", "Debit | Warning", JOptionPane.WARNING_MESSAGE);
     }
 
+    public void invalidInput(){
+        JOptionPane.showMessageDialog(null, "NaN", "Invalid Input", JOptionPane.WARNING_MESSAGE);
+
+    }
+    public void nullInput(){
+        JOptionPane.showMessageDialog(null, "No Input", "Null", JOptionPane.WARNING_MESSAGE);
+
+    }
+
+
 
 }

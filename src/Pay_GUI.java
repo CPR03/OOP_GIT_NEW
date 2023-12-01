@@ -26,37 +26,45 @@ public class Pay_GUI extends JDialog {
     private JTextField txtUtil;
     String DiscountCode;
     String mode;
+    double discount;
+    double total;
 
     public Pay_GUI() {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(paybtn);
 
-
-
-
-
+        cmbDiscount.setSelectedItem("Roland");      //Set default value to avoid empty error
+        cmbPayMethod.setSelectedItem("SoulSpace");
+        DiscountCode=cmbDiscount.getSelectedItem().toString();
+        Calculate.setDiscountCode(discount);
+        getDiscount();
         cmbDiscount.addActionListener(new ActionListener() {//Check selected item from Discount code and set the Discount
             public void actionPerformed(ActionEvent e) {
 
                 DiscountCode=cmbDiscount.getSelectedItem().toString();
-                Calculate.setDiscountCode(DiscountCode);
-                getDiscount();
+                Calculate.setDiscountCode(discount);
+                getDiscount();  //Display Discount
 
 
             }
         });
+        mode = cmbPayMethod.getSelectedItem().toString(); //Set default value to avoid empty error
+        Calculate.setPaymentmod(mode);
+        getPaymentmode();  //Display Payment mode
+        Calculate.setAdditional();//Compute Additional fee for Utilities
+        getTotal();
         cmbPayMethod.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 mode = cmbPayMethod.getSelectedItem().toString();
                 Calculate.setPaymentmod(mode);
-                getPaymentmode();
+                getPaymentmode();  //Display Payment mode
                 getTotal();
             }
         });
 
-        paybtn.addActionListener(new ActionListener() {//Check selected item from Discount code and set the Discount
+        paybtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
                 onPay();
@@ -98,7 +106,8 @@ public class Pay_GUI extends JDialog {
 
         initialtxt.setText(String.valueOf(Calculate.getUnit_price()));
         txtDuration.setText(Calculate.getDuration());
-        Calculate.setAdditional();//Compute Additional fee for Utilities
+
+
 
         txtUtil.setText(String.valueOf(Calculate.getAdditional()));
 
@@ -108,16 +117,30 @@ public class Pay_GUI extends JDialog {
 
 
     }
-
+//    if(utilities.get(i).equals("Amenities")){
+//        additional=200;
+//    }
+//            else if (utilities.get(i).equals("Wi-Fi")) {
+//        additional=300;
+//    }
+//            else if (utilities.get(i).equals("Cable")) {
+//        additional=400;
+//    }
+//            else{
+//        additional=100; //Water
+//    }
 
     private void getTotal(){
-        double total,price,chargefee,discount;
+        double total,price,chargefee,utilfee;
         chargefee=Double.parseDouble(chargetxt.getText());
+        utilfee=Calculate.getAdditional();
         discount=Double.parseDouble(disctxt.getText().substring(0,2))/100;
         price=Calculate.getUnit_price()*discount;
-        total=(Calculate.getUnit_price()-price)+chargefee;
+        total=(Calculate.getUnit_price()-price)+chargefee+utilfee;
         totaltxt.setText(String.valueOf(total));
         Calculate.setTotalprice(total);
+
+
 
     }
 
@@ -129,6 +152,7 @@ public class Pay_GUI extends JDialog {
             case "Hakim" -> disctxt.setText("15%");
             default -> disctxt.setText("10%");
         }
+
 
     }
     private void getPaymentmode(){
@@ -144,12 +168,17 @@ public class Pay_GUI extends JDialog {
 
     Accessor accessor = new Accessor();
     Payment confirm = new Payment();
-    boolean flag=false; //Payment status indicator
+    int status=1; //Payment status indicator
     private void onPay() {
-        ; //Check if payment is successful
-        flag=confirm.confirmPayment(mode);
+        //Check if payment is successful
+        status=confirm.confirmPayment(mode);
+        //Status 0 = successful payment
+        //Status 1 = unsuccessful payment
+        //Status -1 = Null payment
 
-        if(flag){// if Payment successful print receipt update database
+
+        Calculate.setDiscountCode(discount);
+        if(status==0){// if Payment successful print receipt update database
 
             String convert = "";
             for (int i = 0; i < Calculate.getUtilities().size(); i++) {
@@ -193,21 +222,23 @@ public class Pay_GUI extends JDialog {
 
             //Update to Database
             Transaction.saveTransaction();
-        }else{
+        }else if (status==1){
             JOptionPane.showMessageDialog(null,"Payment Unsuccessful\nPlease Try again!");
             onPay(); //Call itself
         }
-
-
-
 
     }
 
 
 
     private void onCancel() {
-        if(flag){
+        //Clear Utilities
+        Calculate cal=new Calculate();
+
+        if(status==0){
             dispose();
+
+            cal.reset();
             Dashboard_GUI.Dashboard_GUI();
 
 
@@ -216,7 +247,8 @@ public class Pay_GUI extends JDialog {
 
         }
         else{          //clear utilities back to Rent confirmation
-            Calculate.utilities.clear(); //Clear Utilities
+            Calculate.utilities.clear();
+            Calculate.resetadditional();
             dispose();
 
             Rent_Confirmation_GUI.Rent_Confirmation_GUI();

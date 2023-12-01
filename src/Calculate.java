@@ -5,7 +5,7 @@ public class Calculate extends Accessor {
     private static int Unit_price;
     private static String Duration;
     private static String Paymentmod;
-    private static String DiscountCode;
+    private static double DiscountCode;
     private static Double totalprice;
     private static double additional;
     static ArrayList<String> utilities = new ArrayList<String>();
@@ -24,19 +24,23 @@ public class Calculate extends Accessor {
     public static void setAdditional(){
         for (int i = 0; i < utilities.size(); i++){
             if(utilities.get(i).equals("Amenities")){
-                additional+=200;
+                additional=200;
             }
             else if (utilities.get(i).equals("Wi-Fi")) {
-                additional+=300;
+                additional=300;
             }
             else if (utilities.get(i).equals("Cable")) {
-                additional+=400;
+                additional=400;
             }
             else{
-                additional+=100; //Water
+                additional=100; //Water
             }
         }
     }
+    public static void resetadditional(){
+        additional=0;
+    }
+
     public static void setTotalprice(Double num){
         totalprice=num;
     }
@@ -53,8 +57,11 @@ public class Calculate extends Accessor {
     public static void setPaymentmod(String paymentmod){
         Paymentmod=paymentmod;
     }
-    public static void setDiscountCode(String discountCode){
+    public static void setDiscountCode(double discountCode){
         DiscountCode=discountCode;
+    }
+    public static double getDiscountCode(){
+        return DiscountCode;
     }
 
     public String getUnit_number(){
@@ -79,6 +86,21 @@ public class Calculate extends Accessor {
     public static ArrayList<String> getUtilities(){
 
         return utilities;
+    }
+
+    public void reset(){
+
+        setTotalprice(0.0);
+        setDuration("");
+        utilities.clear();
+        setDiscountCode(0.0);
+        setPaymentmod("");
+        setUnitnum("");
+        setUnit_price(0);
+        setUnit_number("");
+      
+        resetadditional();
+
     }
 
 

@@ -99,7 +99,7 @@ public class Dashboard_GUI extends JDialog {
 
         btnPayRent.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                dispose();
                 PayRent_GUI.PayRent_GUI();
 
             }
@@ -174,7 +174,7 @@ public class Dashboard_GUI extends JDialog {
 
         table1.setModel(new DefaultTableModel(
                 null,
-                new String[] {"Name","Current Apartment","Date created","Rent Per Month","Duration of Stay","Amenities","Wi-Fi","Cable","Water"}));
+                new String[] {"Name","Current Apartment","Date created","Rent Per Month","Payment Method","Duration of Stay","Amenities","Wi-Fi","Cable","Water"}));
 
         history();//Add rows by calling history
         txtBalance.setText(String.valueOf(cal.getBalance()));
@@ -188,7 +188,7 @@ public class Dashboard_GUI extends JDialog {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/apartment", "root", "root");
             Statement state = con.createStatement();
 
-            ResultSet result = state.executeQuery(" SELECT apartment.users.user_id,apartment.users.userName,apartment.apartment_unit.unit_number,apartment.transaction.Date, apartment.transaction.monthly_due_amount, apartment.transaction.duration,apartment.transaction.amenities,apartment.transaction.wifi,apartment.transaction.cable,apartment.transaction.water\n" +
+            ResultSet result = state.executeQuery(" SELECT apartment.users.user_id,apartment.users.userName,apartment.apartment_unit.unit_number,apartment.transaction.Date, apartment.transaction.monthly_due_amount,apartment.transaction.payment_method, apartment.transaction.duration,apartment.transaction.amenities,apartment.transaction.wifi,apartment.transaction.cable,apartment.transaction.water\n" +
                     "            FROM apartment.users\n" +
                     "            RIGHT JOIN apartment.transaction ON users.user_id = transaction.user_id\n" +
                     "            LEFT JOIN apartment.apartment_unit ON transaction.apart_id = apartment_unit.apr_id" +
@@ -197,17 +197,17 @@ public class Dashboard_GUI extends JDialog {
             while (result.next()){
 
                 Object[] row = {result.getString("userName"),result.getString("unit_number"),
-                        result.getDate("Date"),result.getDouble("monthly_due_amount"),
+                        result.getDate("Date"),result.getDouble("monthly_due_amount"),result.getString("payment_method"),
                         result.getString("duration"),result.getInt("amenities"),
                         result.getInt("wifi"),result.getInt("cable"),result.getInt("water")
                 };
                 DefaultTableModel model = (DefaultTableModel) table1.getModel();
-                model.addRow(new Object[]{row[0], row[1], row[2],row[3],row[4],row[5],row[6],row[7],row[8]});
+                model.addRow(new Object[]{row[0], row[1], row[2],row[3],row[4],row[5],row[6],row[7],row[8],row[9]});
 
 
                 DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
                 centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-                for(int i=0;i<9;i++){
+                for(int i=0;i<10;i++){
                     table1.getColumnModel().getColumn(i).setCellRenderer(centerRenderer); // Center align column
                 }
 

@@ -6,33 +6,61 @@ public class Payment extends Error {
 
 
     Accessor accessor = new Accessor();
-    public boolean confirmPayment(String mode){
-        boolean flag=false;
+    public int confirmPayment(String mode){
+        int stat=10; //initialize not in choices(-1,0,1)
+        String text;
         double input;
 
         if(mode.equals("GCash" )){
-            input=Double.parseDouble(JOptionPane.showInputDialog(null,"Input Amount: ","Gcash",JOptionPane.QUESTION_MESSAGE));
-            if(input>=Calculate.getTotalprice()){
-                JOptionPane.showMessageDialog(null,"Change: "+ (input - Calculate.getTotalprice()),"Payment Successful",JOptionPane.INFORMATION_MESSAGE);
-                flag=true;
+
+            text=JOptionPane.showInputDialog(null,"Input Amount: ","Gcash",JOptionPane.QUESTION_MESSAGE);
+            try {
+                if(isNumeric(text)){
+                    input=Double.parseDouble(text);
+                    if(input>=Calculate.getTotalprice()){
+                        JOptionPane.showMessageDialog(null,"Change: "+ (input - Calculate.getTotalprice()),"Payment Successful",JOptionPane.INFORMATION_MESSAGE);
+                        stat=0;
+                    }
+                    else {
+                        GcashInsufficient();
+                        stat=1;
+                    }
+                }else{
+                    invalidInput();
+                    stat=1;
+                }
+            }catch (NullPointerException e){
+                nullInput();
+                stat=-1;
             }
-            else{
-                GcashInsufficient();
-            }
+
         }
         else if (mode.equals("Debit")) {
-            input=Double.parseDouble(JOptionPane.showInputDialog(null,"Input Amount: ","DebitCard",JOptionPane.QUESTION_MESSAGE));
-            if(input>=Calculate.getTotalprice()){
-                JOptionPane.showMessageDialog(null,"Change: "+ (input - Calculate.getTotalprice()),"Payment Successful",JOptionPane.INFORMATION_MESSAGE);
-                flag=true;
+            text=JOptionPane.showInputDialog(null,"Input Amount: ","DebitCard",JOptionPane.QUESTION_MESSAGE);
+            try {
+                if(isNumeric(text)){
+                    input=Double.parseDouble(text);
+                    if(input>=Calculate.getTotalprice()){
+                        JOptionPane.showMessageDialog(null,"Change: "+ (input - Calculate.getTotalprice()),"Payment Successful",JOptionPane.INFORMATION_MESSAGE);
+                        stat=0;
+                    }
+                    else {
+                        DebitInsufficient();
+                        stat=1;
+                    }
+                }else {
+                    invalidInput();
+                    stat=1;
+                }
+            }catch (NullPointerException e){
+                nullInput();
+                stat=-1;
             }
-            else {
-                DebitInsufficient();
-            }
+
 
         }
 
-        else{
+        else{  //SoulSpace method
             if(accessor.checkBalance()>=Calculate.getTotalprice()){
                 int user = Accessor.getUserID();
                 double currentbal=accessor.checkBalance();
@@ -61,7 +89,7 @@ public class Payment extends Error {
 
 
                 JOptionPane.showMessageDialog(null,"Remaining Balance "+ accessor.checkBalance(),"Payment Successful",JOptionPane.INFORMATION_MESSAGE);
-                flag=true;
+                stat=0;
             }
             else{
                 inputInsufficient();
@@ -74,6 +102,16 @@ public class Payment extends Error {
 
 
 
-        return flag;
+
+        return stat;
+    }
+
+    public static boolean isNumeric(String str) { //check if input is number
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
+        }
     }
 }
