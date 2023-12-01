@@ -137,6 +137,7 @@ public class Pay_GUI extends JDialog {
         discount=Double.parseDouble(disctxt.getText().substring(0,2))/100;
         price=Calculate.getUnit_price()*discount;
         total=(Calculate.getUnit_price()-price)+chargefee+utilfee;
+
         totaltxt.setText(String.valueOf(total));
         Calculate.setTotalprice(total);
 

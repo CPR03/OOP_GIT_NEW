@@ -32,7 +32,7 @@ public class PayRent_GUI extends JDialog {
     int unitprice= (int) last_transaction.get(2);
 
     String duration = (String) last_transaction.get(7);
-    String last_mode= (String) last_transaction.get(12);
+
     Date due_date= (Date) last_transaction.get(4);
     public PayRent_GUI() {
         setContentPane(contentPane);
@@ -123,19 +123,17 @@ public class PayRent_GUI extends JDialog {
 
     }
     private void getTotal(){
-        double total,price,chargefee,last_chargefee;
-        switch (last_mode) {   //Last chargefee
-            case "SoulSpace" -> last_chargefee=0;
-            case "GCash" -> last_chargefee=100;
-            default -> last_chargefee=200;
-        }
+        double total,price,chargefee;
+
         chargefee=Double.parseDouble(txtCharge.getText());
 
         utilfee=Calculate.getAdditional();
-        System.out.println(utilfee);
+
         price=unitprice*(discount/100);
-        total=(unitprice-price)+chargefee+utilfee-last_chargefee; //Subtract last charge fee
+
+        total=((unitprice-price)+chargefee+utilfee);
         txtbill.setText(String.valueOf(total));
+
         Calculate.setTotalprice(total);
 
     }
