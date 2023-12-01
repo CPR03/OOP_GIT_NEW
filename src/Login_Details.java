@@ -3,6 +3,7 @@ public class Login_Details {
     private static String username;
     private static String userPassword;
     private int Balance=10000;
+
     //Constructor
     public Login_Details(String user, String pass){
         username = user;

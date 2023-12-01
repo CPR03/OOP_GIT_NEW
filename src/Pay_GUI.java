@@ -131,6 +131,7 @@ public class Pay_GUI extends JDialog {
 //    }
 
     private void getTotal(){
+
         double total,price,chargefee,utilfee;
         chargefee=Double.parseDouble(chargetxt.getText());
         utilfee=Calculate.getAdditional();
@@ -140,8 +141,6 @@ public class Pay_GUI extends JDialog {
 
         totaltxt.setText(String.valueOf(total));
         Calculate.setTotalprice(total);
-
-
 
     }
 
@@ -168,32 +167,35 @@ public class Pay_GUI extends JDialog {
     }
 
     Accessor accessor = new Accessor();
+
     Payment confirm = new Payment();
+
     int status=1; //Payment status indicator
+
     private void onPay() {
+
         //Check if payment is successful
         status=confirm.confirmPayment(mode);
         //Status 0 = successful payment
         //Status 1 = unsuccessful payment
         //Status -1 = Null payment
 
-
         Calculate.setDiscountCode(discount);
         if(status==0){// if Payment successful print receipt update database
 
             String convert = "";
+
             for (int i = 0; i < Calculate.getUtilities().size(); i++) {
+
                 convert += String.valueOf(Calculate.getUtilities().get(i)); //Get all utilities
 
                 if (i < Calculate.getUtilities().size() - 1)
                     convert += " ";
-            }
 
+            }
 
             Font font = new Font("Arial", Font.PLAIN, 16);
             receipttxt.setFont(font);
-
-
 
             receipttxt.setText(
 
@@ -223,31 +225,33 @@ public class Pay_GUI extends JDialog {
 
             //Update to Database
             Transaction.saveTransaction();
-        }else if (status==1){
+        }
+        else if (status==1){
+
             JOptionPane.showMessageDialog(null,"Payment Unsuccessful\nPlease Try again!");
             onPay(); //Call itself
+
         }
 
     }
-
 
 
     private void onCancel() {
         //Clear Utilities
         Calculate cal=new Calculate();
 
+        //If payment successful back to Dashboard
         if(status==0){
             dispose();
 
             cal.reset();
             Dashboard_GUI.Dashboard_GUI();
 
-
-
-           //If payment successful back to Dashboard
-
         }
-        else{          //clear utilities back to Rent confirmation
+
+        else{
+
+            //clear utilities back to Rent confirmation
             Calculate.utilities.clear();
             Calculate.resetadditional();
             dispose();

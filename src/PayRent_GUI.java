@@ -34,7 +34,9 @@ public class PayRent_GUI extends JDialog {
     String duration = (String) last_transaction.get(7);
 
     Date due_date= (Date) last_transaction.get(4);
+
     public PayRent_GUI() {
+
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(paybtn);
@@ -44,10 +46,12 @@ public class PayRent_GUI extends JDialog {
                 onPay();
             }
         });
+
         cmbmethod.setSelectedItem("SoulSpace");
         mode = cmbmethod.getSelectedItem().toString(); //Set default value to avoid empty error
 
         getcharge();
+
         if((int) last_transaction.get(8)==1){
             utilities.add("Amenities");
         }
@@ -57,12 +61,15 @@ public class PayRent_GUI extends JDialog {
         if((int) last_transaction.get(10)==1){
             utilities.add("Cable");
         }
+
         if((int) last_transaction.get(11)==1){
             utilities.add("Water");
         }
-        Calculate.setUtilities(utilities);//Display Payment mode
+
+        Calculate.setUtilities(utilities);
         Calculate.setAdditional();
         getTotal();
+
         cmbmethod.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -103,6 +110,8 @@ public class PayRent_GUI extends JDialog {
         buttonCancel.setIcon(new ImageIcon(new ImageIcon("Images/Components/button_cancel.png").getImage().getScaledInstance(80, 23, Image.SCALE_SMOOTH)));
         buttonCancel.setHorizontalTextPosition(SwingConstants.CENTER);
         buttonCancel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        //Display Pay Rent Details
         txtDiscount.setText((discount) + "%");
         txtunitprice.setText(String.valueOf(unitprice));
 
@@ -115,28 +124,27 @@ public class PayRent_GUI extends JDialog {
 
         txt_nextbill.setText(formattedDate);
 
-
-
-
-
-
-
     }
+
+    //Get Amount Due
     private void getTotal(){
         double total,price,chargefee;
 
-        chargefee=Double.parseDouble(txtCharge.getText());
+        chargefee = Double.parseDouble(txtCharge.getText());
 
-        utilfee=Calculate.getAdditional();
+        utilfee = Calculate.getAdditional();
 
-        price=unitprice*(discount/100);
+        price = unitprice*(discount/100);
 
-        total=((unitprice-price)+chargefee+utilfee);
-        txtbill.setText(String.valueOf(total));
+        total = ((unitprice-price)+chargefee+utilfee); //Compute Total
+
+        txtbill.setText(String.valueOf(total)); //Display total amount due
 
         Calculate.setTotalprice(total);
 
     }
+
+    //Determine Charge
     private void getcharge(){
 
         switch (mode) {
@@ -145,20 +153,21 @@ public class PayRent_GUI extends JDialog {
             default -> txtCharge.setText("200");
         }
 
-
     }
+
     Payment pay = new Payment();
+
     Accessor accessor = new Accessor();
+
     int status;
+
     private void onPay() {
 
-
         Calculate.setPaymentmod(mode);
-        status=pay.confirmPayment(mode);
+        status = pay.confirmPayment(mode);
         //Status 0 = successful payment
         //Status 1 = unsuccessful payment
         //Status -1 = Null payment
-
 
         if(status==0){// if Payment successful print receipt update database
 
@@ -173,7 +182,6 @@ public class PayRent_GUI extends JDialog {
 
             Font font = new Font("Arial", Font.PLAIN, 14);
             receipttxt.setFont(font);
-
 
 
             receipttxt.setText(
@@ -215,11 +223,11 @@ public class PayRent_GUI extends JDialog {
     }
 
     private void addTransaction(){
+
+
         try {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/apartment", "root", "root");
             Statement state = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-
-
 
 
             ResultSet getMaxTranId = state.executeQuery("SELECT MAX(tran_id) as maxTranId FROM apartment.transaction");
@@ -253,6 +261,8 @@ public class PayRent_GUI extends JDialog {
             result.updateDouble("monthly_due_amount",Calculate.getTotalprice());
 
             result.updateString("duration",duration);
+
+
 
             //utilities
             result.updateInt("amenities", (int) last_transaction.get(8));

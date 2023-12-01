@@ -79,17 +79,13 @@ public class Dashboard_GUI extends JDialog {
             }
         };
 
-
         Display(actionListener);
-
-
 
         btnrequest.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onRequest();
             }
         });
-
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -142,8 +138,11 @@ public class Dashboard_GUI extends JDialog {
     }
 
     User_Data cal = new Accessor();
+
     String type;
+
     private void Display(ActionListener actionListener){
+
         checkType();
 
         //Store all Buttons to Array
@@ -153,8 +152,11 @@ public class Dashboard_GUI extends JDialog {
         //Store all label to Array
         JLabel [] Unit_image={unit1,unit2,unit3,unit4,unit5,unit6,unit7,unit8,unit9,unit10,unit11,unit12};
 
+        //Set Apartment Images
         for(int i=0;i<12;i++){
+
             Apart_buttons[i].addActionListener(actionListener);//add actionlistener to every Rent button
+
             //Set image for buttons
             Apart_buttons[i].setIcon(new ImageIcon(new ImageIcon("Images/Components/button_red.png").getImage().getScaledInstance(150, 30, Image.SCALE_SMOOTH)));
             Apart_buttons[i].setHorizontalTextPosition(SwingConstants.CENTER);//Center text
@@ -166,6 +168,7 @@ public class Dashboard_GUI extends JDialog {
             Unit_image[i].setIcon(new ImageIcon(new ImageIcon(imagePath).getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH)));
 
         }
+
         btnrequest.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnPayRent.setCursor(new Cursor(Cursor.HAND_CURSOR));
         profilePic.setIcon(new ImageIcon(new ImageIcon("Images/Components/profile.png").getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
@@ -188,6 +191,7 @@ public class Dashboard_GUI extends JDialog {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/apartment", "root", "root");
             Statement state = con.createStatement();
 
+            //Get: User ID, Username, Unit Number, Transaction Date, Monthly Rent, Payment Method, Duration of Stay, Utilities
             ResultSet result = state.executeQuery(" SELECT apartment.users.user_id,apartment.users.userName,apartment.apartment_unit.unit_number,apartment.transaction.Date, apartment.transaction.monthly_due_amount,apartment.transaction.payment_method, apartment.transaction.duration,apartment.transaction.amenities,apartment.transaction.wifi,apartment.transaction.cable,apartment.transaction.water\n" +
                     "            FROM apartment.users\n" +
                     "            RIGHT JOIN apartment.transaction ON users.user_id = transaction.user_id\n" +
@@ -201,9 +205,9 @@ public class Dashboard_GUI extends JDialog {
                         result.getString("duration"),result.getInt("amenities"),
                         result.getInt("wifi"),result.getInt("cable"),result.getInt("water")
                 };
+
                 DefaultTableModel model = (DefaultTableModel) table1.getModel();
                 model.addRow(new Object[]{row[0], row[1], row[2],row[3],row[4],row[5],row[6],row[7],row[8],row[9]});
-
 
                 DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
                 centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
@@ -232,22 +236,30 @@ public class Dashboard_GUI extends JDialog {
 //        }
 //    }
     ArrayList objects;
+
+    //Check user type
     private void checkType(){
 
         try {
+
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/apartment", "root", "root");
             Statement state = con.createStatement();
+
+            //Get row count from User ID
             ResultSet result = state.executeQuery("SELECT COUNT(*) as Rowcount FROM apartment.transaction WHERE user_id ='"+Accessor.getUserID()+"'");
             result.next();
+
             int count = result.getInt("Rowcount");
             result.close();
+
+            //Check Row Count
             if(count>0){
                 type="old";
             }
+
             else{
                 type="new";
             }
-
 
 
         } catch (Exception exc) {
@@ -255,17 +267,21 @@ public class Dashboard_GUI extends JDialog {
             exc.printStackTrace();
         }
 
+        //Hide Request Maintenance and Pay Rent Button if New
         if(type.equals("new")){
 
             btnrequest.setVisible(false);
             btnPayRent.setVisible(false);
 
-
         }
+
         else{
+
             objects = Transaction.getTransaction();
-            Object dashpic= objects.get(0);
+            Object dashpic = objects.get(0);
             ImageIcon icon = new ImageIcon((Image) dashpic);
+
+            //Enable Old User Interface
             btnrequest.setVisible(true);
             btnPayRent.setVisible(true);
             scrollPanel.setVisible(false);
@@ -275,7 +291,6 @@ public class Dashboard_GUI extends JDialog {
             rentotal.setText(String.valueOf(objects.get(2)));
             duration.setText(String.valueOf(objects.get(1)));
 
-
              //Display Data to table-Now working
 
         }
@@ -284,7 +299,6 @@ public class Dashboard_GUI extends JDialog {
 
     private void onRequest(){
         Request_Maintenance_GUI.Request_Maintenance_GUI();
-
     }
 
 
@@ -302,8 +316,6 @@ public class Dashboard_GUI extends JDialog {
     public static void main(String[] args) {
 
         Dashboard_GUI.Dashboard_GUI();
-
-
 
     }
 

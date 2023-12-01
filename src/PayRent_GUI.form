@@ -42,7 +42,7 @@
                   <foreground color="-1050625"/>
                   <hideActionText value="false"/>
                   <opaque value="false"/>
-                  <text value="Pay now"/>
+                  <text value="Pay Rent"/>
                 </properties>
               </component>
             </children>
@@ -64,6 +64,8 @@
               </grid>
             </constraints>
             <properties>
+              <editable value="false"/>
+              <margin top="20" left="0" bottom="0" right="0"/>
               <text value=""/>
             </properties>
           </component>
@@ -85,7 +87,7 @@
           <borderPainted value="false"/>
           <contentAreaFilled value="false"/>
           <opaque value="false"/>
-          <text value="Cancel"/>
+          <text value="Back"/>
         </properties>
       </component>
       <grid id="9643" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">

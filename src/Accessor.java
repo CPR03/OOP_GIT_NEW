@@ -15,7 +15,6 @@ public class Accessor extends User_Data{ //Inheritance
 
 
 
-
     //Polymorphism
     public static void setUserDetails(String Username) {
         Accessor.Username=Username;
@@ -24,9 +23,9 @@ public class Accessor extends User_Data{ //Inheritance
     }
 
 
-
-
+    //Check balance
     public double checkBalance(){
+
         double bal=0;
         try {
 
@@ -41,8 +40,11 @@ public class Accessor extends User_Data{ //Inheritance
 
             exc.printStackTrace();
         }
+
         return bal;
     }
+
+    //Set UserID
     public static int setUserID(){
         int userID = 0;
         try {
@@ -65,12 +67,13 @@ public class Accessor extends User_Data{ //Inheritance
     }
 
 
-
+    //Set Unit Number
     public static void setUnitnum(String unitnum){
         Unitnum=unitnum;
 
     }
 
+    //Getters
 
     public static int getUserID() {
         return UserId;
@@ -83,7 +86,6 @@ public class Accessor extends User_Data{ //Inheritance
 
 
     public double getBalance() {
-
 
         return checkBalance();
     } //override in Userdata
