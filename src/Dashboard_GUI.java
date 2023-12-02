@@ -12,7 +12,6 @@ import java.util.ArrayList;
 public class Dashboard_GUI extends JDialog {
     private JPanel contentPane;
 
-    private JButton buttonOK;
     private JButton buttonCancel;
     private JLabel profilePic;
     private JPanel p1;
@@ -57,12 +56,11 @@ public class Dashboard_GUI extends JDialog {
     private JLabel dash_pic;
     private JLabel rentotal;
     private JLabel duration;
+    private JPanel dashboardPanel;
 
 
     public Dashboard_GUI() {
         setContentPane(contentPane);
-
-        getRootPane().setDefaultButton(buttonOK);
 
         pane.getVerticalScrollBar().setUnitIncrement(16); //set scroll speed
 
@@ -87,11 +85,6 @@ public class Dashboard_GUI extends JDialog {
             }
         });
 
-        buttonOK.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
 
         btnPayRent.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -134,6 +127,9 @@ public class Dashboard_GUI extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
 
+        buttonCancel.setIcon(new ImageIcon(new ImageIcon("Images/Components/button_cancel.png").getImage().getScaledInstance(80, 23, Image.SCALE_SMOOTH)));
+        buttonCancel.setHorizontalTextPosition(SwingConstants.CENTER);
+        buttonCancel.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
     }
 
@@ -181,7 +177,7 @@ public class Dashboard_GUI extends JDialog {
 
         history();//Add rows by calling history
         txtBalance.setText(String.valueOf(cal.getBalance()));
-        txtWelcome.setText("WELCOME!  "+cal.getUsername().toUpperCase());
+        txtWelcome.setText("Welcome, "+cal.getUsername() + "!");
 
     }
 
@@ -274,7 +270,6 @@ public class Dashboard_GUI extends JDialog {
             btnPayRent.setVisible(false);
 
         }
-
         else{
 
             objects = Transaction.getTransaction();
@@ -283,12 +278,14 @@ public class Dashboard_GUI extends JDialog {
 
             //Enable Old User Interface
             btnrequest.setVisible(true);
+            dashboardPanel.setVisible(true);
             btnPayRent.setVisible(true);
             scrollPanel.setVisible(false);
             myInfo_panel.setVisible(true);
 
+            //dash_pic.setIcon(new ImageIcon(icon.getImage().getScaledInstance(170, 170, Image.SCALE_SMOOTH)));
             dash_pic.setIcon(icon);
-            rentotal.setText(String.valueOf(objects.get(2)));
+            rentotal.setText("₱ "+ String.valueOf(objects.get(2)));
             duration.setText(String.valueOf(objects.get(1)));
 
              //Display Data to table-Now working

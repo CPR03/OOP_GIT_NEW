@@ -164,7 +164,7 @@ public class Transaction extends Calculate{ //To view transaction history
 
                 java.sql.Blob blob = result.getBlob("unit_photo");
                 InputStream in = blob.getBinaryStream();
-                image= ImageIO.read(in).getScaledInstance(250,200,Image.SCALE_SMOOTH);
+                image= ImageIO.read(in).getScaledInstance(320,200,Image.SCALE_SMOOTH);
                 remaining=result.getDouble("rent_total");
                 duration=result.getString("duration");
 

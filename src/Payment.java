@@ -3,7 +3,6 @@ import java.sql.*;
 
 public class Payment extends Error {
 
-
     Accessor accessor = new Accessor();
 
     //Get Payment Method
