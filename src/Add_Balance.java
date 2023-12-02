@@ -14,7 +14,7 @@ public class Add_Balance extends JDialog {
     private JTextField txtcharge;
     private JTextField txtinput;
     private JButton btnenter;
-    private JButton buttonCancel;
+
     String mode;
 
     public Add_Balance() {
@@ -63,9 +63,10 @@ public class Add_Balance extends JDialog {
     }
     private void getPaymentmode(){
 
-        switch (mode) {
-            case "Debit" -> txtcharge.setText("200");
-            default -> txtcharge.setText("100");
+        if (mode.equals("Debit")) {
+            txtcharge.setText("200");
+        } else {
+            txtcharge.setText("100");
         }
 
     }

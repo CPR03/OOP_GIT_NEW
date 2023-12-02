@@ -46,8 +46,6 @@ public class Request_Maintenance_GUI extends JDialog{
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
-    User_Data cal= new Accessor();
-
     private void onOK() {
 
         try {

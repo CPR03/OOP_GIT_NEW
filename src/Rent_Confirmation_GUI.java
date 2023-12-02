@@ -18,8 +18,7 @@ public class Rent_Confirmation_GUI extends JDialog {
     private JCheckBox waterCheckBox;
     private JLabel homeLogo;
     Calculate chosen_details = new Calculate();
-    private String Duration;
-    ArrayList<String> utilities = new ArrayList<String>();
+    ArrayList<String> utilities = new ArrayList<>();
     public Rent_Confirmation_GUI() {
         setContentPane(contentPane);
         setModal(true);
@@ -94,18 +93,19 @@ public class Rent_Confirmation_GUI extends JDialog {
             utilities.add(wiFiCheckBox.getText());
         }
 
+        String duration;
         if(btn1month.isSelected()){
-            Duration="1 month";
+            duration ="1 month";
         } else if (btn3months.isSelected()) {
-            Duration="3 months";
+            duration ="3 months";
         } else if (halfyear.isSelected()) {
-            Duration="6 months";
+            duration ="6 months";
         }else {
-            Duration="1 year";
+            duration ="1 year";
         }
 
 
-        Calculate.setDuration(Duration);
+        Calculate.setDuration(duration);
         Calculate.setUtilities(utilities);
 
         this.setVisible(false);

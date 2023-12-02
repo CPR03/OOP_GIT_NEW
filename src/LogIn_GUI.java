@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class LogIn_GUI extends JDialog {
-    public Image imageLogo;
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
@@ -87,11 +86,6 @@ public class LogIn_GUI extends JDialog {
     }
 
     private int userID;
-    private static String saveUserName; //save the login for every object to be accessed
-    private static String saveUserPass; //save the login for every object to be accessed
-
-
-    User_Data cal = new Accessor();
 
 
     private void onOK() {
@@ -102,7 +96,7 @@ public class LogIn_GUI extends JDialog {
 
             int flag = 0; //tell if user OK
 
-            while (result.next() && flag == 0) {
+            while (result.next()) {
 
                 String userNameFromDatabase = result.getString("userName");
                 String userPasswordFromDatabase = result.getString("userPassword");
@@ -116,9 +110,11 @@ public class LogIn_GUI extends JDialog {
 
                     //if password OK Open Dashboard
                     else {
-                        saveUserName = txtUserLog.getText();
-                        saveUserPass = txtPass.getText();
-                        Login_Details log = new Login_Details(saveUserName, saveUserPass);
+                        //save the login for every object to be accessed
+                        String saveUserName = txtUserLog.getText();
+                        //save the login for every object to be accessed
+                        String saveUserPass = txtPass.getText();
+                        Login_Details log = new Login_Details(saveUserName);
 
 
                         //Passing User data(Username & Balance) from Login_Details Class to Accessor Class
@@ -150,7 +146,7 @@ public class LogIn_GUI extends JDialog {
             exc.printStackTrace();
         }
 
-        ;
+
 
 
     }
