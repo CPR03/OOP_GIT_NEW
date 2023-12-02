@@ -39,21 +39,24 @@ public class Pay_GUI extends JDialog {
         DiscountCode=cmbDiscount.getSelectedItem().toString();
         Calculate.setDiscountCode(discount);
         getDiscount();
-        cmbDiscount.addActionListener(new ActionListener() {//Check selected item from Discount code and set the Discount
-            public void actionPerformed(ActionEvent e) {
-
-                DiscountCode=cmbDiscount.getSelectedItem().toString();
-                Calculate.setDiscountCode(discount);
-                getDiscount();  //Display Discount
-
-
-            }
-        });
         mode = cmbPayMethod.getSelectedItem().toString(); //Set default value to avoid empty error
         Calculate.setPaymentmod(mode);
         getPaymentmode();  //Display Payment mode
         Calculate.setAdditional();//Compute Additional fee for Utilities
         getTotal();
+        cmbDiscount.addActionListener(new ActionListener() {//Check selected item from Discount code and set the Discount
+            public void actionPerformed(ActionEvent e) {
+                Calculate.setPaymentmod(mode);
+                DiscountCode=cmbDiscount.getSelectedItem().toString();
+                Calculate.setDiscountCode(discount);
+                getDiscount();  //Display Discount
+                getPaymentmode();
+                getTotal();
+
+
+            }
+        });
+
         cmbPayMethod.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -140,7 +143,7 @@ public class Pay_GUI extends JDialog {
         total=(Calculate.getUnit_price()-price)+chargefee+utilfee;
 
         totaltxt.setText(String.valueOf(total));
-        Calculate.setTotalprice(total);
+        Calculate.setTotalprice(total-chargefee);
 
     }
 
@@ -197,11 +200,12 @@ public class Pay_GUI extends JDialog {
             Font font = new Font("Arial", Font.PLAIN, 16);
             receipttxt.setFont(font);
 
+
             receipttxt.setText(
 
 
                     "\t     ~User Info~" + "\n" +
-                            "\tUser ID: " + accessor.getUserID() + "\n" +
+                            "\tUser ID: " + Accessor.getUserID() + "\n" +
                             "\tUsername: "+ accessor.getUsername() +"\n"+
                             "\tRemaining Balance: "+accessor.getBalance()+"\n"+
                             "\tDate: "+ LocalDate.now() +"\n"+"\n"+
@@ -214,6 +218,7 @@ public class Pay_GUI extends JDialog {
 
 
                             "\t     ~Total~" + "\n" +
+                            "\tTotal Fee: " + Calculate.getTotalprice() +"\n"+
                             "\tUtilities Fee: " + Calculate.getAdditional() + "\n"+
                             "\tCharge Fee: " + chargetxt.getText() +"\n"+
                             "\tDiscount: " + disctxt.getText()+"\n"+

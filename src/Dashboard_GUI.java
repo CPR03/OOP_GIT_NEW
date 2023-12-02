@@ -175,7 +175,9 @@ public class Dashboard_GUI extends JDialog {
             Unit_image[i].setIcon(new ImageIcon(new ImageIcon(imagePath).getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH)));
 
         }
-
+        if(rentotal.getText().equals("₱ 0.0")){
+            btnPayRent.setEnabled(false);
+        }
         btnrequest.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnPayRent.setCursor(new Cursor(Cursor.HAND_CURSOR));
         profilePic.setIcon(new ImageIcon(new ImageIcon("Images/Components/profile.png").getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
@@ -194,6 +196,10 @@ public class Dashboard_GUI extends JDialog {
         maintenance();
         txtBalance.setText(String.valueOf(cal.getBalance()));
         txtWelcome.setText("Welcome, "+cal.getUsername() + "!");
+
+    }
+    private void remaining(){
+
 
     }
 

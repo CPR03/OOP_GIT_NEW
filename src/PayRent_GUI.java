@@ -32,6 +32,7 @@ public class PayRent_GUI extends JDialog {
     double monthly = (double) last_transaction.get(6);
     int unitprice= (int) last_transaction.get(2);
 
+
     String duration = (String) last_transaction.get(7);
 
     Date due_date= (Date) last_transaction.get(4);
@@ -126,10 +127,13 @@ public class PayRent_GUI extends JDialog {
         txt_nextbill.setText(formattedDate);
 
     }
-
+    double last_total= (double) last_transaction.get(13);
+    double chargefee;
     //Get Amount Due
     private void getTotal(){
-        double total,price,chargefee;
+        double total,price;
+
+
 
         chargefee = Double.parseDouble(txtCharge.getText());
 
@@ -138,10 +142,14 @@ public class PayRent_GUI extends JDialog {
         price = unitprice*(discount/100);
 
         total = ((unitprice-price)+chargefee+utilfee); //Compute Total
+        txtbill.setText(String.valueOf(total));
 
-        txtbill.setText(String.valueOf(total)); //Display total amount due
 
-        Calculate.setTotalprice(total);
+        Calculate.setTotalprice(total-chargefee);
+
+
+
+
 
     }
 
@@ -225,7 +233,7 @@ public class PayRent_GUI extends JDialog {
 
 
     private void addTransaction(){
-        double last_total= (double) last_transaction.get(13);
+
 
 
         try {

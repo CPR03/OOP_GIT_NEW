@@ -29,16 +29,12 @@ public class Transaction extends Calculate{ //To view transaction history
 
     //Get selected months
     public static int getmonths(){
-        int months;
-        if(getDuration().equals("3 months")){
-            months=2;
-        } else if (getDuration().equals("6 months")) {
-            months=5;
-        } else if (getDuration().equals("1 year")) {
-            months=11;
-        }else{
-            months=0;
-        }
+        int months = switch (getDuration()) {
+            case "3 months" -> 2;
+            case "6 months" -> 5;
+            case "1 year" -> 11;
+            default -> 0;
+        };
 
         return months;
     }
@@ -91,6 +87,8 @@ public class Transaction extends Calculate{ //To view transaction history
 
             //Insert the  Rent_total
             result.updateDouble("rent_total",getTotalprice()*getmonths());
+            System.out.println(getTotalprice());
+            System.out.println();
 
             //Insert the  monthly due
             result.updateDouble("monthly_due_amount",getTotalprice());
@@ -247,8 +245,7 @@ public class Transaction extends Calculate{ //To view transaction history
                 last_transaction.add(result.getString("payment_method")); //payment method
                 last_transaction.add(result.getDouble("rent_total"));
 
-                i++;
-                System.out.println(last_transaction.get(13)+"\n"+i);
+
             }
 
             state.close();
