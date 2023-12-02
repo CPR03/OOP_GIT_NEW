@@ -61,6 +61,7 @@ public class Add_Balance extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
+    Error error = new Error();
     private void getPaymentmode(){
 
         switch (mode) {
@@ -72,12 +73,18 @@ public class Add_Balance extends JDialog {
     int amount=0;
     private void onEnter() {
         String iamount = txtamount.getText();
-        amount = Integer.parseInt(iamount);
+        if(isNumeric(iamount)){
+            amount = Integer.parseInt(iamount);
+        }
+        else{
+            error.invalidInput();
+        }
         txtinput.setText(String.valueOf(amount));
         int charge = Integer.parseInt(txtcharge.getText());
         txttotal.setText(String.valueOf(amount-charge));
+        }
 
-    }
+
     User_Data cal = new Accessor();
     private void onPay() {
 
@@ -131,4 +138,13 @@ public class Add_Balance extends JDialog {
 
         dialog.setVisible(true);
     }
+    public static boolean isNumeric(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
+        }
+    }
+
 }
