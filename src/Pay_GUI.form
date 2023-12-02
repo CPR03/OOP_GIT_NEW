@@ -65,7 +65,7 @@
           <borderPainted value="false"/>
           <contentAreaFilled value="false"/>
           <opaque value="false"/>
-          <text value="Cancel"/>
+          <text value="Back"/>
         </properties>
       </component>
       <grid id="e1376" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
