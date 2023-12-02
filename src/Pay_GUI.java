@@ -218,7 +218,7 @@ public class Pay_GUI extends JDialog {
 
 
                             "\t     ~Total~" + "\n" +
-                            "\tTotal Fee: " + Calculate.getTotalprice() +"\n"+
+                            "\tUnit Fee: " + Calculate.getTotalprice() +"\n"+
                             "\tUtilities Fee: " + Calculate.getAdditional() + "\n"+
                             "\tCharge Fee: " + chargetxt.getText() +"\n"+
                             "\tDiscount: " + disctxt.getText()+"\n"+
