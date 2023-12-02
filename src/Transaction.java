@@ -3,10 +3,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -51,7 +48,7 @@ public class Transaction extends Calculate{ //To view transaction history
     public static void saveTransaction(){
 
         String unitNum= getUnitnum().substring(6); //Will get only the number from the "Unit '1'"
-
+        setStatus(unitNum);
         try {
 
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/apartment", "root", "root");
@@ -62,6 +59,8 @@ public class Transaction extends Calculate{ //To view transaction history
 
             getApartId.next();
             Apartment_id = getApartId.getInt("apr_id"); //get Apartment_id of chosen unit
+
+
 
             //Get the latest transaction ID
             ResultSet getMaxTranId = state.executeQuery("SELECT MAX(tran_id) as maxTranId FROM apartment.transaction");
@@ -87,6 +86,8 @@ public class Transaction extends Calculate{ //To view transaction history
 
             //Insert the Payment Method
             result.updateString("payment_method",getPaymentmod());
+            //Amount payed
+            result.updateDouble("amount_pay",Double.parseDouble(Payment.getText()));
 
             //Insert the  Rent_total
             result.updateDouble("rent_total",getTotalprice()*getmonths());
@@ -139,6 +140,27 @@ public class Transaction extends Calculate{ //To view transaction history
             exc.printStackTrace();
         }
     }
+
+    public static void setStatus(String unitNum){
+        try {
+
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/apartment", "root", "root");
+            con.setAutoCommit(true);
+            //Statement state = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+
+            PreparedStatement stmt = con.prepareStatement("UPDATE apartment_unit SET status = ? WHERE unit_number = ?"); //(Note: ? is a placeholder)
+            stmt.setString(1, "Unavailable"); //.set utilizes the '?'
+            stmt.setString(2,unitNum);
+
+            stmt.executeUpdate();
+            stmt.close();
+            con.close();
+
+        } catch (Exception exc) {
+            exc.printStackTrace();
+        }
+    }
+
 
     public static ArrayList getTransaction(){
 

@@ -4,12 +4,15 @@ import java.sql.*;
 public class Payment extends Error {
 
     Accessor accessor = new Accessor();
-
+    static String text;
+    public static String getText(){
+        return text;
+    }
     //Get Payment Method
     public int confirmPayment(String mode){
 
         int stat=10; //initialize not in choices(-1,0,1)
-        String text;
+
         double input;
 
         //GCash
@@ -98,6 +101,7 @@ public class Payment extends Error {
 
             //Check if the user input is enough for payment.
             if(accessor.checkBalance()>=Calculate.getTotalprice()){
+                text= String.valueOf(Calculate.getTotalprice());
 
                 int user = Accessor.getUserID(); //Get userID
                 double currentbal=accessor.checkBalance(); //Check Current balance
@@ -151,5 +155,6 @@ public class Payment extends Error {
             return false;
         }
     }
+
 
 }

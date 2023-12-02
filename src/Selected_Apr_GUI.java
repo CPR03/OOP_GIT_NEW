@@ -104,6 +104,9 @@ public class Selected_Apr_GUI extends JDialog {
                 int bedcount = result.getInt("bedcount");
                 unit_price=result.getInt("unit_price");
                 String status = result.getString("status");
+                if(status.equals("Unavailable")){
+                    btnRent.setEnabled(false);
+                }
                 BufferedImage[] image = new BufferedImage[5];
                 for(int i=1;i<=5;i++){
                     java.sql.Blob blob = result.getBlob("unit_photo"+i);
@@ -135,7 +138,7 @@ public class Selected_Apr_GUI extends JDialog {
     private void onRent() {
         Calculate.setUnit_number(unit_number);
         Calculate.setUnit_price(unit_price);
-        setVisible(false);
+        dispose();
         Rent_Confirmation_GUI.Rent_Confirmation_GUI();
     }
 

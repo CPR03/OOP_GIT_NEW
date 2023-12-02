@@ -57,6 +57,7 @@ public class Dashboard_GUI extends JDialog {
     private JLabel rentotal;
     private JLabel duration;
     private JPanel dashboardPanel;
+    private JTable table2;
 
 
     public Dashboard_GUI() {
@@ -81,6 +82,7 @@ public class Dashboard_GUI extends JDialog {
 
         btnrequest.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                dispose();
                 onRequest();
             }
         });
@@ -150,8 +152,9 @@ public class Dashboard_GUI extends JDialog {
 
         //Set Apartment Images
         for(int i=0;i<12;i++){
-
             Apart_buttons[i].addActionListener(actionListener);//add actionlistener to every Rent button
+
+
 
             //Set image for buttons
             Apart_buttons[i].setIcon(new ImageIcon(new ImageIcon("Images/Components/button_red.png").getImage().getScaledInstance(150, 30, Image.SCALE_SMOOTH)));
@@ -173,9 +176,14 @@ public class Dashboard_GUI extends JDialog {
 
         table1.setModel(new DefaultTableModel(
                 null,
-                new String[] {"Name","Current Apartment","Date created","Rent Per Month","Payment Method","Duration of Stay","Amenities","Wi-Fi","Cable","Water"}));
+                new String[] {"Name","Current Apartment","Date created","Rent Per Month","Amount Paid","Payment Method","Duration of Stay","Amenities","Wi-Fi","Cable","Water"}));
+
+        table2.setModel(new DefaultTableModel(
+                null,
+                new String[] {"Request ID","User ID","Request Type","Description","Date Created",}));
 
         history();//Add rows by calling history
+        maintenance();
         txtBalance.setText(String.valueOf(cal.getBalance()));
         txtWelcome.setText("Welcome, "+cal.getUsername() + "!");
 
@@ -188,7 +196,7 @@ public class Dashboard_GUI extends JDialog {
             Statement state = con.createStatement();
 
             //Get: User ID, Username, Unit Number, Transaction Date, Monthly Rent, Payment Method, Duration of Stay, Utilities
-            ResultSet result = state.executeQuery(" SELECT apartment.users.user_id,apartment.users.userName,apartment.apartment_unit.unit_number,apartment.transaction.Date, apartment.transaction.monthly_due_amount,apartment.transaction.payment_method, apartment.transaction.duration,apartment.transaction.amenities,apartment.transaction.wifi,apartment.transaction.cable,apartment.transaction.water\n" +
+            ResultSet result = state.executeQuery(" SELECT apartment.users.user_id,apartment.users.userName,apartment.apartment_unit.unit_number,apartment.transaction.Date, apartment.transaction.monthly_due_amount,apartment.transaction.payment_method, apartment.transaction.duration,apartment.transaction.amenities,apartment.transaction.wifi,apartment.transaction.cable,apartment.transaction.water,apartment.transaction.amount_pay\n" +
                     "            FROM apartment.users\n" +
                     "            RIGHT JOIN apartment.transaction ON users.user_id = transaction.user_id\n" +
                     "            LEFT JOIN apartment.apartment_unit ON transaction.apart_id = apartment_unit.apr_id" +
@@ -197,19 +205,21 @@ public class Dashboard_GUI extends JDialog {
             while (result.next()){
 
                 Object[] row = {result.getString("userName"),result.getString("unit_number"),
-                        result.getDate("Date"),result.getDouble("monthly_due_amount"),result.getString("payment_method"),
+                        result.getDate("Date"),result.getDouble("monthly_due_amount"),result.getDouble("amount_pay"),result.getString("payment_method"),
                         result.getString("duration"),result.getInt("amenities"),
                         result.getInt("wifi"),result.getInt("cable"),result.getInt("water")
                 };
 
                 DefaultTableModel model = (DefaultTableModel) table1.getModel();
-                model.addRow(new Object[]{row[0], row[1], row[2],row[3],row[4],row[5],row[6],row[7],row[8],row[9]});
+                model.addRow(new Object[]{row[0], row[1], row[2],row[3],row[4],row[5],row[6],row[7],row[8],row[9],row[10]});
 
                 DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
                 centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-                for(int i=0;i<10;i++){
+                for(int i=0;i<11;i++){
                     table1.getColumnModel().getColumn(i).setCellRenderer(centerRenderer); // Center align column
                 }
+
+
 
             }
             state.close();
@@ -221,6 +231,43 @@ public class Dashboard_GUI extends JDialog {
             exc.printStackTrace();
         }
     }
+    private void maintenance(){ //Get all transaction of the User
+
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/apartment", "root", "root");
+            Statement state = con.createStatement();
+            //Get: User ID, Username, Unit Number, Transaction Date, Monthly Rent, Payment Method, Duration of Stay, Utilities
+            ResultSet result = state.executeQuery(" SELECT *" +
+                    "    FROM apartment.maintenance_req Where maintenance_req.user_id ='"+Accessor.getUserID()+"'");
+
+            while (result.next()){
+
+                Object[] data = {result.getInt("req_id"),result.getInt("user_id"),result.getString("type"),
+                        result.getString("description"),result.getDate("date_created")
+                };
+
+                DefaultTableModel model = (DefaultTableModel) table2.getModel();
+                model.addRow(new Object[]{data[0], data[1], data[2],data[3],data[4]});
+
+                DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+                centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+                for(int i=0;i<5;i++){
+                    table2.getColumnModel().getColumn(i).setCellRenderer(centerRenderer); // Center align column
+                }
+
+
+
+            }
+            state.close();
+            con.close();
+
+
+        } catch (Exception exc) {
+
+            exc.printStackTrace();
+        }
+    }
+
     //for Update
 
 //    public void triggerAction() {

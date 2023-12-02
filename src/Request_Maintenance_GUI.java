@@ -19,6 +19,7 @@ public class Request_Maintenance_GUI extends JDialog{
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+
                 onOK();
             }
         });
@@ -93,7 +94,9 @@ public class Request_Maintenance_GUI extends JDialog{
 
     private void onCancel() {
         // add your code here if necessary
+
         dispose();
+        Dashboard_GUI.Dashboard_GUI();
     }
 
 
@@ -108,7 +111,7 @@ public class Request_Maintenance_GUI extends JDialog{
         Request_Maintenance_GUI req = new Request_Maintenance_GUI();
         req.pack();
         req.setIconImage(req.imagelogo);
-        req.setBounds(600,200,600,350);
+        req.setBounds(600,200,400,350);
         req.setLocationRelativeTo(null);
         req.setTitle("SoulSpace | Request Maintenance");
 

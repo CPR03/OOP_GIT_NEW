@@ -255,6 +255,7 @@ public class PayRent_GUI extends JDialog {
 
             //Payment Method
             result.updateString("payment_method",mode);
+            result.updateDouble("amount_pay",Double.parseDouble(Payment.getText()));
 
             result.updateDouble("Discount_code",discount);
 
