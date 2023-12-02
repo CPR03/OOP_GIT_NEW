@@ -29,6 +29,7 @@ public class PayRent_GUI extends JDialog {
     double utilfee;
     String unit_num= (String) last_transaction.get(1);
     double discount= (double) last_transaction.get(5);
+    double monthly = (double) last_transaction.get(6);
     int unitprice= (int) last_transaction.get(2);
 
     String duration = (String) last_transaction.get(7);
@@ -222,7 +223,9 @@ public class PayRent_GUI extends JDialog {
 
     }
 
+
     private void addTransaction(){
+        double last_total= (double) last_transaction.get(13);
 
 
         try {
@@ -237,6 +240,7 @@ public class PayRent_GUI extends JDialog {
 
 
             ResultSet result = state.executeQuery("SELECT * FROM apartment.transaction");
+
 
             result.moveToInsertRow();
 
@@ -256,7 +260,8 @@ public class PayRent_GUI extends JDialog {
 
 
             //Rent_total
-            result.updateDouble("rent_total",Calculate.getTotalprice()*Transaction.getmonths());
+            result.updateDouble("rent_total",last_total-monthly);
+
             //monthly due
             result.updateDouble("monthly_due_amount",Calculate.getTotalprice());
 

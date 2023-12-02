@@ -32,15 +32,15 @@ public class Transaction extends Calculate{ //To view transaction history
 
     //Get selected months
     public static int getmonths(){
-        int months=0;
+        int months;
         if(getDuration().equals("3 months")){
-            months=3;
+            months=2;
         } else if (getDuration().equals("6 months")) {
-            months=6;
+            months=5;
         } else if (getDuration().equals("1 year")) {
-            months=12;
+            months=11;
         }else{
-            months=1;
+            months=0;
         }
 
         return months;
@@ -154,10 +154,10 @@ public class Transaction extends Calculate{ //To view transaction history
             Statement state = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
             //Get Unit Photo, Rent Total, Duration of Stay, Transaction ID
-            ResultSet result=state.executeQuery(" SELECT apartment_unit.unit_photo, transaction.rent_total, transaction.duration,transaction.user_id\n" +
+            ResultSet result=state.executeQuery(" SELECT apartment_unit.unit_photo, transaction.rent_total, transaction.duration,transaction.user_id,transaction.tran_id\n" +
                     "            FROM apartment.transaction\n" +
                     "            INNER JOIN apartment.apartment_unit ON transaction.apart_id = apartment_unit.apr_id" +
-                    " WHERE user_id='"+Accessor.getUserID()+"'");
+                    " WHERE user_id='"+Accessor.getUserID()+"' order by tran_id DESC ");
 
             //Put Data a local variable
             while (result.next()){
@@ -166,6 +166,7 @@ public class Transaction extends Calculate{ //To view transaction history
                 InputStream in = blob.getBinaryStream();
                 image= ImageIO.read(in).getScaledInstance(320,200,Image.SCALE_SMOOTH);
                 remaining=result.getDouble("rent_total");
+                System.out.println(remaining);
                 duration=result.getString("duration");
 
                 //Add unit photo, duration, and remaining balance to arrayList
@@ -187,7 +188,7 @@ public class Transaction extends Calculate{ //To view transaction history
 
     //Get Last Transaction Performed
     public static ArrayList getlast_trans(){
-
+        int i=0;
         ArrayList<Object> last_transaction = new ArrayList<Object>();
 
         try {
@@ -199,7 +200,7 @@ public class Transaction extends Calculate{ //To view transaction history
             ResultSet result=state.executeQuery(" SELECT apartment_unit.apr_id,apartment_unit.unit_number,apartment_unit.unit_price, transaction.*" +
                     "            FROM apartment.transaction\n" +
                     "            INNER JOIN apartment.apartment_unit ON transaction.apart_id = apartment_unit.apr_id" +
-                    " WHERE user_id='"+Accessor.getUserID()+"' order by Date DESC ");
+                    " WHERE user_id='"+Accessor.getUserID()+"' order by tran_id DESC");
 
             //Put Data to the arrayList (last_transaction)
             while (result.next()){
@@ -222,7 +223,10 @@ public class Transaction extends Calculate{ //To view transaction history
                 last_transaction.add(result.getInt("cable")); //utility
                 last_transaction.add(result.getInt("water")); //utility
                 last_transaction.add(result.getString("payment_method")); //payment method
+                last_transaction.add(result.getDouble("rent_total"));
 
+                i++;
+                System.out.println(last_transaction.get(13)+"\n"+i);
             }
 
             state.close();
