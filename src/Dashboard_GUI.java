@@ -58,6 +58,7 @@ public class Dashboard_GUI extends JDialog {
     private JLabel duration;
     private JPanel dashboardPanel;
     private JTable table2;
+    private JButton btnTopUp;
 
 
     public Dashboard_GUI() {
@@ -92,6 +93,13 @@ public class Dashboard_GUI extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 dispose();
                 PayRent_GUI.PayRent_GUI();
+
+            }
+        });
+        btnTopUp.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                Add_Balance.Add_Balance();
 
             }
         });
