@@ -91,6 +91,17 @@ public class Add_Balance extends JDialog {
     private void onEnter() {
         String iamount = txtamount.getText();
         if(isNumeric(iamount)){
+//            error when charge fee is greater than inputted amount
+            if (Integer.parseInt(iamount)<Integer.parseInt(txtcharge.getText())){
+                error.inputInsufficient ();
+                dispose();
+//            error when charge fee is equal to inputted amount
+            }else if(Integer.parseInt(iamount)==Integer.parseInt(txtcharge.getText())){
+                error.inputInsufficient ();
+                dispose();
+
+            }
+
             amount = Integer.parseInt(iamount);
         }
         else{
