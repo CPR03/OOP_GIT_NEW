@@ -19,7 +19,7 @@ public class Error {
 
     //Invalid Input Error
     public void invalidInput(){
-        JOptionPane.showMessageDialog(null, "NaN", "Invalid Input", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Invalid Input", "Invalid Input", JOptionPane.WARNING_MESSAGE);
 
     }
 

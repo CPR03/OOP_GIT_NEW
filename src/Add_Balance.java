@@ -4,6 +4,7 @@ import java.awt.event.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.util.Objects;
 
 public class Add_Balance extends JDialog {
     private JPanel contentPane;
@@ -92,25 +93,32 @@ public class Add_Balance extends JDialog {
         String iamount = txtamount.getText();
         if(isNumeric(iamount)){
 //            error when charge fee is greater than inputted amount
+            amount = Integer.parseInt(iamount);
             if (Integer.parseInt(iamount)<Integer.parseInt(txtcharge.getText())){
                 error.inputInsufficient ();
-                dispose();
+
 //            error when charge fee is equal to inputted amount
-            }else if(Integer.parseInt(iamount)==Integer.parseInt(txtcharge.getText())){
-                error.inputInsufficient ();
-                dispose();
+            }else if(Integer.parseInt(iamount)==Integer.parseInt(txtcharge.getText())) {
+                error.inputInsufficient();
 
             }
 
-            amount = Integer.parseInt(iamount);
+//        error when input is null
+            else if(iamount.equals("")){
+                error.nullInput();
+            }
+            else{
+                txtinput.setText(String.valueOf(amount));
+                int charge = Integer.parseInt(txtcharge.getText());
+                txttotal.setText(String.valueOf(amount-charge));
+
+            }
         }
         else{
             error.invalidInput();
         }
-        txtinput.setText(String.valueOf(amount));
-        int charge = Integer.parseInt(txtcharge.getText());
-        txttotal.setText(String.valueOf(amount-charge));
-        }
+
+    }
     User_Data cal = new Accessor();
     private void onPay() {
 
