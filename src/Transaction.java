@@ -45,7 +45,6 @@ public class Transaction extends Calculate{ //To view transaction history
             getApartId.next();
             int apartment_id = getApartId.getInt("apr_id"); //get Apartment_id of chosen unit
 
-
             //Get the latest transaction ID
             ResultSet getMaxTranId = state.executeQuery("SELECT MAX(tran_id) as maxTranId FROM apartment.transaction");
 

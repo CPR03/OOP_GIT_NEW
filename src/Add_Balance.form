@@ -96,7 +96,7 @@
                 </constraints>
                 <properties>
                   <background color="-331570"/>
-                  <text value="Total Amount: "/>
+                  <text value="Total Top Up: "/>
                 </properties>
               </component>
               <component id="38faa" class="javax.swing.JTextField" binding="txtinput">

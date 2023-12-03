@@ -44,7 +44,61 @@ public class Request_Maintenance_GUI extends JDialog{
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+
+        onSelectedUtilities();
     }
+
+
+    Accessor access = new Accessor();
+
+
+    //Will only display selected utilities
+    private void onSelectedUtilities(){
+
+        int userID;
+        int amenities = 0, water = 0, cable = 0, wifi = 0;
+
+        try {
+
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/apartment", "root", "root");
+            Statement state = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+
+            ResultSet result = state.executeQuery("SELECT * FROM apartment.transaction WHERE user_id = '" + access.getUserID() + "'");
+
+            while(result.next()){
+                wifi = result.getInt("wifi");
+                amenities = result.getInt("amenities");
+                water = result.getInt("water");
+                cable = result.getInt("cable");
+            }
+
+
+            state.close();
+            con.close();
+
+        } catch (Exception exc) {
+            exc.printStackTrace();
+        }
+
+        if(amenities == 1){
+            cmbReqType.addItem("Amenities");
+        }
+
+        if(wifi == 1){
+            cmbReqType.addItem("Wi-Fi");
+        }
+
+        if(water == 1){
+            cmbReqType.addItem("Water");
+        }
+
+        if(cable == 1){
+            cmbReqType.addItem("Cable");
+        }
+
+
+    }
+
 
     private void onOK() {
 

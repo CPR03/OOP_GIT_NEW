@@ -154,8 +154,6 @@ public class Dashboard_GUI extends JDialog {
         for(int i=0;i<12;i++){
             Apart_buttons[i].addActionListener(actionListener);//add actionlistener to every Rent button
 
-
-
             //Set image for buttons
             Apart_buttons[i].setIcon(new ImageIcon(new ImageIcon("Images/Components/button_red.png").getImage().getScaledInstance(150, 30, Image.SCALE_SMOOTH)));
             Apart_buttons[i].setHorizontalTextPosition(SwingConstants.CENTER);//Center text

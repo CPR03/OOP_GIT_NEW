@@ -157,7 +157,6 @@ public class LogIn_GUI extends JDialog {
     }
 
 
-
     public static void main(String[] args) {
 
         LogIn_GUI.LogIn_GUI();

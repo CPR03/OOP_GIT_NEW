@@ -89,6 +89,8 @@ public class Add_Balance extends JDialog {
 
     }
     int amount=0;
+    double total = 0;
+
     private void onEnter() {
         String iamount = txtamount.getText();
         if(isNumeric(iamount)){
@@ -110,7 +112,8 @@ public class Add_Balance extends JDialog {
             else{
                 txtinput.setText(String.valueOf(amount));
                 int charge = Integer.parseInt(txtcharge.getText());
-                txttotal.setText(String.valueOf(amount-charge));
+                total = amount - charge;
+                txttotal.setText(String.valueOf(amount-charge + " ( " + amount + " (Amount) " + "-" + charge + " (Charge)" + " )" ));
 
             }
         }
@@ -135,7 +138,7 @@ public class Add_Balance extends JDialog {
                 //Statement state = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
                 PreparedStatement stmt = con.prepareStatement("UPDATE users SET Balance = ? WHERE user_id = ?"); //(Note: ? is a placeholder)
-                stmt.setDouble(1, cal.getBalance()+Double.parseDouble(txttotal.getText())); //.set utilizes the '?'
+                stmt.setDouble(1, cal.getBalance()+ total); //.set utilizes the '?'
                 stmt.setInt(2,Accessor.getUserID());
 
 
