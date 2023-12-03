@@ -78,9 +78,7 @@ public class Add_Balance extends JDialog {
         btnCancel.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
     }
-
     Error error = new Error();
-
     private void getPaymentmode(){
 
         switch (mode) {
@@ -102,7 +100,6 @@ public class Add_Balance extends JDialog {
         int charge = Integer.parseInt(txtcharge.getText());
         txttotal.setText(String.valueOf(amount-charge));
         }
-
     User_Data cal = new Accessor();
     private void onPay() {
 
