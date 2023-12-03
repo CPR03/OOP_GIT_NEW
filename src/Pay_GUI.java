@@ -249,7 +249,7 @@ public class Pay_GUI extends JDialog {
 
             //clear utilities back to Rent confirmation
             Calculate.utilities.clear();
-            Calculate.resetadditional();
+            Calculate.reset(0);
             dispose();
 
             Rent_Confirmation_GUI.Rent_Confirmation_GUI();

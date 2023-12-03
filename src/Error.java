@@ -2,7 +2,6 @@ import javax.swing.*;
 
 public class Error {
 
-
     //Insufficient Funds Error
     public void inputInsufficient (){
         JOptionPane.showMessageDialog(null, "Input is insufficient!", "SoulSpace | Warning", JOptionPane.WARNING_MESSAGE);
@@ -29,6 +28,5 @@ public class Error {
         JOptionPane.showMessageDialog(null, "No Input", "Null", JOptionPane.WARNING_MESSAGE);
 
     }
-
 
 }

@@ -13,6 +13,4 @@ public class Login_Details {
     public int getBalance(){
         return 10000;}
 
-
-
 }

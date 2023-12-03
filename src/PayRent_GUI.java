@@ -305,7 +305,7 @@ public class PayRent_GUI extends JDialog {
 
         Calculate cal=new Calculate();
         cal.reset();
-        Calculate.resetadditional();
+        Calculate.reset(0);
         dispose();
         Dashboard_GUI.Dashboard_GUI();
     }

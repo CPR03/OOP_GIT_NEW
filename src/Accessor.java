@@ -12,8 +12,6 @@ public class Accessor extends User_Data{ //Inheritance
     private static String Username;
     private static String Unitnum;
 
-
-
     //Polymorphism
     public static void setUserDetails(String Username) {
         Accessor.Username=Username;

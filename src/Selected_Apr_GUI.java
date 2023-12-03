@@ -30,7 +30,6 @@ public class Selected_Apr_GUI extends JDialog {
 
         chosenUnit(Accessor.getUnitnum());
 
-
         btnRent.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onRent();
@@ -48,6 +47,7 @@ public class Selected_Apr_GUI extends JDialog {
                 onDetails();
             }
         });*/
+
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -73,6 +73,8 @@ public class Selected_Apr_GUI extends JDialog {
         buttonCancel.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
     }
+
+
     public static BufferedImage resize(BufferedImage img, int newW, int newH) {
         Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
         BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
@@ -83,6 +85,7 @@ public class Selected_Apr_GUI extends JDialog {
 
         return dimg;
     }
+
     String unit_number;
     int unit_price;
     private void chosenUnit(String unit){ //pass chosen unit
@@ -96,7 +99,6 @@ public class Selected_Apr_GUI extends JDialog {
                     "FROM apartment.apartment_unit JOIN apartment.unit_photo " +
                     "ON unit_photo.unit_number = apartment_unit.unit_number" +
                     " WHERE unit_photo.unit_number= '"+unitNum+"'");
-
 
            result.next();
 
@@ -114,7 +116,6 @@ public class Selected_Apr_GUI extends JDialog {
                     image[i-1]=ImageIO.read(in);
                 }
 
-
                 details.setText("Unit Number: "+unit_number+"\nBedcount: "+bedcount
                 +"\nUnit Price: "+unit_price+"\nStatus: "+status);
 
@@ -123,9 +124,6 @@ public class Selected_Apr_GUI extends JDialog {
                 poster3.setIcon(new ImageIcon(resize(image[2],550,300)));
                 poster4.setIcon(new ImageIcon(resize(image[3],550,300)));
                 poster5.setIcon(new ImageIcon(resize(image[4],550,300)));
-
-
-
 
         } catch (Exception exc) {
 
@@ -148,8 +146,6 @@ public class Selected_Apr_GUI extends JDialog {
 
     }
 
-
-
     public static void main(String[] args) {
             Selected_Apr_GUI.Selected_Apr_GUI();
     }
@@ -169,9 +165,5 @@ public class Selected_Apr_GUI extends JDialog {
         selectedAprGui.setVisible(true);
 
     }
-
-
-
-
 
 }

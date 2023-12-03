@@ -161,6 +161,7 @@ public class Transaction extends Calculate{ //To view transaction history
             while (result.next()){
 
                 java.sql.Blob blob = result.getBlob("unit_photo");
+
                 InputStream in = blob.getBinaryStream();
                 image= ImageIO.read(in).getScaledInstance(320,200,Image.SCALE_SMOOTH);
                 remaining=result.getDouble("rent_total");
@@ -202,9 +203,6 @@ public class Transaction extends Calculate{ //To view transaction history
             //Put Data to the arrayList (last_transaction)
             while (result.next()){
 
-
-
-
                 last_transaction.add(result.getInt("apr_id")); //apartment ID
                 last_transaction.add(result.getString("unit_number")); //unit number
                 last_transaction.add(result.getInt("unit_price")); //unit price
@@ -218,8 +216,7 @@ public class Transaction extends Calculate{ //To view transaction history
                 last_transaction.add(result.getInt("cable")); //utility
                 last_transaction.add(result.getInt("water")); //utility
                 last_transaction.add(result.getString("payment_method")); //payment method
-                last_transaction.add(result.getDouble("rent_total"));
-
+                last_transaction.add(result.getDouble("rent_total")); //total payment
 
             }
 

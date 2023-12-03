@@ -32,9 +32,9 @@ public class Calculate extends Accessor {
         }
     }
 
-    //Reset Utilities additional variable
-    public static void resetadditional(){
-        additional=0;
+    //Reset Utilities additional variable. Polymorphism
+    public static void reset(int additionalPara){
+        additional= additionalPara;
     }
 
     //Setters
@@ -125,7 +125,7 @@ public class Calculate extends Accessor {
         setUnit_price(0);
         setUnit_number("");
       
-        resetadditional();
+        reset(0);
 
     }
 

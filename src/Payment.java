@@ -9,6 +9,7 @@ public class Payment extends Error {
         return text;
     }
     //Get Payment Method
+
     public int confirmPayment(String mode){
 
         int stat=10; //initialize not in choices(-1,0,1)
