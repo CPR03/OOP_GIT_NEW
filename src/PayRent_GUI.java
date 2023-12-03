@@ -181,12 +181,12 @@ public class PayRent_GUI extends JDialog {
         if(status==0){// if Payment successful print receipt update database
 
 
-            String convert = "";
+            StringBuilder convert = new StringBuilder();
             for (int i = 0; i < utilities.size(); i++) {
-                convert += String.valueOf(utilities.get(i)); //Get all utilities
+                convert.append(utilities.get(i)); //Get all utilities
 
                 if (i < utilities.size() - 1)
-                    convert += " ";
+                    convert.append(" ");
             }
 
             Font font = new Font("Arial", Font.PLAIN, 14);

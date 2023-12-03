@@ -105,15 +105,7 @@ public class Dashboard_GUI extends JDialog {
         });
 
 
-//        btnUpdate.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                dispose();
-//
-//
-//
-//
-//            }
-//        });
+
 
         buttonCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -198,10 +190,6 @@ public class Dashboard_GUI extends JDialog {
         txtWelcome.setText("Welcome, "+cal.getUsername() + "!");
 
     }
-    private void remaining(){
-
-
-    }
 
     private void history(){ //Get all transaction of the User
 
@@ -282,16 +270,7 @@ public class Dashboard_GUI extends JDialog {
         }
     }
 
-    //for Update
-
-//    public void triggerAction() {
-//        if (btnUpdate != null) {
-//            ActionEvent event = new ActionEvent(btnUpdate, ActionEvent.ACTION_PERFORMED, "");
-//            for (ActionListener listener : btnUpdate.getActionListeners()) {
-//                listener.actionPerformed(event);
-//            }
-//        }
-//    }
+ 
     ArrayList objects;
 
     //Check user type
@@ -346,7 +325,7 @@ public class Dashboard_GUI extends JDialog {
 
             //dash_pic.setIcon(new ImageIcon(icon.getImage().getScaledInstance(170, 170, Image.SCALE_SMOOTH)));
             dash_pic.setIcon(icon);
-            rentotal.setText("₱ "+ String.valueOf(objects.get(2)));
+            rentotal.setText("₱ "+ objects.get(2));
             duration.setText(String.valueOf(objects.get(1)));
 
              //Display Data to table-Now working
@@ -359,11 +338,6 @@ public class Dashboard_GUI extends JDialog {
         Request_Maintenance_GUI.Request_Maintenance_GUI();
     }
 
-
-    private void onOK() {
-        scrollPanel.setVisible(false);
-        myInfo_panel.setVisible(true);
-    }
 
     public void onCancel() {
         dispose();

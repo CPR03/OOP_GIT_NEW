@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class SignUp_GUI extends JDialog {
-    public Image imageLogo;
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
@@ -16,7 +15,7 @@ public class SignUp_GUI extends JDialog {
     private JLabel logInPic;
     private JLabel labelLogo;
     private JButton btnLogIn;
-    private JButton button1;
+
 
 
     public SignUp_GUI() {
@@ -99,10 +98,10 @@ public class SignUp_GUI extends JDialog {
 
                 ResultSet result;
 
+                result = state.executeQuery("SELECT * FROM apartment.users");
                 if (rowCount == 0) {
 
                     // Insert the new user with user_id 1 if database is empty
-                    result = state.executeQuery("SELECT * FROM apartment.users");
 
                     result.moveToInsertRow();
 
@@ -121,7 +120,6 @@ public class SignUp_GUI extends JDialog {
                 } else {
 
                     // The database is not empty, check for duplicates
-                    result = state.executeQuery("SELECT * FROM apartment.users");
 
                     //Loop through the database to check if user exists
                     while (result.next()) {

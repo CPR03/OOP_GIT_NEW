@@ -8,7 +8,7 @@ public class Calculate extends Accessor {
     private static double DiscountCode;
     private static Double totalprice;
     private static double additional;
-    static ArrayList<String> utilities = new ArrayList<String>();
+    static ArrayList<String> utilities = new ArrayList<>();
 
 
     //Add selected utilities to arraylist
@@ -23,17 +23,11 @@ public class Calculate extends Accessor {
     public static void setAdditional(){
 
         for (int i = 0; i < utilities.size(); i++){
-            if(utilities.get(i).equals("Amenities")){
-                additional+=200;
-            }
-            else if (utilities.get(i).equals("Wi-Fi")) {
-                additional+=300;
-            }
-            else if (utilities.get(i).equals("Cable")) {
-                additional+=400;
-            }
-            else{
-                additional+=100; //Water
+            switch (utilities.get(i)) {
+                case "Amenities" -> additional += 200;
+                case "Wi-Fi" -> additional += 300;
+                case "Cable" -> additional += 400;
+                default -> additional += 100; //Water
             }
         }
     }

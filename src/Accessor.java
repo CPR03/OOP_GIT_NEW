@@ -10,7 +10,6 @@ public class Accessor extends User_Data{ //Inheritance
     //Apply Encapsulation
     private static int UserId;
     private static String Username;
-    private static double Balance;
     private static String Unitnum;
 
 

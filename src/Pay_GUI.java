@@ -1,15 +1,7 @@
 import javax.swing.*;
-import javax.swing.text.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
 
 public class Pay_GUI extends JDialog {
     private JPanel contentPane;
@@ -27,7 +19,6 @@ public class Pay_GUI extends JDialog {
     String DiscountCode;
     String mode;
     double discount;
-    double total;
 
     public Pay_GUI() {
         setContentPane(contentPane);
@@ -186,14 +177,14 @@ public class Pay_GUI extends JDialog {
         Calculate.setDiscountCode(discount);
         if(status==0){// if Payment successful print receipt update database
 
-            String convert = "";
+            StringBuilder convert = new StringBuilder();
 
             for (int i = 0; i < Calculate.getUtilities().size(); i++) {
 
-                convert += String.valueOf(Calculate.getUtilities().get(i)); //Get all utilities
+                convert.append(Calculate.getUtilities().get(i)); //Get all utilities
 
                 if (i < Calculate.getUtilities().size() - 1)
-                    convert += " ";
+                    convert.append(" ");
 
             }
 
@@ -218,7 +209,7 @@ public class Pay_GUI extends JDialog {
 
 
                             "\t     ~Total~" + "\n" +
-                            "\tTotal Fee: " + Calculate.getTotalprice() +"\n"+
+                            "\tUnit Fee: " + Calculate.getTotalprice() +"\n"+
                             "\tUtilities Fee: " + Calculate.getAdditional() + "\n"+
                             "\tCharge Fee: " + chargetxt.getText() +"\n"+
                             "\tDiscount: " + disctxt.getText()+"\n"+

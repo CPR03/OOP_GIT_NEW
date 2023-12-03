@@ -98,7 +98,7 @@ public class Selected_Apr_GUI extends JDialog {
                     " WHERE unit_photo.unit_number= '"+unitNum+"'");
 
 
-            while (result.next()) {
+           result.next();
 
                 unit_number = result.getString("unit_number");
                 int bedcount = result.getInt("bedcount");
@@ -124,9 +124,7 @@ public class Selected_Apr_GUI extends JDialog {
                 poster4.setIcon(new ImageIcon(resize(image[3],550,300)));
                 poster5.setIcon(new ImageIcon(resize(image[4],550,300)));
 
-                break;
 
-            }
 
 
         } catch (Exception exc) {

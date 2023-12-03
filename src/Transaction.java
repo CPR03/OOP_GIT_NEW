@@ -1,42 +1,31 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
+
 import java.io.InputStream;
 import java.sql.*;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+
 import java.util.ArrayList;
-import java.util.Calendar;
+
 import java.util.Date;
-import java.util.GregorianCalendar;
+
 
 public class Transaction extends Calculate{ //To view transaction history
-    private static String Unit_number;
-    private static int Unit_price;
-    private static int trans_id;
-    private static int Apartment_id;
-    private static int Status=0;
-    private static String Duration;
-    private static String Paymentmod;
-    private static Double Totalprice;
-    private static Double Remaining_balance;
-    private static int Remaining_months;
-    private static double Additional;
-    private static double balance;
-    static ArrayList<String> util = new ArrayList<String>();
+
+
+    static ArrayList<String> util = new ArrayList<>();
 
 
     //Get selected months
     public static int getmonths(){
-        int months = switch (getDuration()) {
+
+        return switch (getDuration()) {
             case "3 months" -> 2;
             case "6 months" -> 5;
             case "1 year" -> 11;
             default -> 0;
         };
-
-        return months;
     }
 
 
@@ -54,8 +43,7 @@ public class Transaction extends Calculate{ //To view transaction history
             ResultSet getApartId = state.executeQuery("SELECT apr_id FROM apartment.apartment_unit where unit_number='"+unitNum+"'");
 
             getApartId.next();
-            Apartment_id = getApartId.getInt("apr_id"); //get Apartment_id of chosen unit
-
+            int apartment_id = getApartId.getInt("apr_id"); //get Apartment_id of chosen unit
 
 
             //Get the latest transaction ID
@@ -69,7 +57,7 @@ public class Transaction extends Calculate{ //To view transaction history
             result.moveToInsertRow();
 
             //Update the newest Transaction ID in the Transaction Table
-            trans_id = maxTranId+1; // Increment the max tran_id
+            int trans_id = maxTranId + 1; // Increment the max tran_id
             result.updateInt("tran_id", trans_id);
 
             //Insert the Discount Code
@@ -82,7 +70,7 @@ public class Transaction extends Calculate{ //To view transaction history
 
             //Insert the Payment Method
             result.updateString("payment_method",getPaymentmod());
-            //Amount payed
+            //Amount paid
             result.updateDouble("amount_pay",Double.parseDouble(Payment.getText()));
 
             //Insert the  Rent_total
@@ -102,33 +90,23 @@ public class Transaction extends Calculate{ //To view transaction history
 
             for(int i=0;i<util.size();i++){
 
-                if(util.get(i).equals("Amenities")){
-                    result.updateInt("amenities",1);
-                }
-
-                else if(util.get(i).equals("Cable")){
-                    result.updateInt("Cable",1);
-                }
-
-                else if(util.get(i).equals("Wi-Fi")){
-                    result.updateInt("wifi",1);
-                }
-
-                else{
-                    result.updateInt("water",1);
+                switch (util.get(i)) {
+                    case "Amenities" -> result.updateInt("amenities", 1);
+                    case "Cable" -> result.updateInt("Cable", 1);
+                    case "Wi-Fi" -> result.updateInt("wifi", 1);
+                    default -> result.updateInt("water", 1);
                 }
 
             }
 
             //Insert Foreign keys (User ID and Apartment ID)
             result.updateInt("user_id",Accessor.getUserID());
-            result.updateInt("apart_id",Apartment_id);
+            result.updateInt("apart_id", apartment_id);
 
             result.insertRow();
             result.beforeFirst();
 
             //Set Status to 1 (Meaning done)
-            Status=1;
             JOptionPane.showMessageDialog(null, "Transaction Successful.");
 
             state.close();
@@ -166,7 +144,7 @@ public class Transaction extends Calculate{ //To view transaction history
         double remaining; //remaining balance
         String duration; //duration of stay
 
-        ArrayList<Object> dashboard = new ArrayList<Object>();
+        ArrayList<Object> dashboard = new ArrayList<>();
 
         try {
 
@@ -208,8 +186,7 @@ public class Transaction extends Calculate{ //To view transaction history
 
     //Get Last Transaction Performed
     public static ArrayList getlast_trans(){
-        int i=0;
-        ArrayList<Object> last_transaction = new ArrayList<Object>();
+        ArrayList<Object> last_transaction = new ArrayList<>();
 
         try {
 
@@ -225,9 +202,7 @@ public class Transaction extends Calculate{ //To view transaction history
             //Put Data to the arrayList (last_transaction)
             while (result.next()){
 
-//                Calendar cal1 = new GregorianCalendar();
-//                cal1.add(Calendar.MONTH, +1);
-//                last_transaction.add(result.getDate("Date",cal1));
+
 
 
                 last_transaction.add(result.getInt("apr_id")); //apartment ID
